@@ -1,0 +1,8 @@
+com\avalanches\core\domain\Capivara.class
+com\avalanches\ports\ServicePort.class
+com\avalanches\ports\in\CapivaraControllerPort.class
+com\avalanches\adapter\driven\CapivaraRepository.class
+com\avalanches\adapter\driver\avalanchesapp\AvalanchesApplication.class
+com\avalanches\adapter\driver\avalanchesapp\controllers\CapivaraController.class
+com\avalanches\ports\out\CapivaraRepositoryPort.class
+com\avalanches\core\services\ServiceCapivara.class
