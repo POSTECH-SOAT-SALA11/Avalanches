@@ -19,7 +19,7 @@ public class CustomerRepository implements CustomerRepositoryPort {
         jdbcTemplate.update("INSERT INTO customer (id, name, document, email) VALUES (?, ?, ?, ?);",
                 customer.getId(),
                 customer.getName(),
-                EncryptionUtils.encrypt(customer.getDocument()),
+                customer.getDocument(),
                 customer.getEmail());
     }
 

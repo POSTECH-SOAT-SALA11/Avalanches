@@ -1,6 +1,7 @@
 package com.avalanches.core.service;
 
 import com.avalanches.core.domain.entities.Customer;
+import com.avalanches.core.utils.EncryptionUtils;
 import com.avalanches.ports.CustomerRepositoryPort;
 import com.avalanches.ports.CustomerServicePort;
 import jakarta.inject.Inject;
@@ -14,6 +15,7 @@ public class CustomerService implements CustomerServicePort {
 
     @Override
     public void insertCustomer(Customer customer) {
+        customer.setDocument(EncryptionUtils.encrypt(customer.getDocument()));
         repository.insert(customer);
     }
 

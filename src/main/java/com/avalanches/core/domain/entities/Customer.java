@@ -39,4 +39,8 @@ public class Customer {
     public String getEmail() {
         return email;
     }
+
+    public void setDocument(String document) {
+        this.document = document;
+    }
 }

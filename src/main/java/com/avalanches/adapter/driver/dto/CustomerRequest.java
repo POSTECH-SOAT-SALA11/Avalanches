@@ -1,5 +1,6 @@
 package com.avalanches.adapter.driver.dto;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -9,6 +10,8 @@ public record CustomerRequest(
         @NotBlank(message = "cpf cannot be empty")
         @CPF
         String document,
-        @NotBlank(message = "email cannot be empty")  String email
+        @NotBlank(message = "email cannot be empty")
+        @Email
+        String email
 ) {
 }
