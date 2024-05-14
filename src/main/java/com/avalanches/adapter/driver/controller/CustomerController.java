@@ -2,8 +2,7 @@ package com.avalanches.adapter.driver.controller;
 
 import com.avalanches.adapter.driver.Convert;
 import com.avalanches.adapter.driver.dto.CustomerRequest;
-import com.avalanches.core.domain.entities.Customer;
-import com.avalanches.ports.CustomerServicePort;
+import com.avalanches.core.application.usecases.CustomerUseCasePort;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CustomerController {
 
     @Autowired
-    private CustomerServicePort servicePort;
+    private CustomerUseCasePort servicePort;
 
     @PostMapping("/customer")
     public ResponseEntity<Void> create(@Valid  @RequestBody CustomerRequest customer) {
