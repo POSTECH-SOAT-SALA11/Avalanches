@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres_container
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./src/main/java/com/avalanches/adapter/driven/database/scripts:/docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_DB: avalanches_database
+      POSTGRES_USER: avalanches_user
+      POSTGRES_PASSWORD: avalanches_password
+

@@ -1,7 +1,0 @@
-com\avalanches\adapter\driver\AvalanchesApplication.class
-com\avalanches\core\domain\entities\Capivara.class
-com\avalanches\adapter\driver\controllers\CapivaraController.class
-com\avalanches\adapter\driven\CapivaraRepository.class
-com\avalanches\core\application\usecases\CapivaraUseCasePort.class
-com\avalanches\core\domain\repositories\CapivaraRepositoryPort.class
-com\avalanches\core\application\usecases\CapivaraUseCase.class
