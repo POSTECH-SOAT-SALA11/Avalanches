@@ -1,10 +1,13 @@
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 CREATE TABLE cliente
 (
-    id    SERIAL PRIMARY KEY,
-    cpf   VARCHAR(45) UNIQUE,
+    id    UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    cpf   VARCHAR(11) UNIQUE,
     nome  VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL
 );
+
 
 CREATE TABLE produto
 (
