@@ -5,12 +5,12 @@ import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
 
 public record ClienteRequest(
-        @NotBlank(message = "nome cannot be empty")
+        @NotBlank(message = "nome não pode ser vazio ou em branco")
         String nome,
-        @NotBlank(message = "cpf cannot be empty")
+        @NotBlank(message = "cpf não pode ser vazio ou em branco")
         @CPF
         String cpf,
-        @NotBlank(message = "email cannot be empty")
+        @NotBlank(message = "email não pode ser vazio ou em branco")
         @Email
         String email
 ) {

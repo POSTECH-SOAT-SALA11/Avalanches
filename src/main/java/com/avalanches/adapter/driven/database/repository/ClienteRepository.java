@@ -15,7 +15,9 @@ public class ClienteRepository implements ClienteRepositoryPort {
     @Override
     public void insert(Cliente cliente) {
 
-        jdbcTemplate.update("INSERT INTO customer (id, nome, cpf, email) VALUES (?, ?, ?, ?);",
+        System.out.println(cliente.getCpf());
+
+        jdbcTemplate.update("INSERT INTO cliente (id, nome, cpf, email) VALUES (?, ?, ?, ?);",
                 cliente.getId(),
                 cliente.getNome(),
                 cliente.getCpf(),
