@@ -1,4 +1,5 @@
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+CREATE
+EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE cliente
 (
@@ -22,7 +23,7 @@ CREATE TABLE produto
 CREATE TABLE pedido
 (
     id         SERIAL PRIMARY KEY,
-    cliente_id INT REFERENCES cliente (id),
+    cliente_id UUID REFERENCES cliente (id),
     status     VARCHAR(20) NOT NULL
 );
 
