@@ -21,9 +21,9 @@ public class ClienteController {
     @Autowired
     private CustomerUseCasePort servicePort;
 
-    @PostMapping("/customer")
-    public ResponseEntity<Void> create(@Valid  @RequestBody ClienteRequest customer) {
-        servicePort.insertCustomer(Convert.customerRequestToCustomer(customer));
+    @PostMapping("/cliente")
+    public ResponseEntity<Void> create(@Valid  @RequestBody ClienteRequest cliente) {
+        servicePort.insertCustomer(Convert.customerRequestToCustomer(cliente));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
