@@ -1,8 +1,10 @@
 package com.avalanches.core.domain.entities;
 
+import java.util.UUID;
+
 public class Cliente {
 
-    private int id;
+    private UUID id;
 
     private String nome;
 
@@ -10,16 +12,14 @@ public class Cliente {
 
     private String email;
 
-    private static int nextId = 1;
-
-    public Cliente(String name, String document, String email) {
-        this.id = nextId++;
-        this.nome = name;
-        this.cpf = document;
+    public Cliente(String nome, String cpf, String email) {
+        this.id = UUID.randomUUID();
+        this.nome = nome;
+        this.cpf = cpf;
         this.email = email;
     }
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
@@ -35,7 +35,7 @@ public class Cliente {
         return email;
     }
 
-    public void setCpf(String document) {
-        this.cpf = document;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 }

@@ -14,7 +14,7 @@ public class CustomerUseCase implements CustomerUseCasePort {
 
     @Override
     public void insertCustomer(Cliente cliente) {
-        cliente.setCpf(EncryptionUtils.encrypt(cliente.getCpf()));
+        // cliente.setCpf(EncryptionUtils.encrypt(cliente.getCpf()));
         repository.insert(cliente);
     }
 
