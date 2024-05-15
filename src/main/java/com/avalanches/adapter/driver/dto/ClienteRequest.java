@@ -4,12 +4,12 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
 
-public record CustomerRequest(
-        @NotBlank(message = "name cannot be empty")
-        String name,
+public record ClienteRequest(
+        @NotBlank(message = "nome cannot be empty")
+        String nome,
         @NotBlank(message = "cpf cannot be empty")
         @CPF
-        String document,
+        String cpf,
         @NotBlank(message = "email cannot be empty")
         @Email
         String email

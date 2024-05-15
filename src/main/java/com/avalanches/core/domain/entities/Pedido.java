@@ -7,23 +7,23 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 import java.util.List;
 
-public class Order {
+public class Pedido {
 
     private String id = UUID.randomUUID().toString();
 
-    private OrderStatus status;
+    private StatusPedido status;
 
-    private BigDecimal value;
+    private BigDecimal valor;
 
-    private String customerId;
+    private LocalDateTime dataCriacao;
 
-    private LocalDateTime createdDate;
-
-    private LocalDateTime finishedDate;
+    private LocalDateTime dataFinalizacao;
 
     // FIXME: Analisar como vai ser feito
-    private Timespan waitTime;
+    private Timespan tempoEspera;
 
-    private List<Integer> productsIds;
+    private List<Produto> listaProduto;
+
+    private Cliente cliente;
 
 }
