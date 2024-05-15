@@ -1,7 +1,7 @@
 package com.avalanches.adapter.driver.controller;
 
 import com.avalanches.adapter.driver.Convert;
-import com.avalanches.adapter.driver.dto.CustomerRequest;
+import com.avalanches.adapter.driver.dto.ClienteRequest;
 import com.avalanches.core.application.usecases.CustomerUseCasePort;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/avalanches/v1")
 @Validated
-public class CustomerController {
+public class ClienteController {
 
     @Autowired
     private CustomerUseCasePort servicePort;
 
     @PostMapping("/customer")
-    public ResponseEntity<Void> create(@Valid  @RequestBody CustomerRequest customer) {
+    public ResponseEntity<Void> create(@Valid  @RequestBody ClienteRequest customer) {
         servicePort.insertCustomer(Convert.customerRequestToCustomer(customer));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
