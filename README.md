@@ -31,11 +31,10 @@ A documentação do sistema, incluindo o Event Storming e os diagramas de DDD, e
 Para executar o projeto localmente, siga estas etapas:
 
 1. Clone o repositório.
-2. Navegue até a pasta do projeto `sistema-controle-pedidos-lanchonete-app`.
-3. Execute o comando `docker build -t sistema-controle-pedidos-lanchonete-app-imagem .` para gerar a imagem da aplicação.
-4. Execute o comando `docker-compose up` para inicializar seu container com os dois services .
-5. Acesse o banco de dados através da URL `jdbc:postgresql://localhost:5432/avalanches_database`, com o usuário `avalanches_user` e a senha `avalanches_password`.
-6. Divirta-se :D
+2. Execute o comando `docker build -t sistema-controle-pedidos-avalanches-app-imagem .` para gerar a imagem da aplicação.
+3. Execute o comando `docker-compose up` para inicializar seu container com os dois services .
+4. Acesse o banco de dados através da URL `jdbc:postgresql://localhost:5432/avalanches_database`, com o usuário `avalanches_user` e a senha `avalanches_password`.
+5. Divirta-se :D
 
 ## Autores
 
