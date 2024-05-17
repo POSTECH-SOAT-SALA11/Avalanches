@@ -34,7 +34,7 @@ Para executar o projeto localmente, siga estas etapas:
 2. Navegue até a pasta do projeto `sistema-controle-pedidos-lanchonete-app`.
 3. Execute o comando `docker build -t sistema-controle-pedidos-lanchonete-app-imagem .` para gerar a imagem da aplicação.
 4. Execute o comando `docker-compose up` para inicializar seu container com os dois services .
-5. Acesse o banco de dados através da URL `jdbc:postgresql://localhost:5432/lanchonete_db`, com o usuário `lanchonete_user` e a senha `lanchonete_password`.
+5. Acesse o banco de dados através da URL `jdbc:postgresql://localhost:5432/avalanches_database`, com o usuário `avalanches_user` e a senha `avalanches_password`.
 6. Divirta-se :D
 
 ## Autores
