@@ -38,14 +38,14 @@ Para executar o projeto localmente, siga estas etapas:
 
 ## Autores
 
-- Hennan Cesar Alves Gadelha de Freitas
+- [Hennan Cesar Alves Gadelha de Freitas](https://github.com/HennanGadelha)
   (hennangadelhafreitas@gmail.com)
 
-- Adinelson da Silva Bruhmuller Júnior
+- [Adinelson da Silva Bruhmuller Júnior](https://github.com/Doomwhite)
   (adinelsonsbruhmuller@gmail.com)
 
-- RAUL DE SOUZA
+- [RAUL DE SOUZA](https://github.com/raulsouza-rm355416)
   (dev.raulsouza@outlook.com)
 
-- Raphael Soares Teodoro
+- [Raphael Soares Teodoro](https://github.com/raphasteodoro)
   (raphael.s.teodoro@outlook.com)
