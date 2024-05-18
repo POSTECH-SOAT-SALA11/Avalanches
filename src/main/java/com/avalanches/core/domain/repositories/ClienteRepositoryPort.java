@@ -6,4 +6,8 @@ public interface ClienteRepositoryPort {
 
     void insert(Cliente cliente);
 
+    Cliente identificar(String cpf);
+
+    void deletar(String cpf);
+
 }
