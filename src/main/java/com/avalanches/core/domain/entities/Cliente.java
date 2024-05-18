@@ -19,6 +19,10 @@ public class Cliente {
         this.email = email;
     }
 
+    public Cliente() {
+
+    }
+
     public UUID getId() {
         return id;
     }
@@ -33,6 +37,14 @@ public class Cliente {
 
     public String getEmail() {
         return email;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setCpf(String cpf) {
