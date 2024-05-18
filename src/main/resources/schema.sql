@@ -14,10 +14,10 @@ CREATE TABLE produto
 (
     id         SERIAL PRIMARY KEY,
     nome       VARCHAR(100)   NOT NULL,
-    categoria  VARCHAR(50)    NOT NULL,
-    preco      DECIMAL(10, 2) NOT NULL,
-    descricao  TEXT,
-    imagem_url VARCHAR(255)
+    descricao  VARCHAR(500)   NOT NULL,
+    categoria  INT            NOT NULL,
+    quantidade INT            NOT NULL,
+    valor      DECIMAL(10, 2) NOT NULL
 );
 
 CREATE TABLE pedido
