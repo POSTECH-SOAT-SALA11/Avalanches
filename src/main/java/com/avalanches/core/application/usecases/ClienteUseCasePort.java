@@ -6,7 +6,9 @@ import org.springframework.stereotype.Service;
 @Service
 public interface ClienteUseCasePort {
 
-    void insertCustomer(Cliente cliente);
+    void insertCliente(Cliente cliente);
 
     Cliente identificar(String cpf);
+
+    void deletar(String cpf);
 }

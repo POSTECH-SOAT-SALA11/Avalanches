@@ -13,24 +13,33 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/avalanches/v1")
+@RequestMapping("/avalanches/v1/cliente")
 @Validated
-public class ClienteController {
+public class ClienteController implements ClienteControllerDoc {
 
     @Autowired
     private ClienteUseCasePort servicePort;
 
-    @PostMapping("/cliente")
+    @PostMapping
+    @Override
     public ResponseEntity<Void> create(@Valid  @RequestBody ClienteRequest cliente) {
-        servicePort.insertCustomer(Convert.clienteRequestToCliente(cliente));
+        servicePort.insertCliente(Convert.clienteRequestToCliente(cliente));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @GetMapping("/cliente/{cpf}")
-    public ResponseEntity<ClienteResponse> create(@PathVariable("cpf") String cpf) {
+    @GetMapping("/{cpf}")
+    @Override
+    public ResponseEntity<ClienteResponse> identifica(@PathVariable("cpf") String cpf) {
         ClienteResponse response = Convert.clienteToClienteResponse(servicePort.identificar(cpf));
 
         return ResponseEntity.ok().body(response);
+    }
+
+    @DeleteMapping("/{cpf}/excluir")
+    @Override
+    public ResponseEntity<Void> delete(@PathVariable("cpf") String cpf) {
+        servicePort.deletar(cpf);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 }

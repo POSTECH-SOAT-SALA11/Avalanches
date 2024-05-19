@@ -12,7 +12,7 @@ public class ClienteUseCase implements ClienteUseCasePort {
     ClienteRepositoryPort repository;
 
     @Override
-    public void insertCustomer(Cliente cliente) {
+    public void insertCliente(Cliente cliente) {
         repository.insert(cliente);
     }
 
@@ -21,5 +21,9 @@ public class ClienteUseCase implements ClienteUseCasePort {
         return repository.identificar(cpf);
     }
 
+    @Override
+    public void deletar(String cpf) {
+        repository.deletar(cpf);
+    }
 
 }
