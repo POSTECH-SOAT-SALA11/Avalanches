@@ -45,7 +45,10 @@ public class ClienteRepository implements ClienteRepositoryPort {
     @Override
     public void deletar(String cpf) {
         try {
-            jdbcTemplate.update("DELETE FROM cliente WHERE cpf = ?", cpf);
+            int rowsAffected = jdbcTemplate.update("DELETE FROM cliente WHERE cpf = ?", cpf);
+            if (rowsAffected == 0) {
+                throw new ClienteNotFoundException(cpf);
+            }
         } catch (EmptyResultDataAccessException e) {
             throw new ClienteNotFoundException(cpf);
         }
