@@ -1,10 +1,19 @@
 package com.avalanches.adapter.driven.database.repository;
 
+import com.avalanches.core.domain.entities.Imagem;
 import com.avalanches.core.domain.entities.Produto;
 import com.avalanches.core.domain.repositories.ProdutoRepositoryPort;
 import jakarta.inject.Inject;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 @Repository
 public class ProdutoRepository implements ProdutoRepositoryPort {
@@ -14,14 +23,51 @@ public class ProdutoRepository implements ProdutoRepositoryPort {
 
     @Override
     public void insert(Produto produto) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(
-            "INSERT INTO produto(nome, descricao, categoria, quantidade, valor) VALUES (?, ?, ?, ?, ?);",
-            produto.nome,
-            produto.descricao,
-            produto.categoria.ordinal(),
-            produto.quantidade,
-            produto.valor
+            new PreparedStatementCreator() {
+                @Override
+                public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                    PreparedStatement ps = connection.prepareStatement(
+                            "INSERT INTO produto(nome, descricao, categoria, quantidade, valor) VALUES (?, ?, ?, ?, ?)",
+                            Statement.RETURN_GENERATED_KEYS
+                    );
+                    ps.setString(1, produto.nome);
+                    ps.setString(2, produto.descricao);
+                    ps.setString(3, produto.categoria.getValue());
+                    ps.setInt(4, produto.quantidade);
+                    ps.setBigDecimal(5, produto.valor);
+                    return ps;
+                }
+            },
+            keyHolder
         );
+        produto.id = (int) keyHolder.getKeys().get("id");
+
+        for (Imagem imagem: produto.imagens) {
+            jdbcTemplate.update(
+                    "INSERT INTO produto_imagem(idproduto, idimagem) VALUES (?, ?);",
+                    produto.id,
+                    imagem.id
+            );
+        }
+    }
+
+    @Override
+    public void update(Produto produto) {
+        jdbcTemplate.update(
+            "UPDATE produto SET nome=?, descricao=?, categoria=?, quantidade=?, valor=? WHERE id=?",
+                produto.nome,
+                produto.descricao,
+                produto.categoria.getValue(),
+                produto.quantidade,
+                produto.valor,
+                produto.id
+        );
+    }
+
+    public void delete(int id) {
+        jdbcTemplate.update("DELETE FROM produto WHERE id=?", id);
     }
 
 }

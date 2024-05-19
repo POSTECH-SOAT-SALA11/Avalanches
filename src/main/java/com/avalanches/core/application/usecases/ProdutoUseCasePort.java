@@ -8,4 +8,8 @@ public interface ProdutoUseCasePort {
 
     void insertProduto(Produto produto);
 
+    void updateProduto(Produto produto);
+
+    void deleteProduto(int id);
+
 }
