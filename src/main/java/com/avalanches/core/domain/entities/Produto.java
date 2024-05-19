@@ -20,6 +20,7 @@ public class Produto {
     public List<Imagem> imagens;
 
     public Produto(
+        int id,
         BigDecimal valor,
         int quantidade,
         CategoriaProduto categoria,
@@ -27,6 +28,7 @@ public class Produto {
         String descricao,
         List<Imagem> imagens
     ) {
+        this.id = id;
         this.valor = valor;
         this.quantidade = quantidade;
         this.categoria = categoria;

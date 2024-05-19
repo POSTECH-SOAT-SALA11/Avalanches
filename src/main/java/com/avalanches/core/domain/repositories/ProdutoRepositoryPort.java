@@ -6,4 +6,8 @@ public interface ProdutoRepositoryPort {
 
     void insert(Produto produto);
 
+    void update(Produto produto);
+
+    void delete(int id);
+
 }
