@@ -16,10 +16,10 @@ public interface ClienteControllerDoc {
              description = "Endpoint utilizado para realizar o cadastro de cliente.")
      ResponseEntity<Void> create(@Valid  @RequestBody ClienteRequest cliente);
 
-     @Operation(summary = "Identifica  cliente",
-             description = "Endpoint utilizado para realizar a identificação do  cliente.")
-     @Parameter(description = "CPF do cliente", required = true, in = ParameterIn.PATH, example = "12345678900")
-     ResponseEntity<ClienteResponse> identifica(String cpf);
+//     @Operation(summary = "Identifica  cliente",
+//             description = "Endpoint utilizado para realizar a identificação do  cliente.")
+//     @Parameter(description = "CPF do cliente", required = true, in = ParameterIn.PATH, example = "12345678900")
+//     ResponseEntity<ClienteResponse> identifica(String cpf);
 
      @Operation(summary = "Remove cadastro do cliente",
              description = "Endpoint utilizado para realizar a remoção de cadastro do  cliente.")
