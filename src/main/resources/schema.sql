@@ -1,39 +1,63 @@
-CREATE
-EXTENSION IF NOT EXISTS "uuid-ossp";
-
-CREATE TABLE cliente
+CREATE TABLE public.cliente
 (
-    id    UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    cpf   VARCHAR(11) UNIQUE,
-    nome  VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL
+    nome  varchar(255)                      NOT NULL,
+    cpf   varchar(255)                      NOT NULL,
+    email varchar(255)                      NOT NULL,
+    id    int4 GENERATED ALWAYS AS IDENTITY NOT NULL,
+    CONSTRAINT cliente_pk PRIMARY KEY (id)
+);
+
+CREATE TABLE public.imagem
+(
+    id           int4 GENERATED ALWAYS AS IDENTITY ( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
+    descricao    varchar                                                                                                     NOT NULL,
+    tipoconteudo varchar                                                                                                     NOT NULL,
+    caminho      varchar                                                                                                     NOT NULL,
+    tamanho      int4                                                                                                        NOT NULL,
+    CONSTRAINT imagem_pk PRIMARY KEY (id)
+);
+
+CREATE TABLE public.produto
+(
+    id         int4 GENERATED ALWAYS AS IDENTITY ( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
+    valor      numeric                                                                                                     NOT NULL,
+    quantidade int4                                                                                                        NOT NULL,
+    categoria  int4                                                                                                        NOT NULL,
+    nome       varchar                                                                                                     NOT NULL,
+    descricao  varchar                                                                                                     NOT NULL,
+    CONSTRAINT produto_pk PRIMARY KEY (id)
+);
+
+CREATE TABLE public.pedido
+(
+    id              int4 GENERATED ALWAYS AS IDENTITY NOT NULL,
+    status          varchar                           NOT NULL,
+    valor           numeric                           NOT NULL,
+    datacriacao     date                              NOT NULL,
+    datafinalizacao date                              NOT NULL,
+    idcliente       int4                              NOT NULL,
+    CONSTRAINT pedido_pk PRIMARY KEY (id),
+    CONSTRAINT pedido_cliente_fk FOREIGN KEY (idcliente) REFERENCES public.cliente (id)
 );
 
 
-CREATE TABLE produto
+CREATE TABLE public.pedido_produto
 (
-    id         SERIAL PRIMARY KEY,
-    nome       VARCHAR(100)   NOT NULL,
-    categoria  VARCHAR(50)    NOT NULL,
-    preco      DECIMAL(10, 2) NOT NULL,
-    descricao  TEXT,
-    imagem_url VARCHAR(255)
+    idpedido      int4    NOT NULL,
+    idproduto     int4    NOT NULL,
+    quantidade    int4    NOT NULL,
+    valorunitario numeric NOT NULL,
+    CONSTRAINT pedido_produto_pk PRIMARY KEY (idpedido, idproduto),
+    CONSTRAINT pedido_produto_fk_1 FOREIGN KEY (idpedido) REFERENCES public.pedido (id),
+    CONSTRAINT pedido_produto_fk_2 FOREIGN KEY (idproduto) REFERENCES public.produto (id)
 );
 
-CREATE TABLE pedido
-(
-    id         SERIAL PRIMARY KEY,
-    cliente_id UUID REFERENCES cliente (id),
-    status     VARCHAR(20) NOT NULL
-);
 
-CREATE TABLE item_pedido
+CREATE TABLE public.produto_imagem
 (
-    id             SERIAL PRIMARY KEY,
-    pedido_id      INT REFERENCES pedido (id),
-    produto_id     INT REFERENCES produto (id),
-    quantidade     INT            NOT NULL,
-    preco_unitario DECIMAL(10, 2) NOT NULL
+    idproduto int4 NOT NULL,
+    idimagem  int4 NOT NULL,
+    CONSTRAINT produto_imagem_pk PRIMARY KEY (idproduto, idimagem),
+    CONSTRAINT imagem_produto_fk_1 FOREIGN KEY (idproduto) REFERENCES public.produto (id),
+    CONSTRAINT imagem_produto_fk_2 FOREIGN KEY (idimagem) REFERENCES public.imagem (id)
 );
-
--- Adicione mais tabelas e relacionamentos conforme necessário
