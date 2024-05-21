@@ -12,6 +12,7 @@ public enum CategoriaProduto {
         this.value = value;
     }
 
+
     public String getValue() {
         return value;
     }

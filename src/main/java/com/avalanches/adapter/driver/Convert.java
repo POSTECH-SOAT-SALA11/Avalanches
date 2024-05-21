@@ -4,6 +4,7 @@ import com.avalanches.adapter.driver.dto.ClienteRequest;
 import com.avalanches.adapter.driver.dto.ClienteResponse;
 import com.avalanches.adapter.driver.dto.ImagemRequest;
 import com.avalanches.adapter.driver.dto.ProdutoRequest;
+import com.avalanches.adapter.driver.dto.ProdutoResponse;
 import com.avalanches.core.domain.entities.Cliente;
 import com.avalanches.core.domain.entities.Imagem;
 import com.avalanches.core.domain.entities.Produto;
@@ -45,9 +46,26 @@ public class Convert {
                         imagemRequest.descricao(),
                         imagemRequest.tipoConteudo(),
                         imagemRequest.tamanho(),
+                        null,
                         imagemRequest.conteudo()
                     ))
                     .collect(Collectors.toList());
         }
     }
+
+    public static List<ProdutoResponse> listProdutoToListProdutoResponse(List<Produto> listaProduto) {
+
+        List<ProdutoResponse> listaProdutoResponse = listaProduto.stream()
+                .map(produto -> new ProdutoResponse(
+                        produto.id,
+                        produto.valor,
+                        produto.quantidade,
+                        produto.categoria,
+                        produto.nome,
+                        produto.descricao,
+                        produto.imagens)).collect(Collectors.toList());
+
+        return listaProdutoResponse;
+    }
+
 }

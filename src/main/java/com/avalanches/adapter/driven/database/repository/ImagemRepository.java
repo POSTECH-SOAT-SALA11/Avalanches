@@ -65,6 +65,8 @@ public class ImagemRepository implements ImagemRepositoryPort {
         );
     }
 
+
+
     private static void createFile(Imagem imagem) {
         Path imagesFolder = Paths.get(IMAGENS);
         if (!Files.exists(imagesFolder)) {
@@ -96,6 +98,22 @@ public class ImagemRepository implements ImagemRepositoryPort {
         } catch (IOException e) {
             throw new RuntimeException("Erro ao editar arquivo.", e);
         }
+    }
+
+
+    @Override
+    public byte[] readFile(String path) {
+        Path imagePath = Paths.get(path);
+
+        byte[] file;
+
+        try {
+            file = Files.readAllBytes(imagePath);
+        }catch(IOException e){
+            throw new RuntimeException("Arquivo não encontrado.", e);
+        }
+
+        return file;
     }
 
 }

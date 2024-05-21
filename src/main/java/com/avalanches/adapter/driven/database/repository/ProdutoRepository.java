@@ -1,6 +1,9 @@
 package com.avalanches.adapter.driven.database.repository;
 
+import com.avalanches.adapter.driven.database.repository.mapper.ImagemRowMapper;
 import com.avalanches.core.domain.entities.Imagem;
+import com.avalanches.adapter.driven.database.repository.mapper.ProdutoRowMapper;
+import com.avalanches.core.domain.entities.CategoriaProduto;
 import com.avalanches.core.domain.entities.Produto;
 import com.avalanches.core.domain.repositories.ProdutoRepositoryPort;
 import jakarta.inject.Inject;
@@ -14,6 +17,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import java.util.List;
 
 @Repository
 public class ProdutoRepository implements ProdutoRepositoryPort {
@@ -70,4 +75,18 @@ public class ProdutoRepository implements ProdutoRepositoryPort {
         jdbcTemplate.update("DELETE FROM produto WHERE id=?", id);
     }
 
+    @Override
+    public List<Imagem> getImagensPorProduto(int id) {
+        return jdbcTemplate.query("select i.* from produto_imagem pi2 " +
+                "inner join imagem i on i.id = pi2.idimagem " +
+                "where idproduto = ?",new ImagemRowMapper(), id);
+    }
+
+    @Override
+    public List<Produto> getProdutos(CategoriaProduto categoriaProduto) {
+        return jdbcTemplate.query("SELECT id, valor,quantidade,categoria," +
+                "nome,descricao FROM produto where categoria=?",new ProdutoRowMapper(), categoriaProduto.getValue());
+    }
+
 }
+
