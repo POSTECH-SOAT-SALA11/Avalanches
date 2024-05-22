@@ -74,7 +74,6 @@ public class ImagemRepository implements ImagemRepositoryPort {
             try {
                 Files.deleteIfExists(imagePath);
             } catch (IOException e) {
-                // Handle exception, log it, etc.
                 throw new RuntimeException("Erro ao deletar arquivo.", e);
             }
         }

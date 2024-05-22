@@ -37,7 +37,7 @@ public class Convert {
 
     public static List<Imagem> imagemRequestsToImagens(List<ImagemRequest> imagens) {
         if (imagens == null) {
-            return Collections.emptyList(); // Return an empty list if 'imagens' is null
+            return Collections.emptyList();
         } else {
             return imagens.stream()
                     .map(imagemRequest -> new Imagem(
