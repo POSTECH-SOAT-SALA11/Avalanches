@@ -28,7 +28,7 @@ public class ClienteController implements ClienteControllerDoc {
     }
 
     @GetMapping("/{cpf}")
-//    @Override
+    @Override
     public ResponseEntity<ClienteResponse> identifica(@PathVariable("cpf") String cpf) {
         ClienteResponse response = Convert.clienteToClienteResponse(servicePort.identificar(cpf));
 
