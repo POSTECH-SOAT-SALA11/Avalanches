@@ -22,26 +22,24 @@ public class ProdutoUseCase implements ProdutoUseCasePort {
 
     @Override
     public void insertProduto(Produto produto) {
+        produtoRepository.insert(produto);
+
         if(produto.imagens != null) {
             for (Imagem imagem: produto.imagens) {
                 imagemRepository.insert(imagem);
+                produtoRepository.insertProdutoImagem(produto.id, imagem.id);
             }
-        }
-        produtoRepository.insert(produto);
-
-        for (Imagem imagem: produto.imagens) {
-            produtoRepository.insertProdutoImagem(produto.id, imagem.id);
         }
     }
 
     @Override
     public void updateProduto(Produto produto) {
-        var preUpdateProduto = produtoRepository.getProdutoPorId(produto.id);
-        if(preUpdateProduto == null) {
+        Produto preUpdatedProduto = produtoRepository.getProdutoPorId(produto.id);
+        if(preUpdatedProduto == null) {
             throw new NotFoundException("Produto não encontrado.");
         }
 
-        var preUpdatedImagens = produtoRepository.getImagensPorProduto(produto.id);
+        List<Imagem> preUpdatedImagens = produtoRepository.getImagensPorProduto(produto.id);
         if(preUpdatedImagens != null) {
             List<Imagem> deletedImagens;
 
@@ -85,7 +83,7 @@ public class ProdutoUseCase implements ProdutoUseCasePort {
 
     @Override
     public void deleteProduto(int id) {
-        var produto = produtoRepository.getProdutoPorId(id);
+        Produto produto = produtoRepository.getProdutoPorId(id);
         if(produto == null) {
             throw new NotFoundException("Produto não encontrado.");
         }
@@ -102,7 +100,7 @@ public class ProdutoUseCase implements ProdutoUseCasePort {
 
     @Override
     public List<Produto> getProdutos(CategoriaProduto categoriaProduto) {
-        var listaProduto =  produtoRepository.getProdutos(categoriaProduto);
+        List<Produto> listaProduto =  produtoRepository.getProdutos(categoriaProduto);
 
         for (Produto p: listaProduto){
             p.imagens = produtoRepository.getImagensPorProduto(p.id);
