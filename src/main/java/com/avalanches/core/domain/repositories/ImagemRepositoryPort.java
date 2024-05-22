@@ -9,5 +9,7 @@ public interface ImagemRepositoryPort {
 
     void update(Imagem imagem);
 
+    void delete(Imagem imagem);
+
     byte[] readFile(String path);
 }

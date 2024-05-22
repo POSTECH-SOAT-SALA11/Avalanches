@@ -10,10 +10,18 @@ import java.util.List;
 public interface ProdutoRepositoryPort {
 
     void insert(Produto produto);
-    List<Produto> getProdutos(CategoriaProduto categoriaProduto);
+
+    void insertProdutoImagem(int idProduto, int idImagem);
+
     void update(Produto produto);
 
     void delete(int id);
+
+    void deleteProdutoImagem(int idProduto, int idImagem);
+
+    List<Produto> getProdutos(CategoriaProduto categoriaProduto);
+
+    Produto getProdutoPorId(int id);
 
     List<Imagem> getImagensPorProduto(int id);
 }

@@ -48,14 +48,15 @@ public class ProdutoRepository implements ProdutoRepositoryPort {
             keyHolder
         );
         produto.id = (int) keyHolder.getKeys().get("id");
+    }
 
-        for (Imagem imagem: produto.imagens) {
-            jdbcTemplate.update(
-                    "INSERT INTO produto_imagem(idproduto, idimagem) VALUES (?, ?);",
-                    produto.id,
-                    imagem.id
-            );
-        }
+    @Override
+    public void insertProdutoImagem(int idProduto, int idImagem) {
+        jdbcTemplate.update(
+                "INSERT INTO produto_imagem(idproduto, idimagem) VALUES (?, ?);",
+                idProduto,
+                idImagem
+        );
     }
 
     @Override
@@ -71,8 +72,26 @@ public class ProdutoRepository implements ProdutoRepositoryPort {
         );
     }
 
+    @Override
     public void delete(int id) {
         jdbcTemplate.update("DELETE FROM produto WHERE id=?", id);
+    }
+
+    @Override
+    public void deleteProdutoImagem(int idProduto, int idImagem) {
+        jdbcTemplate.update("DELETE FROM produto_imagem WHERE idproduto=? AND idimagem=?", idProduto, idImagem);
+    }
+
+    @Override
+    public List<Produto> getProdutos(CategoriaProduto categoriaProduto) {
+        return jdbcTemplate.query("SELECT id,valor,quantidade,categoria," +
+                "nome,descricao FROM produto where categoria=?",new ProdutoRowMapper(), categoriaProduto.getValue());
+    }
+
+    @Override
+    public Produto getProdutoPorId(int id) {
+        return jdbcTemplate.queryForObject("SELECT id,valor,quantidade,categoria," +
+                "nome,descricao FROM produto where id=?",new ProdutoRowMapper(), id);
     }
 
     @Override
@@ -80,12 +99,6 @@ public class ProdutoRepository implements ProdutoRepositoryPort {
         return jdbcTemplate.query("select i.* from produto_imagem pi2 " +
                 "inner join imagem i on i.id = pi2.idimagem " +
                 "where idproduto = ?",new ImagemRowMapper(), id);
-    }
-
-    @Override
-    public List<Produto> getProdutos(CategoriaProduto categoriaProduto) {
-        return jdbcTemplate.query("SELECT id, valor,quantidade,categoria," +
-                "nome,descricao FROM produto where categoria=?",new ProdutoRowMapper(), categoriaProduto.getValue());
     }
 
 }

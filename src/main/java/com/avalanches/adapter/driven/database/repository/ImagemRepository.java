@@ -42,7 +42,7 @@ public class ImagemRepository implements ImagemRepositoryPort {
                         ps.setString(1, imagem.nome);
                         ps.setString(2, imagem.descricao);
                         ps.setString(3, imagem.tipoConteudo);
-                        ps.setString(4, "caminho");
+                        ps.setString(4, imagem.caminho);
                         ps.setInt(5, imagem.tamanho);
                         return ps;
                     }
@@ -65,7 +65,20 @@ public class ImagemRepository implements ImagemRepositoryPort {
         );
     }
 
+    @Override
+    public void delete(Imagem imagem) {
+        jdbcTemplate.update("DELETE FROM imagem WHERE id=?", imagem.id);
 
+        if (imagem.caminho != null) {
+            Path imagePath = Paths.get(IMAGENS).resolve(imagem.caminho);
+            try {
+                Files.deleteIfExists(imagePath);
+            } catch (IOException e) {
+                // Handle exception, log it, etc.
+                throw new RuntimeException("Erro ao deletar arquivo.", e);
+            }
+        }
+    }
 
     private static void createFile(Imagem imagem) {
         Path imagesFolder = Paths.get(IMAGENS);
@@ -109,7 +122,7 @@ public class ImagemRepository implements ImagemRepositoryPort {
 
         try {
             file = Files.readAllBytes(imagePath);
-        }catch(IOException e){
+        } catch(IOException e){
             throw new RuntimeException("Arquivo não encontrado.", e);
         }
 

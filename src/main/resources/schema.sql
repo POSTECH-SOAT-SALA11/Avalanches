@@ -34,7 +34,7 @@ CREATE TABLE public.pedido (
    datafinalizacao date NOT NULL,
    idcliente int4 NOT NULL,
    CONSTRAINT pedido_pk PRIMARY KEY (id),
-   CONSTRAINT pedido_cliente_fk FOREIGN KEY (idcliente) REFERENCES public.cliente(id) ON DELETE CASCADE
+   CONSTRAINT pedido_cliente_fk FOREIGN KEY (idcliente) REFERENCES public.cliente(id)
 );
 
 CREATE TABLE public.pedido_produto (
@@ -43,8 +43,8 @@ CREATE TABLE public.pedido_produto (
    quantidade int4 NOT NULL,
    valorunitario numeric NOT NULL,
    CONSTRAINT pedido_produto_pk PRIMARY KEY (idpedido, idproduto),
-   CONSTRAINT pedido_produto_fk_1 FOREIGN KEY (idpedido) REFERENCES public.pedido(id) ON DELETE CASCADE,
-   CONSTRAINT pedido_produto_fk_2 FOREIGN KEY (idproduto) REFERENCES public.produto(id) ON DELETE CASCADE
+   CONSTRAINT pedido_produto_fk_1 FOREIGN KEY (idpedido) REFERENCES public.pedido(id),
+   CONSTRAINT pedido_produto_fk_2 FOREIGN KEY (idproduto) REFERENCES public.produto(id)
 );
 
 
@@ -52,6 +52,6 @@ CREATE TABLE public.produto_imagem (
    idproduto int4 NOT NULL,
    idimagem int4 NOT NULL,
    CONSTRAINT produto_imagem_pk PRIMARY KEY (idproduto, idimagem),
-   CONSTRAINT imagem_produto_fk_1 FOREIGN KEY (idproduto) REFERENCES public.produto(id) ON DELETE CASCADE,
-   CONSTRAINT imagem_produto_fk_2 FOREIGN KEY (idimagem) REFERENCES public.imagem(id) ON DELETE CASCADE
+   CONSTRAINT imagem_produto_fk_1 FOREIGN KEY (idproduto) REFERENCES public.produto(id),
+   CONSTRAINT imagem_produto_fk_2 FOREIGN KEY (idimagem) REFERENCES public.imagem(id)
 );

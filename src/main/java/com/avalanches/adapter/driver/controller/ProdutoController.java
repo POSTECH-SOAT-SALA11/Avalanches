@@ -38,7 +38,7 @@ public class ProdutoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable int id) {
+    public ResponseEntity<Void> delete(@PathVariable int id) {
         produtoUseCasePort.deleteProduto(id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
