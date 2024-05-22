@@ -7,7 +7,7 @@ Bem-vindo ao Avalanches, o destino perfeito para os amantes de lanches com uma p
 
 ## Tecnologias Utilizadas
 
-- Java 21
+- Java 18
 - Spring Boot 3.2.5
 - Docker
 - Banco de Dados (PostgreSQL)
