@@ -1,5 +1,5 @@
 # Avalanches!
-Bem-vindo ao Avalanches, o destino perfeito para os amantes de lanches com uma pitada de aventura! Em nosso refúgio gastronômico, preparamos uma avalanche de sabores deliciosos que vão deixar você emocionado. Desde hambúrgueres suculentos até milkshakes decadentes, cada mordida é uma jornada de sabor única e emocionante. Nossa equipe calorosa e acolhedora está aqui para garantir que sua experiência seja sempre memorável. Então, junte-se a nós no Avalanches, onde a alegria de comer bem encontra o espírito aventureiro!
+Bem-vindo ao Avalanches, o destino perfeito para os amantes de lanches com uma pitada de aventura! Em nosso refúgio gastronômico, preparamos uma avalanche de sabores deliciosos que vão deixar você emocionado. Desde hambúrgueres suculentos até milkshakes saborosos, cada mordida é uma jornada de sabor única e emocionante. Nossa equipe calorosa e acolhedora está aqui para garantir que sua experiência seja sempre memorável. Então, junte-se a nós no Avalanches, onde a alegria de comer bem encontra o espírito aventureiro!
 
 ## Funcionalidades Principais
 
