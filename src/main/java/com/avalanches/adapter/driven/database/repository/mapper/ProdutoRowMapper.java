@@ -10,8 +10,6 @@ import java.sql.SQLException;
 public class ProdutoRowMapper implements RowMapper<Produto> {
     public Produto mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-        var a = rs.getString("categoria");
-
         return new Produto(
                 rs.getInt("id"),
                 rs.getBigDecimal("valor"),
