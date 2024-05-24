@@ -6,11 +6,7 @@ import com.avalanches.core.domain.repositories.ClienteRepositoryPort;
 import jakarta.inject.Inject;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 @Repository
 public class ClienteRepository implements ClienteRepositoryPort {
@@ -19,7 +15,7 @@ public class ClienteRepository implements ClienteRepositoryPort {
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public void insert(Cliente cliente) {
+    public void cadastrar(Cliente cliente) {
         jdbcTemplate.update("INSERT INTO cliente (nome, cpf, email) VALUES (?, ?, ?);",
                 cliente.getNome(),
                 cliente.getCpf(),

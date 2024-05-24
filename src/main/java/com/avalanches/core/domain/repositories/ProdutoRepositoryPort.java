@@ -9,19 +9,19 @@ import java.util.List;
 
 public interface ProdutoRepositoryPort {
 
-    void insert(Produto produto);
+    void cadastrar(Produto produto);
 
-    void insertProdutoImagem(int idProduto, int idImagem);
+    void cadastrarImagemProduto(int idProduto, int idImagem);
 
-    void update(Produto produto);
+    void atualizar(Produto produto);
 
-    void delete(int id);
+    void excluir(int id);
 
-    void deleteProdutoImagem(int idProduto, int idImagem);
+    void excluirImagemProduto(int idProduto, int idImagem);
 
-    List<Produto> getProdutos(CategoriaProduto categoriaProduto);
+    List<Produto> consultarProdutos(CategoriaProduto categoriaProduto);
 
-    Produto getProdutoPorId(int id);
+    Produto consultarProdutosPorID(int id);
 
-    List<Imagem> getImagensPorProduto(int id);
+    List<Imagem> consultarImagensPorProduto(int id);
 }

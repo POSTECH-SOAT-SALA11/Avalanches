@@ -1,10 +1,10 @@
 package com.avalanches.core.domain.entities;
 
 public enum CategoriaProduto {
-    LANCHE("Lanche"),
-    ACOMPANHAMENTO("Acompanhamento"),
-    BEBIDA("Bebida"),
-    SOBREMESA("SOBREMESA");
+    LANCHE("lanche"),
+    ACOMPANHAMENTO("acompanhamento"),
+    BEBIDA("bebida"),
+    SOBREMESA("sobremesa");
 
     private final String value;
 
@@ -14,5 +14,14 @@ public enum CategoriaProduto {
 
     public String getValue() {
         return value;
+    }
+
+    public static CategoriaProduto fromValue(String value) {
+        for (CategoriaProduto categoria : CategoriaProduto.values()) {
+            if (categoria.getValue().equalsIgnoreCase(value)) {
+                return categoria;
+            }
+        }
+        throw new IllegalArgumentException("Invalid CategoriaProduto value: " + value);
     }
 }

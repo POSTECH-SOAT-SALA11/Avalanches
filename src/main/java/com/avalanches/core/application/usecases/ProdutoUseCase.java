@@ -21,25 +21,25 @@ public class ProdutoUseCase implements ProdutoUseCasePort {
     ImagemRepositoryPort imagemRepository;
 
     @Override
-    public void insertProduto(Produto produto) {
-        produtoRepository.insert(produto);
+    public void cadastrarProduto(Produto produto) {
+        produtoRepository.cadastrar(produto);
 
         if(produto.imagens != null) {
             for (Imagem imagem: produto.imagens) {
-                imagemRepository.insert(imagem);
-                produtoRepository.insertProdutoImagem(produto.id, imagem.id);
+                imagemRepository.cadastrar(imagem);
+                produtoRepository.cadastrarImagemProduto(produto.id, imagem.id);
             }
         }
     }
 
     @Override
-    public void updateProduto(Produto produto) {
-        Produto preUpdatedProduto = produtoRepository.getProdutoPorId(produto.id);
+    public void atualizarProduto(Produto produto) {
+        Produto preUpdatedProduto = produtoRepository.consultarProdutosPorID(produto.id);
         if(preUpdatedProduto == null) {
             throw new NotFoundException("Produto não encontrado.");
         }
 
-        List<Imagem> preUpdatedImagens = produtoRepository.getImagensPorProduto(produto.id);
+        List<Imagem> preUpdatedImagens = produtoRepository.consultarImagensPorProduto(produto.id);
         if(preUpdatedImagens != null) {
             List<Imagem> deletedImagens;
 
@@ -52,8 +52,8 @@ public class ProdutoUseCase implements ProdutoUseCasePort {
             }
 
             for (Imagem imagem: deletedImagens) {
-                produtoRepository.deleteProdutoImagem(produto.id, imagem.id);
-                imagemRepository.delete(imagem);
+                produtoRepository.excluirImagemProduto(produto.id, imagem.id);
+                imagemRepository.excluir(imagem);
             }
         }
 
@@ -69,44 +69,44 @@ public class ProdutoUseCase implements ProdutoUseCasePort {
             }
 
             for (Imagem imagem: updatedImagens) {
-                imagemRepository.update(imagem);
+                imagemRepository.atualizar(imagem);
             }
 
             List<Imagem> newImagens = produto.imagens.stream().filter(imagem -> imagem.id == 0).toList();
             for (Imagem imagem: newImagens) {
-                imagemRepository.insert(imagem);
-                produtoRepository.insertProdutoImagem(produto.id, imagem.id);
+                imagemRepository.cadastrar(imagem);
+                produtoRepository.cadastrarImagemProduto(produto.id, imagem.id);
             }
         }
-        produtoRepository.update(produto);
+        produtoRepository.cadastrar(produto);
     }
 
     @Override
-    public void deleteProduto(int id) {
-        Produto produto = produtoRepository.getProdutoPorId(id);
+    public void excluirProduto(int id) {
+        Produto produto = produtoRepository.consultarProdutosPorID(id);
         if(produto == null) {
             throw new NotFoundException("Produto não encontrado.");
         }
 
-        List<Imagem> deletedImagens = produtoRepository.getImagensPorProduto(id);
+        List<Imagem> deletedImagens = produtoRepository.consultarImagensPorProduto(id);
         if(deletedImagens != null) {
             for(Imagem imagem: deletedImagens) {
-                produtoRepository.deleteProdutoImagem(id, imagem.id);
-                imagemRepository.delete(imagem);
+                produtoRepository.excluirImagemProduto(id, imagem.id);
+                imagemRepository.excluir(imagem);
             }
         }
-        produtoRepository.delete(id);
+        produtoRepository.excluir(id);
     }
 
     @Override
-    public List<Produto> getProdutos(CategoriaProduto categoriaProduto) {
-        List<Produto> listaProduto =  produtoRepository.getProdutos(categoriaProduto);
+    public List<Produto> consultarProdutos(CategoriaProduto categoriaProduto) {
+        List<Produto> listaProduto =  produtoRepository.consultarProdutos(categoriaProduto);
 
         for (Produto p: listaProduto){
-            p.imagens = produtoRepository.getImagensPorProduto(p.id);
+            p.imagens = produtoRepository.consultarImagensPorProduto(p.id);
 
             for(Imagem im: p.imagens){
-                im.conteudo = imagemRepository.readFile(im.caminho);
+                im.conteudo = imagemRepository.lerArquivo(im.caminho);
             }
         }
 

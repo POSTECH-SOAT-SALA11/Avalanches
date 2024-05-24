@@ -10,12 +10,12 @@ import java.util.List;
 @Service
 public interface ProdutoUseCasePort {
 
-    void insertProduto(Produto produto);
+    void cadastrarProduto(Produto produto);
 
-    List<Produto> getProdutos(CategoriaProduto categoriaProduto);
+    List<Produto> consultarProdutos(CategoriaProduto categoriaProduto);
 
-    void updateProduto(Produto produto);
+    void atualizarProduto(Produto produto);
 
-    void deleteProduto(int id);
+    void excluirProduto(int id);
 
 }

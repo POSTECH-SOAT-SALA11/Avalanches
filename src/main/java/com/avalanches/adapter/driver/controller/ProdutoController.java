@@ -24,8 +24,8 @@ public class ProdutoController {
     private ProdutoUseCasePort produtoUseCasePort;
 
     @PostMapping
-    public ResponseEntity<Void> create(@Valid  @RequestBody ProdutoRequest produto) {
-        produtoUseCasePort.insertProduto(Convert.produtoRequestToProduto(produto));
+    public ResponseEntity<Void> create(@Valid @RequestBody ProdutoRequest produto) {
+        produtoUseCasePort.cadastrarProduto(Convert.produtoRequestToProduto(produto));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -33,21 +33,20 @@ public class ProdutoController {
     public ResponseEntity<Void> update(@PathVariable int id, @Valid @RequestBody ProdutoRequest produto) {
         Produto produtoEntity = Convert.produtoRequestToProduto(produto);
         produtoEntity.id = id;
-        produtoUseCasePort.updateProduto(produtoEntity);
+        produtoUseCasePort.atualizarProduto(produtoEntity);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable int id) {
-        produtoUseCasePort.deleteProduto(id);
+        produtoUseCasePort.excluirProduto(id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @GetMapping("/{categoriaProduto}")
-    public ResponseEntity<List<ProdutoResponse>> get(@PathVariable("categoriaProduto") CategoriaProduto categoriaProduto){
-
-        var response = Convert.listProdutoToListProdutoResponse(produtoUseCasePort.getProdutos(categoriaProduto));
-
+    public ResponseEntity<List<ProdutoResponse>> get(@PathVariable("categoriaProduto") String categoriaProdutoValue){
+        CategoriaProduto categoriaProduto = CategoriaProduto.fromValue(categoriaProdutoValue);
+        var response = Convert.listProdutoToListProdutoResponse(produtoUseCasePort.consultarProdutos(categoriaProduto));
         return ResponseEntity.ok().body(response);
     }
 
