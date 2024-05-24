@@ -27,7 +27,7 @@ public class ProdutoRepository implements ProdutoRepositoryPort {
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public void insert(Produto produto) {
+    public void cadastrar(Produto produto) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(
             new PreparedStatementCreator() {
@@ -51,7 +51,7 @@ public class ProdutoRepository implements ProdutoRepositoryPort {
     }
 
     @Override
-    public void insertProdutoImagem(int idProduto, int idImagem) {
+    public void cadastrarImagemProduto(int idProduto, int idImagem) {
         jdbcTemplate.update(
                 "INSERT INTO produto_imagem(idproduto, idimagem) VALUES (?, ?);",
                 idProduto,
@@ -60,7 +60,7 @@ public class ProdutoRepository implements ProdutoRepositoryPort {
     }
 
     @Override
-    public void update(Produto produto) {
+    public void atualizar(Produto produto) {
         jdbcTemplate.update(
             "UPDATE produto SET nome=?, descricao=?, categoria=?, quantidade=?, valor=? WHERE id=?",
                 produto.nome,
@@ -73,29 +73,29 @@ public class ProdutoRepository implements ProdutoRepositoryPort {
     }
 
     @Override
-    public void delete(int id) {
+    public void excluir(int id) {
         jdbcTemplate.update("DELETE FROM produto WHERE id=?", id);
     }
 
     @Override
-    public void deleteProdutoImagem(int idProduto, int idImagem) {
+    public void excluirImagemProduto(int idProduto, int idImagem) {
         jdbcTemplate.update("DELETE FROM produto_imagem WHERE idproduto=? AND idimagem=?", idProduto, idImagem);
     }
 
     @Override
-    public List<Produto> getProdutos(CategoriaProduto categoriaProduto) {
+    public List<Produto> consultarProdutos(CategoriaProduto categoriaProduto) {
         return jdbcTemplate.query("SELECT id,valor,quantidade,categoria," +
                 "nome,descricao FROM produto where categoria=?",new ProdutoRowMapper(), categoriaProduto.getValue());
     }
 
     @Override
-    public Produto getProdutoPorId(int id) {
+    public Produto consultarProdutosPorID(int id) {
         return jdbcTemplate.queryForObject("SELECT id,valor,quantidade,categoria," +
                 "nome,descricao FROM produto where id=?",new ProdutoRowMapper(), id);
     }
 
     @Override
-    public List<Imagem> getImagensPorProduto(int id) {
+    public List<Imagem> consultarImagensPorProduto(int id) {
         return jdbcTemplate.query("select i.* from produto_imagem pi2 " +
                 "inner join imagem i on i.id = pi2.idimagem " +
                 "where idproduto = ?",new ImagemRowMapper(), id);

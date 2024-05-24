@@ -28,8 +28,8 @@ public class ImagemRepository implements ImagemRepositoryPort {
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public void insert(Imagem imagem) {
-        createFile(imagem);
+    public void cadastrar(Imagem imagem) {
+        criarArquivo(imagem);
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(
                 new PreparedStatementCreator() {
@@ -53,8 +53,8 @@ public class ImagemRepository implements ImagemRepositoryPort {
     }
 
     @Override
-    public void update(Imagem imagem) {
-        writeFile(imagem);
+    public void atualizar(Imagem imagem) {
+        editarArquivo(imagem);
         jdbcTemplate.update("UPDATE imagem SET nome=?, descricao=?, tipoconteudo=?, caminho=?, tamanho=? WHERE id=(?);",
                 imagem.nome,
                 imagem.descricao,
@@ -66,7 +66,7 @@ public class ImagemRepository implements ImagemRepositoryPort {
     }
 
     @Override
-    public void delete(Imagem imagem) {
+    public void excluir(Imagem imagem) {
         jdbcTemplate.update("DELETE FROM imagem WHERE id=?", imagem.id);
 
         if (imagem.caminho != null) {
@@ -79,7 +79,7 @@ public class ImagemRepository implements ImagemRepositoryPort {
         }
     }
 
-    private static void createFile(Imagem imagem) {
+    private static void criarArquivo(Imagem imagem) {
         Path imagesFolder = Paths.get(IMAGENS);
         if (!Files.exists(imagesFolder)) {
             try {
@@ -92,13 +92,13 @@ public class ImagemRepository implements ImagemRepositoryPort {
         Path imagePath = imagesFolder.resolve(imagem.caminho);
         try {
             Files.createFile(imagePath);
-            writeFile(imagem);
+            editarArquivo(imagem);
         } catch (IOException e) {
             throw new RuntimeException("Erro ao criar arquivo.", e);
         }
     }
 
-    private static void writeFile(Imagem imagem) {
+    private static void editarArquivo(Imagem imagem) {
         Path imagesFolder = Paths.get(IMAGENS);
         Path imagePath = imagesFolder.resolve(imagem.caminho);
         if (!Files.exists(imagesFolder) || !Files.exists(imagePath)) {
@@ -114,7 +114,7 @@ public class ImagemRepository implements ImagemRepositoryPort {
 
 
     @Override
-    public byte[] readFile(String path) {
+    public byte[] lerArquivo(String path) {
         Path imagePath = Paths.get(path);
 
         byte[] file;

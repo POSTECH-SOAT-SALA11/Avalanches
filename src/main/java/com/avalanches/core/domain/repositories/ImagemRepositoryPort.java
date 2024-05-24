@@ -5,11 +5,11 @@ import java.awt.*;
 
 public interface ImagemRepositoryPort {
 
-    void insert(Imagem imagem);
+    void cadastrar(Imagem imagem);
 
-    void update(Imagem imagem);
+    void atualizar(Imagem imagem);
 
-    void delete(Imagem imagem);
+    void excluir(Imagem imagem);
 
-    byte[] readFile(String path);
+    byte[] lerArquivo(String path);
 }
