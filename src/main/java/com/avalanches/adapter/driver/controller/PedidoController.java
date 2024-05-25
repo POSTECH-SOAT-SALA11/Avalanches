@@ -16,12 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/avalanches/v1/pedido")
 @Validated
-public class PedidoController {
+public class PedidoController implements PedidoControllerDoc {
 
     @Autowired
     private PedidoUseCasePort pedidoUseCasePort;
 
     @PostMapping
+    @Override
     public ResponseEntity<Integer> cadastrar(@Valid @RequestBody PedidoRequest pedido) {
         Integer numeroPedido = pedidoUseCasePort.cadastrar(Convert.pedidoRequestToPedido(pedido));
         return ResponseEntity.status(HttpStatus.CREATED).body(numeroPedido);
