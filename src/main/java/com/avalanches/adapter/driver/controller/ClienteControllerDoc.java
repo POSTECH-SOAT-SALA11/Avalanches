@@ -10,8 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 
 public interface ClienteControllerDoc {
-
-
      @Operation(summary = "Cadastro de cliente",
              description = "Endpoint utilizado para realizar o cadastro de cliente.")
      ResponseEntity<Void> cadastrar(@Valid  @RequestBody ClienteRequest cliente);

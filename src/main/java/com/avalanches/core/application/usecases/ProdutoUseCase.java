@@ -34,51 +34,51 @@ public class ProdutoUseCase implements ProdutoUseCasePort {
 
     @Override
     public void atualizarProduto(Produto produto) {
-        Produto preUpdatedProduto = produtoRepository.consultarProdutosPorID(produto.id);
-        if(preUpdatedProduto == null) {
+        Produto produtoPreAtualizado = produtoRepository.consultarProdutosPorID(produto.id);
+        if(produtoPreAtualizado == null) {
             throw new NotFoundException("Produto não encontrado.");
         }
 
-        List<Imagem> preUpdatedImagens = produtoRepository.consultarImagensPorProduto(produto.id);
-        if(preUpdatedImagens != null) {
-            List<Imagem> deletedImagens;
+        List<Imagem> imagensPreAtualizadas = produtoRepository.consultarImagensPorProduto(produto.id);
+        if(imagensPreAtualizadas != null) {
+            List<Imagem> imagensDeletadas;
 
             if(produto.imagens != null) {
-                deletedImagens = preUpdatedImagens.stream()
+                imagensDeletadas = imagensPreAtualizadas.stream()
                         .filter(preUpdatedImagem -> produto.imagens.stream().noneMatch(imagem -> imagem.id == preUpdatedImagem.id))
                         .toList();
             } else {
-                deletedImagens = preUpdatedImagens;
+                imagensDeletadas = imagensPreAtualizadas;
             }
 
-            for (Imagem imagem: deletedImagens) {
+            for (Imagem imagem: imagensDeletadas) {
                 produtoRepository.excluirImagemProduto(produto.id, imagem.id);
                 imagemRepository.excluir(imagem);
             }
         }
 
         if(produto.imagens != null) {
-            List<Imagem> updatedImagens = produto.imagens.stream().filter(imagem -> imagem.id != 0).toList();
-            if(preUpdatedImagens != null) {
-                for (Imagem imagem: updatedImagens) {
-                    var preUpdatedImage = preUpdatedImagens.stream()
+            List<Imagem> imagensAtualizadas = produto.imagens.stream().filter(imagem -> imagem.id != 0).toList();
+            if(imagensPreAtualizadas != null) {
+                for (Imagem imagem: imagensAtualizadas) {
+                    var preUpdatedImage = imagensPreAtualizadas.stream()
                             .filter(preUpdatedImagem -> preUpdatedImagem.id == imagem.id)
                             .findFirst();
                     preUpdatedImage.ifPresent(value -> imagem.caminho = value.caminho);
                 }
             }
 
-            for (Imagem imagem: updatedImagens) {
+            for (Imagem imagem: imagensAtualizadas) {
                 imagemRepository.atualizar(imagem);
             }
 
-            List<Imagem> newImagens = produto.imagens.stream().filter(imagem -> imagem.id == 0).toList();
-            for (Imagem imagem: newImagens) {
+            List<Imagem> novasImagens = produto.imagens.stream().filter(imagem -> imagem.id == 0).toList();
+            for (Imagem imagem: novasImagens) {
                 imagemRepository.cadastrar(imagem);
                 produtoRepository.cadastrarImagemProduto(produto.id, imagem.id);
             }
         }
-        produtoRepository.cadastrar(produto);
+        produtoRepository.atualizar(produto);
     }
 
     @Override
@@ -88,9 +88,9 @@ public class ProdutoUseCase implements ProdutoUseCasePort {
             throw new NotFoundException("Produto não encontrado.");
         }
 
-        List<Imagem> deletedImagens = produtoRepository.consultarImagensPorProduto(id);
-        if(deletedImagens != null) {
-            for(Imagem imagem: deletedImagens) {
+        List<Imagem> imagensDeletadas = produtoRepository.consultarImagensPorProduto(id);
+        if(imagensDeletadas != null) {
+            for(Imagem imagem: imagensDeletadas) {
                 produtoRepository.excluirImagemProduto(id, imagem.id);
                 imagemRepository.excluir(imagem);
             }
@@ -100,17 +100,17 @@ public class ProdutoUseCase implements ProdutoUseCasePort {
 
     @Override
     public List<Produto> consultarProdutos(CategoriaProduto categoriaProduto) {
-        List<Produto> listaProduto =  produtoRepository.consultarProdutos(categoriaProduto);
+        List<Produto> produtos =  produtoRepository.consultarProdutos(categoriaProduto);
 
-        for (Produto p: listaProduto){
-            p.imagens = produtoRepository.consultarImagensPorProduto(p.id);
+        for (Produto produto: produtos){
+            produto.imagens = produtoRepository.consultarImagensPorProduto(produto.id);
 
-            for(Imagem im: p.imagens){
-                im.conteudo = imagemRepository.lerArquivo(im.caminho);
+            for(Imagem imagem: produto.imagens){
+                imagem.conteudo = imagemRepository.lerArquivo(imagem.caminho);
             }
         }
 
-        return listaProduto;
+        return produtos;
     }
 
 
