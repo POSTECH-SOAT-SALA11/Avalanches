@@ -78,7 +78,7 @@ public class ProdutoUseCase implements ProdutoUseCasePort {
                 produtoRepository.cadastrarImagemProduto(produto.id, imagem.id);
             }
         }
-        produtoRepository.cadastrar(produto);
+        produtoRepository.atualizar(produto);
     }
 
     @Override
