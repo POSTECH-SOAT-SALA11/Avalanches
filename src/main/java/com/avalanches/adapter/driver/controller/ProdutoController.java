@@ -18,18 +18,20 @@ import java.util.List;
 @RestController
 @RequestMapping("/avalanches/v1/produto")
 @Validated
-public class ProdutoController {
+public class ProdutoController implements ProdutoControllerDoc {
 
     @Autowired
     private ProdutoUseCasePort produtoUseCasePort;
 
     @PostMapping
+    @Override
     public ResponseEntity<Void> create(@Valid @RequestBody ProdutoRequest produto) {
         produtoUseCasePort.cadastrarProduto(Convert.produtoRequestToProduto(produto));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/{id}")
+    @Override
     public ResponseEntity<Void> update(@PathVariable int id, @Valid @RequestBody ProdutoRequest produto) {
         Produto produtoEntity = Convert.produtoRequestToProduto(produto);
         produtoEntity.id = id;
@@ -38,12 +40,14 @@ public class ProdutoController {
     }
 
     @DeleteMapping("/{id}")
+    @Override
     public ResponseEntity<Void> delete(@PathVariable int id) {
         produtoUseCasePort.excluirProduto(id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @GetMapping("/{categoriaProduto}")
+    @Override
     public ResponseEntity<List<ProdutoResponse>> get(@PathVariable("categoriaProduto") String categoriaProdutoValue){
         CategoriaProduto categoriaProduto = CategoriaProduto.fromValue(categoriaProdutoValue);
         var response = Convert.listProdutoToListProdutoResponse(produtoUseCasePort.consultarProdutos(categoriaProduto));
