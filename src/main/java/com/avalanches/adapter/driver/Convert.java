@@ -1,13 +1,7 @@
 package com.avalanches.adapter.driver;
 
-import com.avalanches.adapter.driver.dto.ClienteRequest;
-import com.avalanches.adapter.driver.dto.ClienteResponse;
-import com.avalanches.adapter.driver.dto.ImagemRequest;
-import com.avalanches.adapter.driver.dto.ProdutoRequest;
-import com.avalanches.adapter.driver.dto.ProdutoResponse;
-import com.avalanches.core.domain.entities.Cliente;
-import com.avalanches.core.domain.entities.Imagem;
-import com.avalanches.core.domain.entities.Produto;
+import com.avalanches.adapter.driver.dto.*;
+import com.avalanches.core.domain.entities.*;
 
 import java.util.Collections;
 import java.util.List;
@@ -16,7 +10,7 @@ import java.util.stream.Collectors;
 public class Convert {
 
     public static Cliente clienteRequestToCliente(ClienteRequest request) {
-        return new Cliente(request.nome(), request.cpf(), request.email());
+        return new Cliente(null, request.nome(), request.cpf(), request.email());
     }
 
     public static ClienteResponse clienteToClienteResponse(Cliente cliente){
@@ -68,4 +62,16 @@ public class Convert {
         return listaProdutoResponse;
     }
 
+    public static Pedido pedidoRequestToPedido(PedidoRequest pedido) {
+        return new Pedido(
+                null,
+                StatusPedido.EMPREPARACAO,
+                pedido.valor(),
+                pedido.dataCriacao(),
+                pedido.dataFinalizacao(),
+                null,
+                pedido.listaProduto(),
+                pedido.IdCliente()
+        );
+    }
 }

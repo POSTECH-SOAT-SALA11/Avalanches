@@ -4,26 +4,45 @@ import jdk.jfr.Timespan;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.UUID;
 import java.util.List;
 
 public class Pedido {
 
-    private String id = UUID.randomUUID().toString();
+    public Integer id;
 
-    private StatusPedido status;
+    public StatusPedido status;
 
-    private BigDecimal valor;
+    public BigDecimal valor;
 
-    private LocalDateTime dataCriacao;
+    public LocalDateTime dataCriacao;
 
-    private LocalDateTime dataFinalizacao;
+    public LocalDateTime dataFinalizacao;
 
     // FIXME: Analisar como vai ser feito
-    private Timespan tempoEspera;
+    public Timespan tempoEspera;
 
-    private List<Produto> listaProduto;
+    public List<PedidoProduto> listaProduto;
 
-    private Cliente cliente;
+    public Integer IdCliente;
+
+    public Pedido(
+            Integer id,
+            StatusPedido status,
+            BigDecimal valor,
+            LocalDateTime dataCriacao,
+            LocalDateTime dataFinalizacao,
+            Timespan tempoEspera,
+            List<PedidoProduto> listaProduto,
+            Integer IdCliente
+    ){
+        this.id = id;
+        this.status = status;
+        this.valor = valor;
+        this.dataCriacao = dataCriacao;
+        this.dataFinalizacao = dataFinalizacao;
+        this.tempoEspera = tempoEspera;
+        this.listaProduto = listaProduto;
+        this.IdCliente = IdCliente;
+    }
 
 }
