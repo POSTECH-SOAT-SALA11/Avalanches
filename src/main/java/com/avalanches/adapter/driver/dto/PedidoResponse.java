@@ -1,6 +1,7 @@
 package com.avalanches.adapter.driver.dto;
 
 import com.avalanches.core.domain.entities.PedidoProduto;
+import com.avalanches.core.domain.entities.StatusPedido;
 
 import java.math.BigDecimal;
 import java.time.Duration;
@@ -12,6 +13,8 @@ public record PedidoResponse(
         Integer id,
 
         BigDecimal valor,
+
+        StatusPedido statusPedido,
 
         LocalDateTime dataCriacao,
 

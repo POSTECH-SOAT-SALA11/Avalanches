@@ -29,6 +29,7 @@ public class PedidoController implements PedidoControllerDoc {
     }
 
     @GetMapping
+    @Override
     public ResponseEntity<List<PedidoResponse>> listar() {
 
         List<PedidoResponse> response = Convert.pedidoToPedidoResponse(pedidoUseCasePort.listar());

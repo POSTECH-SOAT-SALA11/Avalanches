@@ -67,72 +67,48 @@ public class PedidoRepository implements PedidoRepositoryPort {
                 + "FROM pedido p "
                 + "LEFT JOIN pedido_produto pp ON p.id = pp.idpedido";
 
-        return jdbcTemplate.query(sql, new PedidoRowMapper());
+        return jdbcTemplate.query(sql, new PedidoResultSetExtractor());
     }
 
 
-    private static class PedidoRowMapper implements RowMapper<Pedido> {
+    private static class PedidoResultSetExtractor implements ResultSetExtractor<List<Pedido>> {
 
-        public Pedido mapRow(ResultSet rs, int rowNum) throws SQLException {
+        @Override
+        public List<Pedido> extractData(ResultSet rs) throws SQLException {
+            Map<Integer, Pedido> pedidoMap = new HashMap<>();
 
-            Pedido pedido = new Pedido(rs.getInt("id"),
-                    StatusPedido.valueOf(rs.getString("status")),
-                    rs.getBigDecimal("valor"),
-                    rs.getTimestamp("datacriacao").toLocalDateTime(),
-                    rs.getTimestamp("datafinalizacao").toLocalDateTime(),
-                    rs.getInt("idcliente"));
+            while (rs.next()) {
+                Integer pedidoId = rs.getInt("id");
+                Pedido pedido = pedidoMap.get(pedidoId);
 
-            PedidoProduto pedidoProduto = new PedidoProduto(
-                    rs.getInt("idproduto"),
-                    rs.getInt("quantidade"),
-                    rs.getBigDecimal("valorunitario")
-            );
 
-            pedido.adicionarProduto(pedidoProduto);
+                if (pedido == null) {
+                    LocalDateTime dataCriacao = rs.getTimestamp("datacriacao").toLocalDateTime();
+                    LocalDateTime dataFinalizacao = rs.getTimestamp("datafinalizacao").toLocalDateTime();
+                    pedido = new Pedido(
+                            pedidoId,
+                            StatusPedido.valueOf(rs.getString("status")),
+                            rs.getBigDecimal("valor"),
+                            dataCriacao,
+                            dataFinalizacao,
+                            rs.getInt("idcliente")
+                    );
+                    pedidoMap.put(pedidoId, pedido);
+                }
 
-            return pedido;
+                if (rs.getInt("idproduto") != 0) {
+                    PedidoProduto pedidoProduto = new PedidoProduto(
+                            rs.getInt("idproduto"),
+                            rs.getInt("quantidade"),
+                            rs.getBigDecimal("valorunitario")
+                    );
+                    pedido.adicionarProduto(pedidoProduto);
+                }
+            }
+
+            return new ArrayList<>(pedidoMap.values());
         }
     }
 
-
-//    private static class PedidoResultSetExtractor implements ResultSetExtractor<List<Pedido>> {
-//
-//        @Override
-//        public List<Pedido> extractData(ResultSet rs) throws SQLException {
-//            Map<Integer, Pedido> pedidoMap = new HashMap<>();
-//
-//            while (rs.next()) {
-//                Integer pedidoId = rs.getInt("pedido_id");
-//                Pedido pedido = pedidoMap.get(pedidoId);
-//
-//
-//                if (pedido == null) {
-//                    LocalDateTime dataCriacao = rs.getTimestamp("datacriacao").toLocalDateTime();
-//                    LocalDateTime dataFinalizacao = rs.getTimestamp("datafinalizacao").toLocalDateTime();
-//                    pedido = new Pedido(
-//                            pedidoId,
-//                            StatusPedido.valueOf(rs.getString("status")),
-//                            rs.getBigDecimal("pedido_valor"),
-//                            dataCriacao,
-//                            dataFinalizacao,
-//                            rs.getInt("idcliente")
-//                    );
-//                    pedidoMap.put(pedidoId, pedido);
-//                }
-//
-//                if (rs.getInt("idproduto") != 0) {
-//                    PedidoProduto pedidoProduto = new PedidoProduto(
-//                            rs.getInt("idproduto"),
-//                            rs.getInt("quantidade"),
-//                            rs.getBigDecimal("valorunitario")
-//                    );
-//                    pedido.adicionarProduto(pedidoProduto);
-//                }
-//            }
-//
-//            return new ArrayList<>(pedidoMap.values());
-//        }
-//    }
-//
 
 }

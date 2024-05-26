@@ -79,7 +79,7 @@ public class Convert {
     public static List<PedidoResponse> pedidoToPedidoResponse(List<Pedido> pedidos) {
 
         List<PedidoResponse> pedidosResponse = pedidos.stream().map( p ->
-                new PedidoResponse(p.id, p.valor, p.dataCriacao, p.dataFinalizacao, p.listaProduto, p.IdCliente)).collect(Collectors.toList());
+                new PedidoResponse(p.id, p.valor, p.status , p.dataCriacao, p.dataFinalizacao, p.listaProduto, p.IdCliente)).collect(Collectors.toList());
 
         return pedidosResponse;
     }
