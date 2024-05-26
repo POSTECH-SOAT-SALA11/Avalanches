@@ -3,6 +3,8 @@ package com.avalanches.adapter.driver;
 import com.avalanches.adapter.driver.dto.*;
 import com.avalanches.core.domain.entities.*;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -69,9 +71,17 @@ public class Convert {
                 pedido.valor(),
                 pedido.dataCriacao(),
                 pedido.dataFinalizacao(),
-                null,
                 pedido.listaProduto(),
                 pedido.IdCliente()
         );
     }
+
+    public static List<PedidoResponse> pedidoToPedidoResponse(List<Pedido> pedidos) {
+
+        List<PedidoResponse> pedidosResponse = pedidos.stream().map( p ->
+                new PedidoResponse(p.id, p.valor, p.status , p.dataCriacao, p.dataFinalizacao, p.listaProduto, p.IdCliente)).collect(Collectors.toList());
+
+        return pedidosResponse;
+    }
+
 }

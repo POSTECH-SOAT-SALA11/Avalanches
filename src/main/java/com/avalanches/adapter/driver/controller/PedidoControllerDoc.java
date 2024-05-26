@@ -1,6 +1,7 @@
 package com.avalanches.adapter.driver.controller;
 
 import com.avalanches.adapter.driver.dto.PedidoRequest;
+import com.avalanches.adapter.driver.dto.PedidoResponse;
 import com.avalanches.adapter.driver.dto.ProdutoRequest;
 import com.avalanches.adapter.driver.dto.ProdutoResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,5 +17,11 @@ public interface PedidoControllerDoc {
      @Operation(summary = "Cadastro de pedido",
              description = "Endpoint utilizado para realizar o cadastro de pedido.")
      ResponseEntity<Integer> cadastrar(@Valid @RequestBody PedidoRequest pedido);
+
+
+
+     @Operation(summary = "Listagem  de pedido",
+             description = "Endpoint utilizado para realizar a listagem de todos os pedidios")
+     ResponseEntity<List<PedidoResponse>> listar();
 
 }

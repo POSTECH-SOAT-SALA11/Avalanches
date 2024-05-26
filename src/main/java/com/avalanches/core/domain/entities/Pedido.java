@@ -3,7 +3,9 @@ package com.avalanches.core.domain.entities;
 import jdk.jfr.Timespan;
 
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Pedido {
@@ -19,7 +21,7 @@ public class Pedido {
     public LocalDateTime dataFinalizacao;
 
     // FIXME: Analisar como vai ser feito
-    public Timespan tempoEspera;
+    public Duration tempoEspera;
 
     public List<PedidoProduto> listaProduto;
 
@@ -31,7 +33,24 @@ public class Pedido {
             BigDecimal valor,
             LocalDateTime dataCriacao,
             LocalDateTime dataFinalizacao,
-            Timespan tempoEspera,
+            Integer IdCliente
+    ){
+        this.id = id;
+        this.status = status;
+        this.valor = valor;
+        this.dataCriacao = dataCriacao;
+        this.dataFinalizacao = dataFinalizacao;
+        this.listaProduto = new ArrayList<>();
+        this.tempoEspera = Duration.between(dataCriacao, dataFinalizacao);
+        this.IdCliente = IdCliente;
+    }
+
+    public Pedido(
+            Integer id,
+            StatusPedido status,
+            BigDecimal valor,
+            LocalDateTime dataCriacao,
+            LocalDateTime dataFinalizacao,
             List<PedidoProduto> listaProduto,
             Integer IdCliente
     ){
@@ -40,9 +59,12 @@ public class Pedido {
         this.valor = valor;
         this.dataCriacao = dataCriacao;
         this.dataFinalizacao = dataFinalizacao;
-        this.tempoEspera = tempoEspera;
+        this.tempoEspera = Duration.between(dataCriacao, dataFinalizacao);
         this.listaProduto = listaProduto;
         this.IdCliente = IdCliente;
     }
 
+    public void adicionarProduto(PedidoProduto produto) {
+        this.listaProduto.add(produto);
+    }
 }
