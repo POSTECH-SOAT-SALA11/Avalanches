@@ -6,6 +6,8 @@ import com.avalanches.core.domain.repositories.PedidoRepositoryPort;
 import jakarta.inject.Inject;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PedidoUseCase implements PedidoUseCasePort {
 
@@ -21,4 +23,11 @@ public class PedidoUseCase implements PedidoUseCasePort {
 
         return pedido.id;
     }
+
+
+    @Override
+    public List<Pedido> listar() {
+        return pedidoRepositoryPort.listar();
+    }
+
 }
