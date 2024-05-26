@@ -28,6 +28,7 @@ public class ClienteRepository implements ClienteRepositoryPort {
             return jdbcTemplate.queryForObject("SELECT * FROM cliente WHERE cpf = ?",
                     new Object[]{cpf},
                     (rs, rowNum) -> new Cliente(
+                            rs.getInt("id"),
                             rs.getString("nome"),
                             rs.getString("cpf"),
                             rs.getString("email")

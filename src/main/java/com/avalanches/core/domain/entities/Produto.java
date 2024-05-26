@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Produto {
 
-    public int id;
+    public Integer id;
 
     public BigDecimal valor;
 
