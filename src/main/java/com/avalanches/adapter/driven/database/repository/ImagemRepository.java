@@ -115,7 +115,7 @@ public class ImagemRepository implements ImagemRepositoryPort {
 
     @Override
     public byte[] lerArquivo(String path) {
-        Path imagePath = Paths.get(path);
+        Path imagePath = Paths.get(IMAGENS + '/' + path);
 
         byte[] file;
 

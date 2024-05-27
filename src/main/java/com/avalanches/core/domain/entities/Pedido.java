@@ -20,7 +20,6 @@ public class Pedido {
 
     public LocalDateTime dataFinalizacao;
 
-    // FIXME: Analisar como vai ser feito
     public Duration tempoEspera;
 
     public List<PedidoProduto> listaProduto;
