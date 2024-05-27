@@ -5,7 +5,9 @@ import java.math.BigDecimal;
 public class PedidoProduto {
 
     public int idProduto;
+
     public int quantidade;
+
     public BigDecimal valorUnitario;
 
     public PedidoProduto(int idProduto, int quantidade, BigDecimal valorUnitario) {

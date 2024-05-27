@@ -16,7 +16,7 @@ public class Convert {
     }
 
     public static ClienteResponse clienteToClienteResponse(Cliente cliente){
-        return new ClienteResponse(cliente.getNome(), cliente.getCpf(), cliente.getEmail());
+        return new ClienteResponse(cliente.nome, cliente.cpf, cliente.email);
     }
 
     public static Produto produtoRequestToProduto(ProdutoRequest request) {
