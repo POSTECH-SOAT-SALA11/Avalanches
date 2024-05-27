@@ -24,4 +24,13 @@ public enum CategoriaProduto {
         }
         throw new IllegalArgumentException("Invalid CategoriaProduto value: " + value);
     }
+
+    public static boolean isValid(String value) {
+        for (CategoriaProduto categoria : values()) {
+            if (categoria.name().equalsIgnoreCase(value)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
