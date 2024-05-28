@@ -40,6 +40,13 @@ public class ClienteRepository implements ClienteRepositoryPort {
     }
 
     @Override
+    public boolean verificaCpfExistente(String cpf) {
+        String sql = "SELECT COUNT(*) FROM cliente WHERE cpf = ?";
+        Integer count = jdbcTemplate.queryForObject(sql, new Object[]{cpf}, Integer.class);
+        return count != null && count > 0;
+    }
+
+    @Override
     public void deletar(String cpf) {
         try {
             int rowsAffected = jdbcTemplate.update("DELETE FROM cliente WHERE cpf = ?", cpf);
