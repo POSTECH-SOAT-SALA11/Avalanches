@@ -1,5 +1,6 @@
 package com.avalanches.adapter.driver.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -14,6 +15,7 @@ public record ImagemRequest(
         @NotNull(message = "Tamanho é um campo obrigatório.")
         int tamanho,
         @NotNull(message = "Conteúdo é um campo obrigatório.")
+        @Schema(description = "Conteúdo da imagem", example = "[\"1\"]")
         byte[] conteudo
 ) {
 }
