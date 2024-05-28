@@ -1,5 +1,6 @@
 package com.avalanches.adapter.driver.handler;
 
+import com.avalanches.core.domain.ClienteAlreadyExistsException;
 import com.avalanches.core.domain.ClienteNotFoundException;
 import com.avalanches.core.domain.entities.CategoriaProduto;
 import org.springframework.http.HttpStatus;
@@ -36,6 +37,16 @@ public class GlobalExceptionHandler {
                 LocalDateTime.now()
         );
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(ClienteAlreadyExistsException.class)
+    public ResponseEntity<ErroResponse> handleClienteAlreadyExistsException(ClienteAlreadyExistsException ex) {
+        ErroResponse errorResponse = new ErroResponse(
+                HttpStatus.CONFLICT.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(NotFoundException.class)
