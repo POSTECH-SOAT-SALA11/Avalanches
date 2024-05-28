@@ -48,8 +48,7 @@ public class ProdutoController implements ProdutoControllerDoc {
 
     @GetMapping("/{categoriaProduto}")
     @Override
-    public ResponseEntity<List<ProdutoResponse>> consultarPorCategoria(@PathVariable("categoriaProduto") String categoriaProdutoValue){
-        CategoriaProduto categoriaProduto = CategoriaProduto.fromValue(categoriaProdutoValue);
+    public ResponseEntity<List<ProdutoResponse>> consultarPorCategoria(@PathVariable("categoriaProduto") CategoriaProduto categoriaProduto){
         var response = Convert.listProdutoToListProdutoResponse(produtoUseCasePort.consultarProdutos(categoriaProduto));
         return ResponseEntity.ok().body(response);
     }

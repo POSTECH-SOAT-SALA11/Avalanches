@@ -1,6 +1,7 @@
 package com.avalanches.adapter.driver.handler;
 
 import com.avalanches.core.domain.ClienteNotFoundException;
+import com.avalanches.core.domain.entities.CategoriaProduto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -8,9 +9,11 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.webjars.NotFoundException;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,5 +54,20 @@ public class GlobalExceptionHandler {
         String errorMessage = ex.getCause().getMessage();
         ErroResponse error = new ErroResponse(HttpStatus.BAD_REQUEST.value(), errorMessage, LocalDateTime.now());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErroResponse> handleHttpMessageNotReadableException(MethodArgumentTypeMismatchException ex) {
+        String errorMessage = ex.getCause().getMessage();
+
+        if (errorMessage.contains("CategoriaProduto")) {
+            String validValues = Arrays.stream(CategoriaProduto.values())
+                    .map(Enum::name)
+                    .collect(Collectors.joining(", "));
+            errorMessage = "Valor inválido para o campo categoria. Os valores aceitos são: " + validValues + ".";
+        }
+        ErroResponse erro = new ErroResponse(HttpStatus.BAD_REQUEST.value(), errorMessage, LocalDateTime.now());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
     }
 }
