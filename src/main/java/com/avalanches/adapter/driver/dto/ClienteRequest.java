@@ -11,7 +11,7 @@ public record ClienteRequest(
         String nome,
         @NotBlank(message = "cpf não pode ser vazio ou em branco")
         @CPF
-        @Schema(description = "CPF do cliente", example = "12345678900")
+        @Schema(description = "CPF do cliente", example = "36184114050")
         String cpf,
         @NotBlank(message = "email não pode ser vazio ou em branco")
         @Email
