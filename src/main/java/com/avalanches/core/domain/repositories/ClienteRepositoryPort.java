@@ -8,6 +8,8 @@ public interface ClienteRepositoryPort {
 
     Cliente identificar(String cpf);
 
+    boolean verificaCpfExistente(String cpf);
+
     void deletar(String cpf);
 
 }
