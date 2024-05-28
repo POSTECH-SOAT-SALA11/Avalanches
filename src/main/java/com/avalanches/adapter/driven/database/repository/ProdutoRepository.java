@@ -7,11 +7,13 @@ import com.avalanches.core.domain.entities.CategoriaProduto;
 import com.avalanches.core.domain.entities.Produto;
 import com.avalanches.core.domain.repositories.ProdutoRepositoryPort;
 import jakarta.inject.Inject;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.webjars.NotFoundException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -90,8 +92,15 @@ public class ProdutoRepository implements ProdutoRepositoryPort {
 
     @Override
     public Produto consultarProdutosPorID(int id) {
-        return jdbcTemplate.queryForObject("SELECT id,valor,quantidade,categoria," +
-                "nome,descricao FROM produto where id=?",new ProdutoRowMapper(), id);
+        try {
+            return jdbcTemplate.queryForObject(
+                    "SELECT id, valor, quantidade, categoria, nome, descricao FROM produto WHERE id = ?",
+                    new ProdutoRowMapper(),
+                    id
+            );
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException("Produto não existe");
+        }
     }
 
     @Override

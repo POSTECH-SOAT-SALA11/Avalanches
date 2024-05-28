@@ -5,13 +5,14 @@ import com.avalanches.core.domain.entities.PedidoProduto;
 import com.avalanches.core.domain.entities.StatusPedido;
 import com.avalanches.core.domain.repositories.PedidoRepositoryPort;
 import jakarta.inject.Inject;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.ResultSetExtractor;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.webjars.NotFoundException;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -62,12 +63,16 @@ public class PedidoRepository implements PedidoRepositoryPort {
 
     @Override
     public List<Pedido> listar() {
-        String sql = "SELECT p.id, p.status, p.valor, p.datacriacao, p.datafinalizacao, p.idcliente, "
-                + "pp.idproduto, pp.quantidade, pp.valorunitario "
-                + "FROM pedido p "
-                + "LEFT JOIN pedido_produto pp ON p.id = pp.idpedido";
+        try {
+            String sql = "SELECT p.id, p.status, p.valor, p.datacriacao, p.datafinalizacao, p.idcliente, "
+                    + "pp.idproduto, pp.quantidade, pp.valorunitario "
+                    + "FROM pedido p "
+                    + "LEFT JOIN pedido_produto pp ON p.id = pp.idpedido";
 
-        return jdbcTemplate.query(sql, new PedidoResultSetExtractor());
+            return jdbcTemplate.query(sql, new PedidoResultSetExtractor());
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException("Produto não existe");
+        }
     }
 
 
