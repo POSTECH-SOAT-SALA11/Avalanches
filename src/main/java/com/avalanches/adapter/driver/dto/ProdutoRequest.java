@@ -19,7 +19,7 @@ public record ProdutoRequest(
         @NotNull(message = "Quantidade é um campo obrigatório.")
         @Schema(description = "Quantidade em estoque", example = "30")
         Integer quantidade,
-        @ValidarCategoriaProduto(message = "Categoria é um campo obrigatório.")
+
         @Schema(description = "Categoria do produto", example = "LANCHE")
         CategoriaProduto categoria,
 
