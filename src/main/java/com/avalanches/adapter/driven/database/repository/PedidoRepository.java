@@ -92,7 +92,7 @@ public class PedidoRepository implements PedidoRepositoryPort {
                     LocalDateTime dataFinalizacao = rs.getTimestamp("datafinalizacao").toLocalDateTime();
                     pedido = new Pedido(
                             pedidoId,
-                            StatusPedido.valueOf(rs.getString("status")),
+                            StatusPedido.fromValue(rs.getString("status")),
                             rs.getBigDecimal("valor"),
                             dataCriacao,
                             dataFinalizacao,
