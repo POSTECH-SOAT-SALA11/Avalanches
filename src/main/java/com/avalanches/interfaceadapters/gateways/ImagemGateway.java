@@ -25,6 +25,7 @@ import java.util.UUID;
 public class ImagemGateway implements ImagemGatewayInterface {
 
     public static final String IMAGENS = "imagens";
+    // TODO: pesquisar como fazer no springboot via interface
     @Inject
     private JdbcTemplate jdbcTemplate;
 

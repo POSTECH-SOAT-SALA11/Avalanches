@@ -24,6 +24,7 @@ import java.util.Map;
 
 @Repository
 public class PedidoGateway implements PedidoGatewayInterface {
+    // TODO: pesquisar como fazer no springboot via interface
     @Inject
     private JdbcTemplate jdbcTemplate;
 

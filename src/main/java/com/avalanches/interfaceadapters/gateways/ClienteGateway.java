@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ClienteGateway implements ClienteGatewayInterface {
 
+    // TODO: pesquisar como fazer no springboot via interface
     @Inject
     private JdbcTemplate jdbcTemplate;
 

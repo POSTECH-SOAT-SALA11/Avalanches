@@ -25,6 +25,7 @@ import java.util.List;
 @Repository
 public class ProdutoGateway implements ProdutoGatewayInterface {
 
+    // TODO: pesquisar como fazer no springboot via interface
     @Inject
     private JdbcTemplate jdbcTemplate;
 
