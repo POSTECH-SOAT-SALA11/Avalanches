@@ -20,7 +20,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.UUID;
 
-@Repository
 public class ImagemGateway implements ImagemGatewayInterface {
 
     public static final String IMAGENS = "imagens";

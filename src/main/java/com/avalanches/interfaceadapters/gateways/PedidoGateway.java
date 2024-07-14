@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Repository
 public class PedidoGateway implements PedidoGatewayInterface {
     // TODO: pesquisar como fazer no springboot via interface
 

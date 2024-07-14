@@ -5,11 +5,10 @@ import com.avalanches.frameworksanddrivers.api.dto.ProdutoRequest;
 import com.avalanches.enterprisebusinessrules.entities.CategoriaProduto;
 import com.avalanches.enterprisebusinessrules.entities.Produto;
 import com.avalanches.frameworksanddrivers.api.interfaces.ProdutoApiInterface;
+import com.avalanches.interfaceadapters.controllers.ProdutoController;
 import com.avalanches.interfaceadapters.controllers.interfaces.ProdutoControllerInterface;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcOperations;
@@ -23,16 +22,13 @@ import java.util.List;
 @Validated
 public class ProdutoApi implements ProdutoApiInterface {
 
-    @Qualifier("produtoController")
-    @Autowired
-    private ProdutoControllerInterface produtoController;
-
     @Inject
     private JdbcOperations jdbcOperations;
 
     @PostMapping
     @Override
     public ResponseEntity<Void> cadastrar(@Valid @RequestBody ProdutoRequest produto) {
+        ProdutoControllerInterface produtoController = new ProdutoController();
         produtoController.cadastrarProduto(Convert.produtoRequestToProduto(produto), jdbcOperations);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -40,6 +36,7 @@ public class ProdutoApi implements ProdutoApiInterface {
     @PutMapping("/{id}")
     @Override
     public ResponseEntity<Void> atualizar(@PathVariable int id, @Valid @RequestBody ProdutoRequest produto) {
+        ProdutoControllerInterface produtoController = new ProdutoController();
         Produto produtoEntity = Convert.produtoRequestToProduto(produto);
         produtoEntity.id = id;
         produtoController.atualizarProduto(produtoEntity, jdbcOperations);
@@ -49,6 +46,7 @@ public class ProdutoApi implements ProdutoApiInterface {
     @DeleteMapping("/{id}")
     @Override
     public ResponseEntity<Void> excluir(@PathVariable int id) {
+        ProdutoControllerInterface produtoController = new ProdutoController();
         produtoController.excluirProduto(id, jdbcOperations);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
@@ -56,6 +54,7 @@ public class ProdutoApi implements ProdutoApiInterface {
     @GetMapping("/{categoriaProduto}")
     @Override
     public ResponseEntity<List<ProdutoResponse>> consultarPorCategoria(@PathVariable("categoriaProduto") CategoriaProduto categoriaProduto){
+        ProdutoControllerInterface produtoController = new ProdutoController();
         var response = Convert.listProdutoToListProdutoResponse(produtoController.consultarProdutos(categoriaProduto, jdbcOperations));
         return ResponseEntity.ok().body(response);
     }

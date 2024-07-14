@@ -8,7 +8,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.stereotype.Repository;
 
-@Repository
 public class ClienteGateway implements ClienteGatewayInterface {
 
     // TODO: pesquisar como fazer no springboot via interface

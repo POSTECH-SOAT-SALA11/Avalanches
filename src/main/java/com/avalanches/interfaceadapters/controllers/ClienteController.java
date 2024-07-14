@@ -8,7 +8,6 @@ import com.avalanches.interfaceadapters.gateways.interfaces.ClienteGatewayInterf
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.stereotype.Service;
 
-@Service
 public class ClienteController implements ClienteControllerInterface {
 
     @Override

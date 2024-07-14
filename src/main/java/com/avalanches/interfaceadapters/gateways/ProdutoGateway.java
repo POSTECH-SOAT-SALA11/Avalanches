@@ -21,7 +21,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-@Repository
 public class ProdutoGateway implements ProdutoGatewayInterface {
 
     // TODO: pesquisar como fazer no springboot via interface
