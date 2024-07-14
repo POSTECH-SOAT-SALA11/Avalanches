@@ -1,28 +1,19 @@
 package com.avalanches.applicationbusinessrules.usecases;
 
-import com.avalanches.applicationbusinessrules.usecases.interfaces.ProdutoUseCaseInterface;
 import com.avalanches.enterprisebusinessrules.entities.CategoriaProduto;
 import com.avalanches.enterprisebusinessrules.entities.Imagem;
 import com.avalanches.enterprisebusinessrules.entities.Produto;
 import com.avalanches.interfaceadapters.gateways.interfaces.ImagemGatewayInterface;
 import com.avalanches.interfaceadapters.gateways.interfaces.ProdutoGatewayInterface;
-import jakarta.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
 import java.util.List;
 
 @Service
-public class ProdutoUseCase implements ProdutoUseCaseInterface {
+public class ProdutoUseCase{
 
-    @Inject
-    ProdutoGatewayInterface produtoGateway;
-
-    @Inject
-    ImagemGatewayInterface imagemGateway;
-
-    @Override
-    public void cadastrarProduto(Produto produto) {
+    public static void cadastrarProduto(Produto produto, ProdutoGatewayInterface produtoGateway, ImagemGatewayInterface imagemGateway) {
         produtoGateway.cadastrar(produto);
 
         if(produto.imagens != null) {
@@ -33,8 +24,7 @@ public class ProdutoUseCase implements ProdutoUseCaseInterface {
         }
     }
 
-    @Override
-    public void atualizarProduto(Produto produto) {
+    public static void atualizarProduto(Produto produto, ProdutoGatewayInterface produtoGateway, ImagemGatewayInterface imagemGateway) {
         Produto produtoPreAtualizado = produtoGateway.consultarProdutosPorID(produto.id);
         if(produtoPreAtualizado == null) {
             throw new NotFoundException("Produto não encontrado.");
@@ -82,8 +72,7 @@ public class ProdutoUseCase implements ProdutoUseCaseInterface {
         produtoGateway.atualizar(produto);
     }
 
-    @Override
-    public void excluirProduto(int id) {
+    public static void excluirProduto(int id, ProdutoGatewayInterface produtoGateway, ImagemGatewayInterface imagemGateway) {
         Produto produto = produtoGateway.consultarProdutosPorID(id);
         if(produto == null) {
             throw new NotFoundException("Produto não encontrado.");
@@ -99,8 +88,7 @@ public class ProdutoUseCase implements ProdutoUseCaseInterface {
         produtoGateway.excluir(id);
     }
 
-    @Override
-    public List<Produto> consultarProdutos(CategoriaProduto categoriaProduto) {
+    public static List<Produto> consultarProdutos(CategoriaProduto categoriaProduto, ProdutoGatewayInterface produtoGateway, ImagemGatewayInterface imagemGateway) {
         List<Produto> produtos =  produtoGateway.consultarProdutos(categoriaProduto);
 
         for (Produto produto: produtos){
