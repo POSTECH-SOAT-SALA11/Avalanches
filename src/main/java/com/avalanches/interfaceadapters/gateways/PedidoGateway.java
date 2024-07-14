@@ -5,9 +5,8 @@ import com.avalanches.enterprisebusinessrules.entities.Pedido;
 import com.avalanches.enterprisebusinessrules.entities.PedidoProduto;
 import com.avalanches.enterprisebusinessrules.entities.StatusPedido;
 import com.avalanches.interfaceadapters.gateways.interfaces.PedidoGatewayInterface;
-import jakarta.inject.Inject;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -25,14 +24,18 @@ import java.util.Map;
 @Repository
 public class PedidoGateway implements PedidoGatewayInterface {
     // TODO: pesquisar como fazer no springboot via interface
-    @Inject
-    private JdbcTemplate jdbcTemplate;
+
+    private JdbcOperations jdbcOperations;
+
+    public PedidoGateway(JdbcOperations jdbcOperations) {
+        this.jdbcOperations = jdbcOperations;
+    }
 
     @Override
     public void cadastrar(Pedido pedido) {
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(
+        jdbcOperations.update(
                 new PreparedStatementCreator() {
                     @Override
                     public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
@@ -56,7 +59,7 @@ public class PedidoGateway implements PedidoGatewayInterface {
 
     @Override
     public void cadastrarProdutosPorPedido(Integer idPedido, PedidoProduto pedidoProduto) {
-        jdbcTemplate.update("INSERT INTO pedido_produto (idPedido, idProduto, quantidade, valorUnitario) VALUES (?, ?, ?, ?);",
+        jdbcOperations.update("INSERT INTO pedido_produto (idPedido, idProduto, quantidade, valorUnitario) VALUES (?, ?, ?, ?);",
                 idPedido,
                 pedidoProduto.idProduto,
                 pedidoProduto.quantidade,
@@ -71,7 +74,7 @@ public class PedidoGateway implements PedidoGatewayInterface {
                     + "FROM pedido p "
                     + "LEFT JOIN pedido_produto pp ON p.id = pp.idpedido";
 
-            return jdbcTemplate.query(sql, new PedidoResultSetExtractor());
+            return jdbcOperations.query(sql, new PedidoResultSetExtractor());
         } catch (EmptyResultDataAccessException e) {
             throw new NotFoundException("Produto não existe");
         }

@@ -3,8 +3,7 @@ package com.avalanches.interfaceadapters.gateways;
 
 import com.avalanches.enterprisebusinessrules.entities.Imagem;
 import com.avalanches.interfaceadapters.gateways.interfaces.ImagemGatewayInterface;
-import jakarta.inject.Inject;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -26,14 +25,18 @@ public class ImagemGateway implements ImagemGatewayInterface {
 
     public static final String IMAGENS = "imagens";
     // TODO: pesquisar como fazer no springboot via interface
-    @Inject
-    private JdbcTemplate jdbcTemplate;
+
+    private JdbcOperations jdbcOperations;
+
+    public ImagemGateway(JdbcOperations jdbcOperations) {
+        this.jdbcOperations = jdbcOperations;
+    }
 
     @Override
     public void cadastrar(Imagem imagem) {
         criarArquivo(imagem);
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(
+        jdbcOperations.update(
                 new PreparedStatementCreator() {
                     @Override
                     public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
@@ -57,7 +60,7 @@ public class ImagemGateway implements ImagemGatewayInterface {
     @Override
     public void atualizar(Imagem imagem) {
         editarArquivo(imagem);
-        jdbcTemplate.update("UPDATE imagem SET nome=?, descricao=?, tipoconteudo=?, caminho=?, tamanho=? WHERE id=(?);",
+        jdbcOperations.update("UPDATE imagem SET nome=?, descricao=?, tipoconteudo=?, caminho=?, tamanho=? WHERE id=(?);",
                 imagem.nome,
                 imagem.descricao,
                 imagem.tipoConteudo,
@@ -69,7 +72,7 @@ public class ImagemGateway implements ImagemGatewayInterface {
 
     @Override
     public void excluir(Imagem imagem) {
-        jdbcTemplate.update("DELETE FROM imagem WHERE id=?", imagem.id);
+        jdbcOperations.update("DELETE FROM imagem WHERE id=?", imagem.id);
 
         if (imagem.caminho != null) {
             Path imagePath = Paths.get(IMAGENS).resolve(imagem.caminho);

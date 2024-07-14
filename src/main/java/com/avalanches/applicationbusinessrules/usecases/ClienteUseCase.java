@@ -1,34 +1,26 @@
 package com.avalanches.applicationbusinessrules.usecases;
 
-import com.avalanches.applicationbusinessrules.usecases.interfaces.ClienteUseCaseInterface;
 import com.avalanches.enterprisebusinessrules.entities.Cliente;
 import com.avalanches.frameworksanddrivers.databases.ClienteAlreadyExistsException;
 import com.avalanches.interfaceadapters.gateways.interfaces.ClienteGatewayInterface;
-import jakarta.inject.Inject;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ClienteUseCase implements ClienteUseCaseInterface {
+public class ClienteUseCase{
 
-    @Inject
-    ClienteGatewayInterface gateway;
-
-    @Override
-    public void cadastrarCliente(Cliente cliente) {
-        if(gateway.verificaCpfExistente(cliente.cpf)) {
+    public static void cadastrarCliente(Cliente cliente, ClienteGatewayInterface clienteGateway) {
+        if(clienteGateway.verificaCpfExistente(cliente.cpf)) {
             throw new ClienteAlreadyExistsException(cliente.cpf);
         }
-        gateway.cadastrar(cliente);
+        clienteGateway.cadastrar(cliente);
     }
 
-    @Override
-    public Cliente consultar(String cpf) {
-        return gateway.identificar(cpf);
+    public static Cliente consultar(String cpf, ClienteGatewayInterface clienteGateway) {
+        return clienteGateway.identificar(cpf);
     }
 
-    @Override
-    public void excluir(String cpf) {
-        gateway.deletar(cpf);
+    public static void excluir(String cpf, ClienteGatewayInterface clienteGateway) {
+        clienteGateway.deletar(cpf);
     }
 
 }
