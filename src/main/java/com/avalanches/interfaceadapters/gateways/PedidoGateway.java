@@ -16,10 +16,7 @@ import org.webjars.NotFoundException;
 
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PedidoGateway implements PedidoGatewayInterface {
     // TODO: pesquisar como fazer no springboot via interface
@@ -71,7 +68,9 @@ public class PedidoGateway implements PedidoGatewayInterface {
             String sql = "SELECT p.id, p.status, p.valor, p.datacriacao, p.datafinalizacao, p.idcliente, "
                     + "pp.idproduto, pp.quantidade, pp.valorunitario "
                     + "FROM pedido p "
-                    + "LEFT JOIN pedido_produto pp ON p.id = pp.idpedido";
+                    + "LEFT JOIN pedido_produto pp ON p.id = pp.idpedido "
+                    + "where P.status <> 'Finalizado'\n"
+                    + "ORDER BY array_position(ARRAY['Pronto', 'EmPreparacao', 'Recebido']::varchar[], p.status),p.datacriacao";
 
             return jdbcOperations.query(sql, new PedidoResultSetExtractor());
         } catch (EmptyResultDataAccessException e) {
@@ -84,7 +83,7 @@ public class PedidoGateway implements PedidoGatewayInterface {
 
         @Override
         public List<Pedido> extractData(ResultSet rs) throws SQLException {
-            Map<Integer, Pedido> pedidoMap = new HashMap<>();
+            Map<Integer, Pedido> pedidoMap = new LinkedHashMap<>();
 
             while (rs.next()) {
                 Integer pedidoId = rs.getInt("id");
