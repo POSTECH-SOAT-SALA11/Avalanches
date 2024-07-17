@@ -65,7 +65,7 @@ public class Convert {
     public static Pedido pedidoRequestToPedido(PedidoRequest pedido) {
         return new Pedido(
                 null,
-                StatusPedido.EMPREPARACAO,
+                StatusPedido.RECEBIDO,
                 pedido.valor(),
                 pedido.dataCriacao(),
                 pedido.dataFinalizacao(),
