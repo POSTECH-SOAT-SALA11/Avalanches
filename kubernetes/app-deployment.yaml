@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: avalanches-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: avalanches
+  template:
+    metadata:
+      labels:
+        app: avalanches
+    spec:
+      containers:
+        - name: avalanches
+          image: rm355416/avalanches-app:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://postgres-service:5432/avalanches_database
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config
+                  key: POSTGRES_USER
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config
+                  key: POSTGRES_PASSWORD
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: avalanches-service
+spec:
+  selector:
+    app: avalanches
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
