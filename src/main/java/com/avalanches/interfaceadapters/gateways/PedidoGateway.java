@@ -63,6 +63,20 @@ public class PedidoGateway implements PedidoGatewayInterface {
     }
 
     @Override
+    public void atualizaStatus(Integer idPedido, StatusPedido statusPedido) {
+        jdbcOperations.update("UPDATE pedido SET status=? WHERE id=?",
+                statusPedido.getValue(),
+                idPedido
+        );
+    }
+
+    public boolean verificaPedidoExiste(Integer idPedido) {
+        String sql = "SELECT COUNT(*) FROM pedido WHERE id = ?";
+        Integer count = jdbcOperations.queryForObject(sql, new Object[]{idPedido}, Integer.class);
+        return count != null && count > 0;
+    }
+
+    @Override
     public List<Pedido> listar() {
         try {
             String sql = "SELECT p.id, p.status, p.valor, p.datacriacao, p.datafinalizacao, p.idcliente, "
