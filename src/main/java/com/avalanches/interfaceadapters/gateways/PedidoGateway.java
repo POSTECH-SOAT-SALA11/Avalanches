@@ -69,7 +69,8 @@ public class PedidoGateway implements PedidoGatewayInterface {
                 idPedido
         );
     }
-
+    
+    @Override
     public boolean verificaPedidoExiste(Integer idPedido) {
         String sql = "SELECT COUNT(*) FROM pedido WHERE id = ?";
         Integer count = jdbcOperations.queryForObject(sql, new Object[]{idPedido}, Integer.class);
