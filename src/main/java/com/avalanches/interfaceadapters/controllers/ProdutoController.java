@@ -8,6 +8,9 @@ import com.avalanches.interfaceadapters.gateways.ImagemGateway;
 import com.avalanches.interfaceadapters.gateways.ProdutoGateway;
 import com.avalanches.interfaceadapters.gateways.interfaces.ImagemGatewayInterface;
 import com.avalanches.interfaceadapters.gateways.interfaces.ProdutoGatewayInterface;
+import com.avalanches.interfaceadapters.presenters.ProdutoPresenter;
+import com.avalanches.interfaceadapters.presenters.dtos.ProdutoDto;
+import com.avalanches.interfaceadapters.presenters.interfaces.ProdutoPresenterInterface;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.stereotype.Service;
 
@@ -23,10 +26,12 @@ public class ProdutoController implements ProdutoControllerInterface {
     }
 
     @Override
-    public List<Produto> consultarProdutos(CategoriaProduto categoriaProduto, JdbcOperations jdbcOperations) {
+    public List<ProdutoDto> consultarProdutos(CategoriaProduto categoriaProduto, JdbcOperations jdbcOperations) {
         ProdutoGatewayInterface produtoGateway = new ProdutoGateway(jdbcOperations);
         ImagemGatewayInterface imagemGateway = new ImagemGateway(jdbcOperations);
-        return ProdutoUseCase.consultarProdutos(categoriaProduto, produtoGateway, imagemGateway);
+        List<Produto> produtos = ProdutoUseCase.consultarProdutos(categoriaProduto, produtoGateway, imagemGateway);
+        ProdutoPresenterInterface produtoPresenter = new ProdutoPresenter();
+        return produtoPresenter.produtosToDtos(produtos);
     }
 
     @Override

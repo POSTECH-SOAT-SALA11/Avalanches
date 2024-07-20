@@ -4,6 +4,7 @@ import com.avalanches.enterprisebusinessrules.entities.StatusPedido;
 import com.avalanches.frameworksanddrivers.api.interfaces.PedidoApiInterface;
 import com.avalanches.interfaceadapters.controllers.PedidoController;
 import com.avalanches.interfaceadapters.controllers.interfaces.PedidoControllerInterface;
+import com.avalanches.interfaceadapters.presenters.dtos.PedidoDto;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -11,8 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import com.avalanches.frameworksanddrivers.api.dto.PedidoResponse;
-import com.avalanches.frameworksanddrivers.api.dto.PedidoRequest;
+import com.avalanches.frameworksanddrivers.api.dto.PedidoParams;
 
 import java.util.List;
 
@@ -26,9 +26,9 @@ public class PedidoApi implements PedidoApiInterface {
 
     @PostMapping
     @Override
-    public ResponseEntity<Integer> cadastrar(@Valid @RequestBody PedidoRequest pedido) {
+    public ResponseEntity<Integer> cadastrar(@Valid @RequestBody PedidoParams pedido) {
         PedidoControllerInterface pedidoController = new PedidoController();
-        Integer numeroPedido = pedidoController.cadastrar(Convert.pedidoRequestToPedido(pedido), jdbcOperations);
+        Integer numeroPedido = pedidoController.cadastrar(Convert.pedidoParamsToPedido(pedido), jdbcOperations);
         return ResponseEntity.status(HttpStatus.CREATED).body(numeroPedido);
     }
 
@@ -42,9 +42,9 @@ public class PedidoApi implements PedidoApiInterface {
 
     @GetMapping
     @Override
-    public ResponseEntity<List<PedidoResponse>> listar() {
+    public ResponseEntity<List<PedidoDto>> listar() {
         PedidoControllerInterface pedidoController = new PedidoController();
-        List<PedidoResponse> response = Convert.pedidoToPedidoResponse(pedidoController.listar(jdbcOperations));
+        List<PedidoDto> response = pedidoController.listar(jdbcOperations);
         return ResponseEntity.ok().body(response);
     }
 

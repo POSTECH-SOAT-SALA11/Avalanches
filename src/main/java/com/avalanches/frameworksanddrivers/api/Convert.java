@@ -9,77 +9,50 @@ import java.util.stream.Collectors;
 
 public class Convert {
 
-    public static Cliente clienteRequestToCliente(ClienteRequest request) {
-        return new Cliente(null, request.nome(), request.cpf(), request.email());
+    public static Cliente clienteParamsToCliente(ClienteParams params) {
+        return new Cliente(null, params.nome(), params.cpf(), params.email());
     }
 
-    public static ClienteResponse clienteToClienteResponse(Cliente cliente){
-        return new ClienteResponse(cliente.nome, cliente.cpf, cliente.email);
-    }
-
-    public static Produto produtoRequestToProduto(ProdutoRequest request) {
+    public static Produto produtoParamsToProduto(ProdutoParams params) {
         return new Produto(
-            request.id(),
-            request.valor(),
-            request.quantidade(),
-            request.categoria(),
-            request.nome(),
-            request.descricao(),
-            request.imagens() == null ? Collections.emptyList() : imagemRequestsToImagens(List.of(request.imagens()))
+            params.id(),
+            params.valor(),
+            params.quantidade(),
+            params.categoria(),
+            params.nome(),
+            params.descricao(),
+            params.imagens() == null ? Collections.emptyList() : imagensParamsToImagens(List.of(params.imagens()))
         );
     }
 
-    public static List<Imagem> imagemRequestsToImagens(List<ImagemRequest> imagens) {
+    public static List<Imagem> imagensParamsToImagens(List<ImagemParams> imagens) {
         if (imagens == null) {
             return Collections.emptyList();
         } else {
             return imagens.stream()
-                    .map(imagemRequest -> new Imagem(
-                        imagemRequest.id(),
-                        imagemRequest.nome(),
-                        imagemRequest.descricao(),
-                        imagemRequest.tipoConteudo(),
-                        imagemRequest.tamanho(),
+                    .map(imagemParams -> new Imagem(
+                        imagemParams.id(),
+                        imagemParams.nome(),
+                        imagemParams.descricao(),
+                        imagemParams.tipoConteudo(),
+                        imagemParams.tamanho(),
                         null,
-                        imagemRequest.conteudo()
+                        imagemParams.conteudo()
                     ))
                     .collect(Collectors.toList());
         }
     }
 
-    public static List<ProdutoResponse> listProdutoToListProdutoResponse(List<Produto> listaProduto) {
-
-        List<ProdutoResponse> listaProdutoResponse = listaProduto.stream()
-                .map(produto -> new ProdutoResponse(
-                        produto.id,
-                        produto.valor,
-                        produto.quantidade,
-                        produto.categoria,
-                        produto.nome,
-                        produto.descricao,
-                        produto.imagens)).collect(Collectors.toList());
-
-        return listaProdutoResponse;
-    }
-
-    public static Pedido pedidoRequestToPedido(PedidoRequest pedido) {
+    public static Pedido pedidoParamsToPedido(PedidoParams pedido) {
         return new Pedido(
-                null,
-                StatusPedido.RECEBIDO,
-                pedido.valor(),
-                pedido.dataCriacao(),
-                pedido.dataFinalizacao(),
-                pedido.listaProduto(),
-                pedido.IdCliente()
+            null,
+            StatusPedido.RECEBIDO,
+            pedido.valor(),
+            pedido.dataCriacao(),
+            pedido.dataFinalizacao(),
+            pedido.listaProduto(),
+            pedido.IdCliente()
         );
-    }
-
-    public static List<PedidoResponse> pedidoToPedidoResponse(List<Pedido> pedidos) {
-
-        List<PedidoResponse> pedidosResponse = pedidos.stream().map( p ->
-                new PedidoResponse(p.id, p.valor, p.status , p.dataCriacao, p.dataFinalizacao, p.listaProduto, p.IdCliente)).collect(Collectors.toList());
-
-        return pedidosResponse;
     }
 
 }

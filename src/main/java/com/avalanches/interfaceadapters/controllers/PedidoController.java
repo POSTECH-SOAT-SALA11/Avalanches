@@ -6,6 +6,9 @@ import com.avalanches.enterprisebusinessrules.entities.StatusPedido;
 import com.avalanches.interfaceadapters.controllers.interfaces.PedidoControllerInterface;
 import com.avalanches.interfaceadapters.gateways.PedidoGateway;
 import com.avalanches.interfaceadapters.gateways.interfaces.PedidoGatewayInterface;
+import com.avalanches.interfaceadapters.presenters.PedidoPresenter;
+import com.avalanches.interfaceadapters.presenters.dtos.PedidoDto;
+import com.avalanches.interfaceadapters.presenters.interfaces.PedidoPresenterInterface;
 import org.springframework.jdbc.core.JdbcOperations;
 
 import java.util.List;
@@ -25,8 +28,10 @@ public class PedidoController implements PedidoControllerInterface {
     }
 
     @Override
-    public List<Pedido> listar(JdbcOperations jdbcOperations) {
+    public List<PedidoDto> listar(JdbcOperations jdbcOperations) {
         PedidoGatewayInterface pedidoGateway = new PedidoGateway(jdbcOperations);
-        return PedidoUseCase.listar(pedidoGateway);
+        List<Pedido> pedidos = PedidoUseCase.listar(pedidoGateway);
+        PedidoPresenterInterface pedidoPresenter = new PedidoPresenter();
+        return pedidoPresenter.pedidosToDtos(pedidos);
     }
 }
