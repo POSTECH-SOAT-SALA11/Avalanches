@@ -41,22 +41,28 @@ Para executar o projeto em Kubernetes, siga estas etapas:
    cd Avalanches
    ```
 
-2. Aplique os manifestos do Kubernetes.
+2. Inicie o Minikube.
    ```bash
-   kubectl apply -f kubernetes/
+   minikube start
    ```
 
-3. Verifique o status dos pods.
+3. Aplique os manifestos do Kubernetes.
+   ```bash
+   kubectl apply -f kubernetes/
+    ```
+   
+4. Verifique o status dos pods.
    ```bash
    kubectl get pods
    ```
 
-4. Acesse o Swagger da aplicação.
+5. Acesse o Swagger da aplicação.
    ```bash
-   minikube service avalanches-app --url
+   minikube service avalanches-service --url
    ```
 
-5. Divirta-se explorando a API via Swagger!
+6. Divirta-se explorando a API via Swagger!
+   Não esqueça de acrescentar o contexto `/swagger-ui/index.html#/` ao final da URL. 
 
 ## Event Storming
 
