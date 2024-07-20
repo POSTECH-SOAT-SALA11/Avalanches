@@ -16,11 +16,11 @@ public interface ClienteApiInterface {
     ResponseEntity<Void> cadastrar(@Valid  @RequestBody ClienteRequest cliente);
 
     @Operation(summary = "Identifica  cliente",
-            description = "Endpoint utilizado para realizar a identificação do  cliente.")
+            description = "Endpoint utilizado para realizar a identificação do cliente.")
     ResponseEntity<ClienteResponse> consultar(@Parameter(description = "CPF do cliente", required = true, in = ParameterIn.PATH, example = "12345678900") String cpf);
 
     @Operation(summary = "Remove cadastro de cliente",
-            description = "Endpoint utilizado para realizar a remoção de cadastro do  cliente.")
+            description = "Endpoint utilizado para realizar a remoção do cliente.")
     ResponseEntity<Void> excluir(@Parameter(description = "CPF do cliente", required = true, in = ParameterIn.PATH, example = "12345678900") String cpf);
 
 }

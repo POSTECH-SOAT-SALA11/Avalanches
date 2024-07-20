@@ -1,5 +1,6 @@
 package com.avalanches.frameworksanddrivers.api;
 
+import com.avalanches.enterprisebusinessrules.entities.StatusPedido;
 import com.avalanches.frameworksanddrivers.api.interfaces.PedidoApiInterface;
 import com.avalanches.interfaceadapters.controllers.PedidoController;
 import com.avalanches.interfaceadapters.controllers.interfaces.PedidoControllerInterface;
@@ -29,6 +30,14 @@ public class PedidoApi implements PedidoApiInterface {
         PedidoControllerInterface pedidoController = new PedidoController();
         Integer numeroPedido = pedidoController.cadastrar(Convert.pedidoRequestToPedido(pedido), jdbcOperations);
         return ResponseEntity.status(HttpStatus.CREATED).body(numeroPedido);
+    }
+
+    @PutMapping("/{idPedido}")
+    @Override
+    public ResponseEntity<Void> atualizaStatus(@PathVariable("idPedido") Integer idPedido, @RequestBody StatusPedido statusPedido) {
+        PedidoControllerInterface pedidoController = new PedidoController();
+        pedidoController.atualizaStatus(idPedido, statusPedido, jdbcOperations);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping
