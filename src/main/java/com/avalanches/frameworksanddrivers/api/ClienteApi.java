@@ -1,10 +1,10 @@
 package com.avalanches.frameworksanddrivers.api;
 
-import com.avalanches.frameworksanddrivers.api.dto.ClienteRequest;
-import com.avalanches.frameworksanddrivers.api.dto.ClienteResponse;
+import com.avalanches.frameworksanddrivers.api.dto.ClienteParams;
 import com.avalanches.frameworksanddrivers.api.interfaces.ClienteApiInterface;
 import com.avalanches.interfaceadapters.controllers.ClienteController;
 import com.avalanches.interfaceadapters.controllers.interfaces.ClienteControllerInterface;
+import com.avalanches.interfaceadapters.presenters.dtos.ClienteDto;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -23,17 +23,17 @@ public class ClienteApi implements ClienteApiInterface {
 
     @PostMapping
     @Override
-    public ResponseEntity<Void> cadastrar(@Valid  @RequestBody ClienteRequest cliente) {
+    public ResponseEntity<Void> cadastrar(@Valid  @RequestBody ClienteParams cliente) {
         ClienteControllerInterface clienteController = new ClienteController();
-        clienteController.cadastrar(Convert.clienteRequestToCliente(cliente), jdbcOperations);
+        clienteController.cadastrar(Convert.clienteParamsToCliente(cliente), jdbcOperations);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping("/{cpf}")
     @Override
-    public ResponseEntity<ClienteResponse> consultar(@PathVariable("cpf") String cpf) {
+    public ResponseEntity<ClienteDto> consultar(@PathVariable("cpf") String cpf) {
         ClienteControllerInterface clienteController = new ClienteController();
-        ClienteResponse response = Convert.clienteToClienteResponse(clienteController.consultar(cpf, jdbcOperations));
+        ClienteDto response = clienteController.consultar(cpf, jdbcOperations);
 
         return ResponseEntity.ok().body(response);
     }

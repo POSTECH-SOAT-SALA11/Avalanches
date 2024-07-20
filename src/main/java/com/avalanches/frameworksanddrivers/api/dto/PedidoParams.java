@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public record PedidoRequest (
+public record PedidoParams(
 
         @Schema(description = "Valor do pedido", example = "48")
         BigDecimal valor,

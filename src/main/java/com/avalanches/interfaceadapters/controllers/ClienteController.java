@@ -5,8 +5,10 @@ import com.avalanches.enterprisebusinessrules.entities.Cliente;
 import com.avalanches.interfaceadapters.controllers.interfaces.ClienteControllerInterface;
 import com.avalanches.interfaceadapters.gateways.ClienteGateway;
 import com.avalanches.interfaceadapters.gateways.interfaces.ClienteGatewayInterface;
+import com.avalanches.interfaceadapters.presenters.ClientePresenter;
+import com.avalanches.interfaceadapters.presenters.dtos.ClienteDto;
+import com.avalanches.interfaceadapters.presenters.interfaces.ClientePresenterInterface;
 import org.springframework.jdbc.core.JdbcOperations;
-import org.springframework.stereotype.Service;
 
 public class ClienteController implements ClienteControllerInterface {
 
@@ -17,9 +19,12 @@ public class ClienteController implements ClienteControllerInterface {
     }
 
     @Override
-    public Cliente consultar(String cpf, JdbcOperations jdbcOperations) {
+    public ClienteDto consultar(String cpf, JdbcOperations jdbcOperations) {
         ClienteGatewayInterface clienteGateway = new ClienteGateway(jdbcOperations);
-        return ClienteUseCase.consultar(cpf, clienteGateway);
+        Cliente cliente = ClienteUseCase.consultar(cpf, clienteGateway);
+
+        ClientePresenterInterface clientePresenter = new ClientePresenter();
+        return clientePresenter.clienteToDto(cliente);
     }
 
     @Override

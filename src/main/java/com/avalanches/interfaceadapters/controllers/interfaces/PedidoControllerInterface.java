@@ -2,6 +2,7 @@ package com.avalanches.interfaceadapters.controllers.interfaces;
 
 import com.avalanches.enterprisebusinessrules.entities.Pedido;
 import com.avalanches.enterprisebusinessrules.entities.StatusPedido;
+import com.avalanches.interfaceadapters.presenters.dtos.PedidoDto;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,6 @@ public interface PedidoControllerInterface {
 
     void atualizaStatus(Integer idPedido, StatusPedido statusPedido, JdbcOperations jdbcOperations);
 
-    List<Pedido> listar(JdbcOperations jdbcOperations);
+    List<PedidoDto> listar(JdbcOperations jdbcOperations);
 
 }

@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
 
-public record ClienteRequest(
+public record ClienteParams(
         @NotBlank(message = "nome não pode ser vazio ou em branco")
         @Schema(description = "Nome do cliente", example = "Romario Silva")
         String nome,
