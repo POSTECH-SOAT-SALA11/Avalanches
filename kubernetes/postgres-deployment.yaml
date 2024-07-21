@@ -35,14 +35,3 @@ spec:
             items:
               - key: schema.sql
                 path: schema.sql
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: postgres-service
-spec:
-  ports:
-    - port: 5432
-      targetPort: 5432
-  selector:
-    app: postgres
