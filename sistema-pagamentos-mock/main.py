@@ -1,21 +1,41 @@
 # main_app.py
 import requests
-import uuid
-import json
-
+import os
+import psycopg2
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
 
-@app.route('/pagamento/<id_pedido>', methods=['GET'])
+def get_db_connection():
+    return psycopg2.connect(
+        dbname=os.environ['POSTGRES_DB'],
+        user=os.environ['POSTGRES_USER'],
+        password=os.environ['POSTGRES_PASSWORD'],
+        host='db'
+    )
+
+
+@app.route('/pagamento/<id_pedido>', methods=['POST'])
 def efetuar_pagamento(id_pedido):
     status_pagamento = "aprovado" if int(id_pedido) % 2 == 0 else "reprovado"
 
-    return {
+    # Conectar ao banco de dados e inserir os dados
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute(
+        "INSERT INTO pagamento (id_pedido, status) VALUES (%s, %s) "
+        "ON CONFLICT (id_pedido) DO UPDATE SET status = EXCLUDED.status",
+        (id_pedido, status_pagamento)
+    )
+    conn.commit()
+    cur.close()
+    conn.close()
+
+    return jsonify({
         "id_pedido": id_pedido,
         "status": status_pagamento
-    }
+    })
 
 
 def consultar_pagamento(id_pedido):
