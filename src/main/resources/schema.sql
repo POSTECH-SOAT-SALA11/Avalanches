@@ -55,3 +55,11 @@ CREATE TABLE public.produto_imagem (
    CONSTRAINT imagem_produto_fk_1 FOREIGN KEY (idproduto) REFERENCES public.produto(id),
    CONSTRAINT imagem_produto_fk_2 FOREIGN KEY (idimagem) REFERENCES public.imagem(id)
 );
+
+CREATE TABLE public.pagamento
+(
+    id SERIAL PRIMARY KEY,
+    id_pedido int4 NOT NULL,
+    status varchar NOT NULL,
+    CONSTRAINT pagamento_pedido_fk FOREIGN KEY (id_pedido) REFERENCES public.pedido(id)
+);

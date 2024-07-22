@@ -17,8 +17,7 @@ public class PagamentoGateway implements PagamentoGatewayInterface {
 
     @Override
     public void cadastrar(Pagamento pagamento) {
-        jdbcOperations.update("INSERT INTO pagamento (id, id_pedido, status) VALUES (?,?,?)",
-                pagamento.getId(),
+        jdbcOperations.update("INSERT INTO pagamento (id_pedido, status) VALUES (?,?)",
                 pagamento.getIdPedido(),
                 pagamento.getStatusPagamento());
     }
