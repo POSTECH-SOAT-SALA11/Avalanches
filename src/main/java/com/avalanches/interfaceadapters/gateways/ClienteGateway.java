@@ -10,14 +10,11 @@ import org.springframework.stereotype.Repository;
 
 public class ClienteGateway implements ClienteGatewayInterface {
 
-    // TODO: pesquisar como fazer no springboot via interface
-
     private JdbcOperations jdbcOperations;
 
     public ClienteGateway(JdbcOperations jdbcOperations) {
         this.jdbcOperations = jdbcOperations;
     }
-
 
     @Override
     public void cadastrar(Cliente cliente) {

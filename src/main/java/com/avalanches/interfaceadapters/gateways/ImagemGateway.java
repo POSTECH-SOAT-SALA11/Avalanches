@@ -23,7 +23,6 @@ import java.util.UUID;
 public class ImagemGateway implements ImagemGatewayInterface {
 
     public static final String IMAGENS = "imagens";
-    // TODO: pesquisar como fazer no springboot via interface
 
     private JdbcOperations jdbcOperations;
 
@@ -115,7 +114,6 @@ public class ImagemGateway implements ImagemGatewayInterface {
             throw new RuntimeException("Erro ao editar arquivo.", e);
         }
     }
-
 
     @Override
     public byte[] lerArquivo(String path) {

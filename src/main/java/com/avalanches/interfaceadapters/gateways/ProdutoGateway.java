@@ -23,8 +23,6 @@ import java.util.List;
 
 public class ProdutoGateway implements ProdutoGatewayInterface {
 
-    // TODO: pesquisar como fazer no springboot via interface
-
     private JdbcOperations jdbcOperations;
 
     public ProdutoGateway(JdbcOperations jdbcOperations) {

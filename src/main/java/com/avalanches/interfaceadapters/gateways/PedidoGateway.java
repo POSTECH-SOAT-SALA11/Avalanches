@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 public class PedidoGateway implements PedidoGatewayInterface {
-    // TODO: pesquisar como fazer no springboot via interface
 
     private JdbcOperations jdbcOperations;
 

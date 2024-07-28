@@ -18,19 +18,22 @@ public class PedidoController implements PedidoControllerInterface {
     @Override
     public Integer cadastrar(Pedido pedido, JdbcOperations jdbcOperations) {
         PedidoGatewayInterface pedidoGateway = new PedidoGateway(jdbcOperations);
-        return PedidoUseCase.cadastrar(pedido, pedidoGateway);
+        PedidoUseCase pedidoUseCase = new PedidoUseCase();
+        return pedidoUseCase.cadastrar(pedido, pedidoGateway);
     }
 
     @Override
     public void atualizaStatus(Integer idPedido, StatusPedido statusPedido, JdbcOperations jdbcOperations) {
         PedidoGatewayInterface pedidoGateway = new PedidoGateway(jdbcOperations);
-        PedidoUseCase.atualizaStatus(idPedido, statusPedido, pedidoGateway);
+        PedidoUseCase pedidoUseCase = new PedidoUseCase();
+        pedidoUseCase.atualizaStatus(idPedido, statusPedido, pedidoGateway);
     }
 
     @Override
     public List<PedidoDto> listar(JdbcOperations jdbcOperations) {
         PedidoGatewayInterface pedidoGateway = new PedidoGateway(jdbcOperations);
-        List<Pedido> pedidos = PedidoUseCase.listar(pedidoGateway);
+        PedidoUseCase pedidoUseCase = new PedidoUseCase();
+        List<Pedido> pedidos = pedidoUseCase.listar(pedidoGateway);
         PedidoPresenterInterface pedidoPresenter = new PedidoPresenter();
         return pedidoPresenter.pedidosToDtos(pedidos);
     }
