@@ -30,3 +30,10 @@ spec:
                 configMapKeyRef:
                   name: postgres-config
                   key: POSTGRES_PASSWORD
+          resources:
+            requests:
+              cpu: "300m"
+              memory: "256Mi"
+            limits:
+              cpu: "1000m"
+              memory: "512Mi"
