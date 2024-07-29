@@ -25,6 +25,13 @@ spec:
               name: postgres-storage
             - mountPath: /docker-entrypoint-initdb.d
               name: initdb
+          resources:
+            requests:
+              cpu: "300m"
+              memory: "256Mi"
+            limits:
+              cpu: "1000m"
+              memory: "512Mi"
       volumes:
         - name: postgres-storage
           persistentVolumeClaim:

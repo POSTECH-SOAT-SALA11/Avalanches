@@ -59,6 +59,7 @@ Para executar o projeto em Kubernetes, siga estas etapas:
 5. Acesse o Swagger da aplicação.
    ```bash
    minikube service avalanches-service --url
+   minikube service sistema-pagamentos-mock-service --url
    ```
 
 6. Divirta-se explorando a API via Swagger!
