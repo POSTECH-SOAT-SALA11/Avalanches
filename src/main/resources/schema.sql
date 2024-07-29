@@ -58,8 +58,7 @@ CREATE TABLE public.produto_imagem (
 
 CREATE TABLE public.pagamento
 (
-    id SERIAL PRIMARY KEY,
     id_pedido int4 NOT NULL,
     status varchar NOT NULL,
-    CONSTRAINT pagamento_pedido_fk FOREIGN KEY (id_pedido) REFERENCES public.pedido(id)
+    CONSTRAINT pagamento_pk PRIMARY KEY (id_pedido)
 );

@@ -1,48 +1,73 @@
 # Avalanches!
-Bem-vindo ao Avalanches, o destino perfeito para os amantes de lanches com uma pitada de aventura! Em nosso refúgio gastronômico, preparamos uma avalanche de sabores deliciosos que vão deixar você emocionado. Desde hambúrgueres suculentos até milkshakes saborosos, cada mordida é uma jornada de sabor única e emocionante. Nossa equipe calorosa e acolhedora está aqui para garantir que sua experiência seja sempre memorável. Então, junte-se a nós no Avalanches, onde a alegria de comer bem encontra o espírito aventureiro!
 
-## Funcionalidades Principais ao Cliente Externo
+Bem-vindo ao Avalanches, onde a alegria de comer bem encontra o espírito aventureiro! Prepare-se para uma avalanche de sabores deliciosos que vão deixar você emocionado. De hambúrgueres suculentos a milkshakes saborosos, cada mordida é uma jornada de sabor única. Nossa equipe calorosa está aqui para garantir que sua experiência seja sempre memorável.
 
-- **Cadastro de Clientes**: Deixe a gente te conhecer mais! Venha se cadastrar na nossa lanchonete e fique por dentro de nossas novidades, como também torne-se apto a receber nossas promoções!
-- **Sistema de Pedidos**: Olhe nosso delicioso cardápio e faça seu pedido! Nossa equipe está pronta para preparar seu lanche com todo o carinho e dedicação.
+## Funcionalidades Principais
 
-## Funcionalidades Principais Internas
+### Para Clientes
 
-- **Cadastro de Produtos**: Adicione novos produtos ao nosso cardápio e deixe nossos clientes ainda mais felizes!
-- **Consulta de Produtos**: Consulte todos os produtos disponíveis em nosso cardápio e garanta que nossos clientes tenham sempre a melhor experiência.
-- **Atualização de Produtos**: Atualize as informações dos produtos cadastrados em nosso sistema e mantenha nosso cardápio sempre atualizado.
-- **Consulta de Clientes**: Consulte todos os clientes cadastrados em nosso sistema e garanta que eles estejam sempre satisfeitos com nossos serviços.
-- **Atualização de Clientes**: Atualize as informações dos clientes cadastrados em nosso sistema e mantenha nosso banco de dados sempre atualizado.
+- **Cadastro de Clientes**: Registre-se para receber novidades e promoções.
+- **Sistema de Pedidos**: Faça seu pedido diretamente do nosso cardápio delicioso.
+
+### Internas
+
+- **Cadastro de Produtos**: Adicione novos itens ao cardápio.
+- **Consulta e Atualização de Produtos**: Mantenha o cardápio atualizado.
+- **Consulta e Atualização de Clientes**: Gerencie informações dos clientes.
 
 ## Tecnologias Utilizadas
 
 - Java 18
 - Spring Boot 3.2.5
 - Docker
-- Banco de Dados (PostgreSQL)
+- Kubernetes (Minikube)
+- Banco de Dados PostgreSQL
 
 ## Estrutura do Projeto
 
-O projeto segue os princípios de Domain-Driven Design (DDD) e arquitetura hexagonal, com as seguintes camadas:
+O projeto segue os princípios de Domain-Driven Design (DDD) e arquitetura hexagonal:
 
-- **Camada de Aplicação**: Contém os casos de uso e interfaces de aplicação.
+- **Camada de Aplicação**: Contém casos de uso e interfaces.
+- **Camada de Domínio**: Entidades, objetos de valor, repositórios e serviços.
+- **Camada de Infraestrutura**: Implementações de persistência e integrações.
 
-- **Camada de Domínio**: Contém as entidades, objetos de valor, repositórios e serviços de domínio.
+## Execução do Projeto em Kubernetes
 
-- **Camada de Infraestrutura**: Contém as implementações de infraestrutura, como persistência em banco de dados e comunicação com APIs externas.
+Para executar o projeto em Kubernetes, siga estas etapas:
+
+1. Clone o repositório.
+   ```bash
+   git clone https://github.com/POSTECH-SOAT-SALA11/Avalanches.git
+   cd Avalanches
+   ```
+
+2. Inicie o Minikube.
+   ```bash
+   minikube start
+   ```
+
+3. Aplique os manifestos do Kubernetes.
+   ```bash
+   kubectl apply -f kubernetes/
+    ```
+   
+4. Verifique o status dos pods.
+   ```bash
+   kubectl get pods
+   ```
+
+5. Acesse o Swagger da aplicação.
+   ```bash
+   minikube service avalanches-service --url
+   minikube service sistema-pagamentos-mock-service --url
+   ```
+
+6. Divirta-se explorando a API via Swagger!
+   Não esqueça de acrescentar o contexto `/swagger-ui/index.html#/` ao final da URL. 
 
 ## Event Storming
 
-O Event Storming encontra-se no seguinte link: `https://miro.com/app/board/uXjVKR1mTMY=/`
-
-## Execução do Projeto
-
-Para executar o projeto localmente, siga estas etapas:
-
-1. Clone o repositório.
-2. Execute o comando `docker-compose up --build` para que o build da aplicação aconteça e sejam geradas as imagens e contâineres da aplicação + banco de dados.
-3. Acesse o Swagger da aplicação através da URL `http://localhost:8081/swagger-ui/index.html#`.
-4. Divirta-se!
+O diagrama do Event Storming pode ser acessado [aqui](https://miro.com/app/board/uXjVKR1mTMY=/).
 
 ## Autores
 
@@ -52,7 +77,7 @@ Para executar o projeto localmente, siga estas etapas:
 - [Adinelson da Silva Bruhmuller Júnior](https://github.com/Doomwhite)
   (adinelsonsbruhmuller@gmail.com)
 
-- [RAUL DE SOUZA](https://github.com/raulsouza-rm355416)
+- [Raul de Souza](https://github.com/raulsouza-rm355416)
   (dev.raulsouza@outlook.com)
 
 - [Raphael Soares Teodoro](https://github.com/raphasteodoro)

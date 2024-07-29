@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sistema-pagamentos-mock
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sistema-pagamentos-mock
+  template:
+    metadata:
+      labels:
+        app: sistema-pagamentos-mock
+    spec:
+      containers:
+        - name: sistema-pagamentos-mock
+          image: rm355416/sistema-pagamentos-mock:latest
+          ports:
+            - containerPort: 5001
+          env:
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config
+                  key: POSTGRES_DB
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config
+                  key: POSTGRES_PASSWORD
+            - name: POSTGRES_HOST
+              value: "postgres-service"
+          resources:
+            requests:
+              cpu: "300m"
+              memory: "256Mi"
+            limits:
+              cpu: "1000m"
+              memory: "512Mi"

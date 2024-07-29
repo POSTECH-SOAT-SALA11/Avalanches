@@ -27,5 +27,20 @@ services:
     depends_on:
       - db
 
+  python-app:
+    build:
+      context: sistema-pagamentos-mock
+      dockerfile: Dockerfile
+    container_name: sistema-pagamentos-mock-container
+    restart: always
+    ports:
+      - "5001:5001"
+    depends_on:
+      - db
+    environment:
+      POSTGRES_DB: avalanches_database
+      POSTGRES_USER: avalanches_user
+      POSTGRES_PASSWORD: avalanches_password
+
 volumes:
   postgres_data:
