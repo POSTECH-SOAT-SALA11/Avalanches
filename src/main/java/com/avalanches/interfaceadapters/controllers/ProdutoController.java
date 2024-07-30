@@ -22,14 +22,16 @@ public class ProdutoController implements ProdutoControllerInterface {
     public void cadastrarProduto(Produto produto, JdbcOperations jdbcOperations) {
         ProdutoGatewayInterface produtoGateway = new ProdutoGateway(jdbcOperations);
         ImagemGatewayInterface imagemGateway = new ImagemGateway(jdbcOperations);
-        ProdutoUseCase.cadastrarProduto(produto, produtoGateway, imagemGateway);
+        ProdutoUseCase produtoUseCase = new ProdutoUseCase();
+        produtoUseCase.cadastrarProduto(produto, produtoGateway, imagemGateway);
     }
 
     @Override
     public List<ProdutoDto> consultarProdutos(CategoriaProduto categoriaProduto, JdbcOperations jdbcOperations) {
         ProdutoGatewayInterface produtoGateway = new ProdutoGateway(jdbcOperations);
         ImagemGatewayInterface imagemGateway = new ImagemGateway(jdbcOperations);
-        List<Produto> produtos = ProdutoUseCase.consultarProdutos(categoriaProduto, produtoGateway, imagemGateway);
+        ProdutoUseCase produtoUseCase = new ProdutoUseCase();
+        List<Produto> produtos = produtoUseCase.consultarProdutos(categoriaProduto, produtoGateway, imagemGateway);
         ProdutoPresenterInterface produtoPresenter = new ProdutoPresenter();
         return produtoPresenter.produtosToDtos(produtos);
     }
@@ -38,13 +40,15 @@ public class ProdutoController implements ProdutoControllerInterface {
     public void atualizarProduto(Produto produto, JdbcOperations jdbcOperations) {
         ProdutoGatewayInterface produtoGateway = new ProdutoGateway(jdbcOperations);
         ImagemGatewayInterface imagemGateway = new ImagemGateway(jdbcOperations);
-        ProdutoUseCase.atualizarProduto(produto, produtoGateway, imagemGateway);
+        ProdutoUseCase produtoUseCase = new ProdutoUseCase();
+        produtoUseCase.atualizarProduto(produto, produtoGateway, imagemGateway);
     }
 
     @Override
     public void excluirProduto(int id, JdbcOperations jdbcOperations) {
         ProdutoGatewayInterface produtoGateway = new ProdutoGateway(jdbcOperations);
         ImagemGatewayInterface  imagemGateway = new ImagemGateway(jdbcOperations);
-        ProdutoUseCase.excluirProduto(id, produtoGateway, imagemGateway);
+        ProdutoUseCase produtoUseCase = new ProdutoUseCase();
+        produtoUseCase.excluirProduto(id, produtoGateway, imagemGateway);
     }
 }

@@ -1,19 +1,19 @@
 package com.avalanches.applicationbusinessrules.usecases;
 
+import com.avalanches.applicationbusinessrules.usecases.interfaces.PedidoUseCaseInterface;
 import com.avalanches.enterprisebusinessrules.entities.Pedido;
 import com.avalanches.enterprisebusinessrules.entities.PedidoProduto;
 import com.avalanches.enterprisebusinessrules.entities.StatusPedido;
 import com.avalanches.interfaceadapters.gateways.interfaces.PagamentoGatewayInterface;
 import com.avalanches.interfaceadapters.gateways.interfaces.PedidoGatewayInterface;
-import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
 import java.util.List;
 
-@Service
-public class PedidoUseCase{
+public class PedidoUseCase implements PedidoUseCaseInterface {
 
-    public static Integer cadastrar(Pedido pedido, PedidoGatewayInterface pedidoGateway, PagamentoGatewayInterface pagamentoGateway) {
+    @Override
+    public Integer cadastrar(Pedido pedido, PedidoGatewayInterface pedidoGateway, PagamentoGatewayInterface pagamentoGateway) {
         pedidoGateway.cadastrar(pedido);
         PagamentoUseCase pagamentoUseCase = new PagamentoUseCase();
         pagamentoUseCase.efetuarPagamento(pedido.id, pagamentoGateway);
@@ -28,7 +28,8 @@ public class PedidoUseCase{
         return pedidoGateway.listar();
     }
 
-    public static void atualizaStatus(Integer idPedido, StatusPedido statusPedido, PedidoGatewayInterface pedidoGateway) {
+    @Override
+    public void atualizaStatus(Integer idPedido, StatusPedido statusPedido, PedidoGatewayInterface pedidoGateway) {
         if (!pedidoGateway.verificaPedidoExiste(idPedido))  {
            throw new NotFoundException("Pedido não encontrado.");
         }

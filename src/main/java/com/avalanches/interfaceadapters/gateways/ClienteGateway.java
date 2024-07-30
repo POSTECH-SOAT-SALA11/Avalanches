@@ -16,7 +16,6 @@ public class ClienteGateway implements ClienteGatewayInterface {
         this.jdbcOperations = jdbcOperations;
     }
 
-
     @Override
     public void cadastrar(Cliente cliente) {
         jdbcOperations.update("INSERT INTO cliente (nome, cpf, email) VALUES (?, ?, ?);",

@@ -15,14 +15,15 @@ public class ClienteController implements ClienteControllerInterface {
     @Override
     public void cadastrar(Cliente cliente, JdbcOperations jdbcOperations) {
         ClienteGatewayInterface clienteGateway = new ClienteGateway(jdbcOperations);
-        ClienteUseCase.cadastrarCliente(cliente, clienteGateway);
+        ClienteUseCase clienteUseCase = new ClienteUseCase();
+        clienteUseCase.cadastrarCliente(cliente, clienteGateway);
     }
 
     @Override
     public ClienteDto consultar(String cpf, JdbcOperations jdbcOperations) {
         ClienteGatewayInterface clienteGateway = new ClienteGateway(jdbcOperations);
-        Cliente cliente = ClienteUseCase.consultar(cpf, clienteGateway);
-
+        ClienteUseCase clienteUseCase = new ClienteUseCase();
+        Cliente cliente = clienteUseCase.consultar(cpf, clienteGateway);
         ClientePresenterInterface clientePresenter = new ClientePresenter();
         return clientePresenter.clienteToDto(cliente);
     }
@@ -30,6 +31,7 @@ public class ClienteController implements ClienteControllerInterface {
     @Override
     public void excluir(String cpf, JdbcOperations jdbcOperations) {
         ClienteGatewayInterface clienteGateway = new ClienteGateway(jdbcOperations);
-        ClienteUseCase.excluir(cpf, clienteGateway);
+        ClienteUseCase clienteUseCase = new ClienteUseCase();
+        clienteUseCase.excluir(cpf, clienteGateway);
     }
 }
