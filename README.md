@@ -7,7 +7,7 @@ Bem-vindo ao Avalanches, o destino perfeito para os amantes de lanches com uma p
 - **Cadastro de Clientes**: Registre-se para receber novidades e promoções.
 - **Sistema de Pedidos**: Faça seu pedido diretamente do nosso cardápio delicioso.
 
-## Internas
+### Internas
 
 - **Cadastro de Produtos**: Adicione novos itens ao cardápio.
 - **Consulta de Produtos**: Consulte todos os produtos disponíveis.
@@ -36,7 +36,7 @@ O projeto segue os princípios de Domain-Driven Design (DDD) e clean architectur
 
 - **Frameworks and Drivers**: Contém a web api e as configurações de banco de dados.
 
-- **Interface Adapters**: Contém os gateways que garantem a comunicação com o mundo externo (Banco de dados, sistema de arquivos, api de pagamento etc...), 
+- **Interface Adapters**: Contém os gateways que garantem a comunicação com o mundo externo (Banco de dados, sistema de arquivos, api de pagamentos etc...),
 e os adaptadores que ajudam a camada de apresentação a exibir resultados.
 
 - **Application Business Rules**:  Encapsula e implementa as regras de negócio através de casos de uso.
