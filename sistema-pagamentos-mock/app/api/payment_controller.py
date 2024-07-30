@@ -9,6 +9,8 @@ payment_bp = Blueprint('payment', __name__)
 @payment_bp.route('/pagamento/<id_pedido>', methods=['POST'])
 def efetuar_pagamento(id_pedido):
     status_pagamento = PaymentService().process_payment(id_pedido)
+    repository = PaymentRepository()
+    repository.save_payment(id_pedido, status_pagamento)
 
     # Dados para o webhook
     webhook_data = {

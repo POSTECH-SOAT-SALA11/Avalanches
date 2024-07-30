@@ -1,6 +1,7 @@
 package com.avalanches.interfaceadapters.gateways;
 
 import com.avalanches.enterprisebusinessrules.entities.Pagamento;
+import com.avalanches.enterprisebusinessrules.entities.StatusPagamento;
 import com.avalanches.frameworksanddrivers.api.dto.WebHookMockParams;
 import com.avalanches.interfaceadapters.gateways.interfaces.PagamentoGatewayInterface;
 import jakarta.inject.Inject;
@@ -8,6 +9,7 @@ import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcOperations;
 
 import java.io.IOException;
@@ -50,5 +52,22 @@ public class PagamentoGateway implements PagamentoGatewayInterface {
         }
     }
 
+    @Override
+    public StatusPagamento consultaStatus(Integer idPedido) {
+        String statusString = jdbcOperations.queryForObject(
+            "SELECT status FROM pagamento WHERE id_pedido = ?",
+            new Object[]{idPedido},
+            String.class
+        );
+
+        return StatusPagamento.valueOf(statusString);
+    }
+
+    @Override
+    public boolean verificaPagamentoExiste(Integer idPedido) {
+        String sql = "SELECT COUNT(*) FROM pagamento WHERE id_pedido = ?";
+        Integer count = jdbcOperations.queryForObject(sql, new Object[]{idPedido}, Integer.class);
+        return count != null && count > 0;
+    }
 
 }

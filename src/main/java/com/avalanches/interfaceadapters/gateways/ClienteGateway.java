@@ -10,8 +10,6 @@ import org.springframework.stereotype.Repository;
 
 public class ClienteGateway implements ClienteGatewayInterface {
 
-    // TODO: pesquisar como fazer no springboot via interface
-
     private JdbcOperations jdbcOperations;
 
     public ClienteGateway(JdbcOperations jdbcOperations) {
@@ -48,6 +46,13 @@ public class ClienteGateway implements ClienteGatewayInterface {
     public boolean verificaCpfExistente(String cpf) {
         String sql = "SELECT COUNT(*) FROM cliente WHERE cpf = ?";
         Integer count = jdbcOperations.queryForObject(sql, new Object[]{cpf}, Integer.class);
+        return count != null && count > 0;
+    }
+
+    @Override
+    public boolean verificaClienteExiste(Integer idCliente) {
+        String sql = "SELECT COUNT(*) FROM cliente WHERE id = ?";
+        Integer count = jdbcOperations.queryForObject(sql, new Object[]{idCliente}, Integer.class);
         return count != null && count > 0;
     }
 

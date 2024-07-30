@@ -1,9 +1,11 @@
 package com.avalanches.frameworksanddrivers.api;
 
+import com.avalanches.enterprisebusinessrules.entities.StatusPagamento;
 import com.avalanches.frameworksanddrivers.api.dto.WebHookMockParams;
 import com.avalanches.frameworksanddrivers.api.dto.WebhookParams;
 import com.avalanches.frameworksanddrivers.api.interfaces.PagamentoApiInterface;
 import com.avalanches.interfaceadapters.controllers.PagamentoController;
+import com.avalanches.interfaceadapters.controllers.interfaces.PagamentoControllerInterface;
 import com.avalanches.interfaceadapters.presenters.dtos.WebHookDto;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -38,5 +40,13 @@ public class PagamentoApi implements PagamentoApiInterface {
         }
     }
 
+    @GetMapping("/status/{idPedido}")
+    @Override
+    public ResponseEntity<StatusPagamento> consultaStatus(@PathVariable("idPedido") Integer idPedido) {
+        PagamentoControllerInterface pagamentoController = new PagamentoController();
+        WebHookMockParams webHookMockParams = new WebHookMockParams();
+        StatusPagamento response = pagamentoController.consultaStatus(idPedido, jdbcOperations, webHookMockParams);
+        return ResponseEntity.ok().body(response);
+    }
 
 }

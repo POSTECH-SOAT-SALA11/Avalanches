@@ -23,8 +23,6 @@ import java.util.List;
 
 public class ProdutoGateway implements ProdutoGatewayInterface {
 
-    // TODO: pesquisar como fazer no springboot via interface
-
     private JdbcOperations jdbcOperations;
 
     public ProdutoGateway(JdbcOperations jdbcOperations) {
@@ -111,6 +109,13 @@ public class ProdutoGateway implements ProdutoGatewayInterface {
         return jdbcOperations.query("select i.* from produto_imagem pi2 " +
                 "inner join imagem i on i.id = pi2.idimagem " +
                 "where idproduto = ?",new ImagemRowMapper(), id);
+    }
+
+    @Override
+    public boolean verificaProdutoExiste(Integer idProduto) {
+        String sql = "SELECT COUNT(*) FROM produto WHERE id = ?";
+        Integer count = jdbcOperations.queryForObject(sql, new Object[]{idProduto}, Integer.class);
+        return count != null && count > 0;
     }
 
 }

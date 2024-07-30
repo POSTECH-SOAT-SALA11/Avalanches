@@ -1,6 +1,7 @@
 package com.avalanches.interfaceadapters.gateways.interfaces;
 
 import com.avalanches.enterprisebusinessrules.entities.Pagamento;
+import com.avalanches.enterprisebusinessrules.entities.StatusPagamento;
 
 public interface PagamentoGatewayInterface {
 
@@ -8,4 +9,7 @@ public interface PagamentoGatewayInterface {
 
     Boolean efetuarPagamento(Integer idPedido);
 
+    boolean verificaPagamentoExiste(Integer idPedido);
+
+    StatusPagamento consultaStatus(Integer idPedido);
 }
