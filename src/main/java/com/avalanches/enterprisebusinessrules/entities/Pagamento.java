@@ -12,7 +12,6 @@ public class Pagamento {
         this.statusPagamento = statusPagamento;
     }
 
-
     public Integer getId() {
         return id;
     }

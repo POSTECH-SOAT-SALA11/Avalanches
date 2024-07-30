@@ -14,13 +14,10 @@ public class PagamentoGateway implements PagamentoGatewayInterface {
         this.jdbcOperations = jdbcOperations;
     }
 
-
     @Override
     public void cadastrar(Pagamento pagamento) {
         jdbcOperations.update("INSERT INTO pagamento (id_pedido, status) VALUES (?,?)",
                 pagamento.getIdPedido(),
-                pagamento.getStatusPagamento());
+                pagamento.getStatusPagamento().name()); // Converte o enum para string
     }
-
-
 }

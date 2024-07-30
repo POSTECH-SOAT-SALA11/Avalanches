@@ -1,6 +1,5 @@
 package com.avalanches.frameworksanddrivers.api;
 
-
 import com.avalanches.applicationbusinessrules.usecases.PagamentoUseCase;
 import com.avalanches.frameworksanddrivers.api.dto.WebhookParams;
 import com.avalanches.frameworksanddrivers.api.interfaces.PagamentoApiInterface;

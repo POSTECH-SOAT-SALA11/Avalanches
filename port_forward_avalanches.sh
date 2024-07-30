@@ -24,13 +24,27 @@ wait_for_pod_ready() {
     done
 }
 
-# Esperar o pod avalanches estar pronto
-wait_for_pod_ready "avalanches"
+# Função para configurar o port forwarding
+setup_port_forward() {
+    local pod_label=$1
+    local port=$2
 
-# Obter o nome do pod avalanches
-POD_NAME=$(kubectl get pods -l app=avalanches -o jsonpath="{.items[0].metadata.name}")
+    while true; do
+        wait_for_pod_ready "$pod_label"
 
-# Configurar o port forwarding para avalanches
+        POD_NAME=$(kubectl get pods -l app=$pod_label -o jsonpath="{.items[0].metadata.name}")
+
+        echo "Configurando port forwarding para o pod $POD_NAME na porta $port..."
+        kubectl port-forward pod/$POD_NAME $port:$port
+
+        echo "Port forwarding para o pod $POD_NAME foi interrompido. Tentando novamente..."
+        sleep 5
+    done
+}
+
+# Definir as variáveis
+POD_LABEL="avalanches"
 PORT=8080
-echo "Configurando port forwarding para avalanches na porta $PORT..."
-kubectl port-forward pod/$POD_NAME $PORT:$PORT
+
+# Configurar o port forwarding e manter verificando
+setup_port_forward "$POD_LABEL" "$PORT"

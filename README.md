@@ -33,37 +33,33 @@ O projeto segue os princípios de Domain-Driven Design (DDD) e arquitetura hexag
 
 ## Execução do Projeto em Kubernetes
 
+### Requisitos tecnológicos:
+- **[Docker](https://www.docker.com/)**: para a criação de imagens de contêineres.
+- **[Minikube](https://minikube.sigs.k8s.io/docs/start/?arch=%2Fwindows%2Fx86-64%2Fstable%2F.exe+download)**: para a execução de um cluster Kubernetes local.
+
 Para executar o projeto em Kubernetes, siga estas etapas:
 
 1. Clone o repositório.
    ```bash
    git clone https://github.com/POSTECH-SOAT-SALA11/Avalanches.git
+   ```
+
+2. Acesse o repositório.
+   ```bash
    cd Avalanches
    ```
 
-2. Inicie o Minikube.
+3. Execute o script que inicializará o projeto automaticamente.
    ```bash
-   minikube start
-   ```
-
-3. Aplique os manifestos do Kubernetes.
-   ```bash
-   kubectl apply -f kubernetes/
+   ./start_minikube.sh
     ```
-   
-4. Verifique o status dos pods.
-   ```bash
-   kubectl get pods
-   ```
 
-5. Acesse o Swagger da aplicação.
-   ```bash
-   minikube service avalanches-service --url
-   minikube service sistema-pagamentos-mock-service --url
+4. Acesse o Swagger da aplicação em:
+   ```
+   http://localhost:8080/swagger-ui/index.html#/
    ```
 
 6. Divirta-se explorando a API via Swagger!
-   Não esqueça de acrescentar o contexto `/swagger-ui/index.html#/` ao final da URL. 
 
 ## Event Storming
 
