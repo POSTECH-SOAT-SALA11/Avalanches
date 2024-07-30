@@ -8,6 +8,8 @@ public interface ClienteGatewayInterface {
 
     Cliente identificar(String cpf);
 
+    boolean verificaClienteExiste(Integer idCliente);
+
     boolean verificaCpfExistente(String cpf);
 
     void deletar(String cpf);

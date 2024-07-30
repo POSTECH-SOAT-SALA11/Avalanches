@@ -1,6 +1,7 @@
 package com.avalanches.frameworksanddrivers.api;
 
 import com.avalanches.enterprisebusinessrules.entities.StatusPedido;
+import com.avalanches.frameworksanddrivers.api.dto.WebHookMockParams;
 import com.avalanches.frameworksanddrivers.api.interfaces.PedidoApiInterface;
 import com.avalanches.interfaceadapters.controllers.PedidoController;
 import com.avalanches.interfaceadapters.controllers.interfaces.PedidoControllerInterface;
@@ -28,7 +29,8 @@ public class PedidoApi implements PedidoApiInterface {
     @Override
     public ResponseEntity<Integer> cadastrar(@Valid @RequestBody PedidoParams pedido) {
         PedidoControllerInterface pedidoController = new PedidoController();
-        Integer numeroPedido = pedidoController.cadastrar(Convert.pedidoParamsToPedido(pedido), jdbcOperations);
+        WebHookMockParams webHookMockParams = new WebHookMockParams();
+        Integer numeroPedido = pedidoController.cadastrar(Convert.pedidoParamsToPedido(pedido), jdbcOperations, webHookMockParams);
         return ResponseEntity.status(HttpStatus.CREATED).body(numeroPedido);
     }
 

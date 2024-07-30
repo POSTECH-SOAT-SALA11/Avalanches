@@ -1,5 +1,6 @@
 # Avalanches!
-Bem-vindo ao Avalanches, o destino perfeito para os amantes de lanches com uma pitada de aventura! Em nosso refúgio gastronômico, preparamos uma avalanche de sabores deliciosos que vão deixar você emocionado. Desde hambúrgueres suculentos até milkshakes saborosos, cada mordida é uma jornada de sabor única e emocionante. Nossa equipe calorosa e acolhedora está aqui para garantir que sua experiência seja sempre memorável. Então, junte-se a nós no Avalanches, onde a alegria de comer bem encontra o espírito aventureiro!
+
+Bem-vindo ao Avalanches, onde a alegria de comer bem encontra o espírito aventureiro! Prepare-se para uma avalanche de sabores deliciosos que vão deixar você emocionado. De hambúrgueres suculentos a milkshakes saborosos, cada mordida é uma jornada de sabor única. Nossa equipe calorosa está aqui para garantir que sua experiência seja sempre memorável.
 
 ## Funcionalidades Principais 
 
@@ -26,9 +27,9 @@ Bem-vindo ao Avalanches, o destino perfeito para os amantes de lanches com uma p
 
 - Java 18
 - Spring Boot 3.2.5
-- Banco de Dados (PostgreSQL)
 - Docker
 - Kubernetes (Minikube)
+- Banco de Dados PostgreSQL
 
 ## Estrutura do Projeto
 
@@ -42,7 +43,6 @@ e os adaptadores que ajudam a camada de apresentação a exibir resultados.
 - **Application Business Rules**:  Encapsula e implementa as regras de negócio através de casos de uso.
 
 - **Enterprise Business Rules**:  Representa a camada de entidades e suas regras de negócio.
-
 
 ## Event Storming
 

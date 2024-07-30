@@ -49,6 +49,13 @@ public class ClienteGateway implements ClienteGatewayInterface {
     }
 
     @Override
+    public boolean verificaClienteExiste(Integer idCliente) {
+        String sql = "SELECT COUNT(*) FROM cliente WHERE id = ?";
+        Integer count = jdbcOperations.queryForObject(sql, new Object[]{idCliente}, Integer.class);
+        return count != null && count > 0;
+    }
+
+    @Override
     public void deletar(String cpf) {
         try {
             int rowsAffected = jdbcOperations.update("DELETE FROM cliente WHERE cpf = ?", cpf);

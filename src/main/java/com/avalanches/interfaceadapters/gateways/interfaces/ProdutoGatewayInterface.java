@@ -24,4 +24,6 @@ public interface ProdutoGatewayInterface {
     Produto consultarProdutosPorID(int id);
 
     List<Imagem> consultarImagensPorProduto(int id);
+
+    boolean verificaProdutoExiste(Integer idProduto);
 }

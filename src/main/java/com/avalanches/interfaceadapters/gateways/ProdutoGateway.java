@@ -111,5 +111,12 @@ public class ProdutoGateway implements ProdutoGatewayInterface {
                 "where idproduto = ?",new ImagemRowMapper(), id);
     }
 
+    @Override
+    public boolean verificaProdutoExiste(Integer idProduto) {
+        String sql = "SELECT COUNT(*) FROM produto WHERE id = ?";
+        Integer count = jdbcOperations.queryForObject(sql, new Object[]{idProduto}, Integer.class);
+        return count != null && count > 0;
+    }
+
 }
 
