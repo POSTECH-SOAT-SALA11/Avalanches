@@ -1,48 +1,94 @@
 # Avalanches!
 Bem-vindo ao Avalanches, o destino perfeito para os amantes de lanches com uma pitada de aventura! Em nosso refúgio gastronômico, preparamos uma avalanche de sabores deliciosos que vão deixar você emocionado. Desde hambúrgueres suculentos até milkshakes saborosos, cada mordida é uma jornada de sabor única e emocionante. Nossa equipe calorosa e acolhedora está aqui para garantir que sua experiência seja sempre memorável. Então, junte-se a nós no Avalanches, onde a alegria de comer bem encontra o espírito aventureiro!
 
-## Funcionalidades Principais ao Cliente Externo
+## Funcionalidades Principais 
 
-- **Cadastro de Clientes**: Deixe a gente te conhecer mais! Venha se cadastrar na nossa lanchonete e fique por dentro de nossas novidades, como também torne-se apto a receber nossas promoções!
-- **Sistema de Pedidos**: Olhe nosso delicioso cardápio e faça seu pedido! Nossa equipe está pronta para preparar seu lanche com todo o carinho e dedicação.
+### Para Clientes
+- **Cadastro de Clientes**: Registre-se para receber novidades e promoções.
+- **Sistema de Pedidos**: Faça seu pedido diretamente do nosso cardápio delicioso.
 
-## Funcionalidades Principais Internas
+### Internas
 
-- **Cadastro de Produtos**: Adicione novos produtos ao nosso cardápio e deixe nossos clientes ainda mais felizes!
-- **Consulta de Produtos**: Consulte todos os produtos disponíveis em nosso cardápio e garanta que nossos clientes tenham sempre a melhor experiência.
-- **Atualização de Produtos**: Atualize as informações dos produtos cadastrados em nosso sistema e mantenha nosso cardápio sempre atualizado.
-- **Consulta de Clientes**: Consulte todos os clientes cadastrados em nosso sistema e garanta que eles estejam sempre satisfeitos com nossos serviços.
-- **Atualização de Clientes**: Atualize as informações dos clientes cadastrados em nosso sistema e mantenha nosso banco de dados sempre atualizado.
+- **Cadastro de Produtos**: Adicione novos itens ao cardápio.
+- **Consulta de Produtos**: Consulte todos os produtos disponíveis.
+- **Atualização de Produtos**: Mantenha o cardápio atualizado.
+- **Exclusão de Produtos**: Exclua produtos que não fazem mais parte do cardápio.
+- **Cadastro de Clientes**: Cadastre novos clientes a fim de oferecer promoções e descontos.
+- **Consulta de Clientes**: Consulte os clientes cadastrados no sistema.
+- **Atualização de Clientes**: Mantenha o cadastro de clientes atualizado.
+- **Cadastro de Pedidos**: Crie novos pedidos.
+- **Listagem de Pedidos**: Consulte todos os pedidos em andamento.
+- **Atualização de Status de Pedido**: Atualize o status dos pedidos conforme o progresso na linha de produção.
+- **Integração de pagamento**: Integração com API de pagamentos.
+- **Status de pagamento**: Acompanhe o status dos pagamentos.
 
 ## Tecnologias Utilizadas
 
 - Java 18
 - Spring Boot 3.2.5
-- Docker
 - Banco de Dados (PostgreSQL)
+- Docker
+- Kubernetes (Minikube)
 
 ## Estrutura do Projeto
 
-O projeto segue os princípios de Domain-Driven Design (DDD) e arquitetura hexagonal, com as seguintes camadas:
+O projeto segue os princípios de Domain-Driven Design (DDD) e clean architecture, com as seguintes camadas:
 
-- **Camada de Aplicação**: Contém os casos de uso e interfaces de aplicação.
+- **Frameworks and Drivers**: Contém a web api e as configurações de banco de dados.
 
-- **Camada de Domínio**: Contém as entidades, objetos de valor, repositórios e serviços de domínio.
+- **Interface Adapters**: Contém os gateways que garantem a comunicação com o mundo externo (Banco de dados, sistema de arquivos, api de pagamentos etc...),
+e os adaptadores que ajudam a camada de apresentação a exibir resultados.
 
-- **Camada de Infraestrutura**: Contém as implementações de infraestrutura, como persistência em banco de dados e comunicação com APIs externas.
+- **Application Business Rules**:  Encapsula e implementa as regras de negócio através de casos de uso.
+
+- **Enterprise Business Rules**:  Representa a camada de entidades e suas regras de negócio.
+
 
 ## Event Storming
 
 O Event Storming encontra-se no seguinte link: `https://miro.com/app/board/uXjVKR1mTMY=/`
 
-## Execução do Projeto
+## Execução do Projeto em Kubernetes
+
+### Requisitos tecnológicos:
+- **[Docker](https://www.docker.com/)**: para a criação de imagens de contêineres.
+- **[Minikube](https://minikube.sigs.k8s.io/docs/start/?arch=%2Fwindows%2Fx86-64%2Fstable%2F.exe+download)**: para a execução de um cluster Kubernetes local.
+
+Para executar o projeto em Kubernetes, siga estas etapas:
+
+1. Clone o repositório.
+   ```bash
+   git clone https://github.com/POSTECH-SOAT-SALA11/Avalanches.git
+   ```
+
+2. Acesse o repositório.
+   ```bash
+   cd Avalanches
+   ```
+
+3. Execute o script que inicializará o projeto automaticamente.
+   ```bash
+   ./start_minikube.sh
+    ```
+
+4. Acesse o Swagger da aplicação em:
+   ```
+   http://localhost:8080/swagger-ui/index.html#/
+   ```
+
+6. Divirta-se explorando a API via Swagger! 
+Exemplos de requisição: https://github.com/POSTECH-SOAT-SALA11/Avalanches/wiki/Exemplos-de-Requisi%C3%A7%C3%A3o
+
+## Execução do Projeto Localmente
 
 Para executar o projeto localmente, siga estas etapas:
 
 1. Clone o repositório.
 2. Execute o comando `docker-compose up --build` para que o build da aplicação aconteça e sejam geradas as imagens e contâineres da aplicação + banco de dados.
-3. Acesse o Swagger da aplicação através da URL `http://localhost:8081/swagger-ui/index.html#`.
-4. Divirta-se!
+3. Acesse o Swagger da aplicação através da URL `http://localhost:8080/swagger-ui/index.html#`.
+4. Exemplos de requisição: https://github.com/POSTECH-SOAT-SALA11/Avalanches/wiki/Exemplos-de-Requisi%C3%A7%C3%A3o
+5. Divirta-se!
+
 
 ## Autores
 
