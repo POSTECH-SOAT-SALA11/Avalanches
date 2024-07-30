@@ -1,11 +1,9 @@
 package com.avalanches.frameworksanddrivers.api;
 
-import com.avalanches.applicationbusinessrules.usecases.PagamentoUseCase;
+import com.avalanches.frameworksanddrivers.api.dto.WebHookMockParams;
 import com.avalanches.frameworksanddrivers.api.dto.WebhookParams;
 import com.avalanches.frameworksanddrivers.api.interfaces.PagamentoApiInterface;
 import com.avalanches.interfaceadapters.controllers.PagamentoController;
-import com.avalanches.interfaceadapters.controllers.interfaces.PagamentoControllerInterface;
-import com.avalanches.interfaceadapters.gateways.interfaces.PagamentoClientInterface;
 import com.avalanches.interfaceadapters.presenters.dtos.WebHookDto;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -23,16 +21,14 @@ public class PagamentoApi implements PagamentoApiInterface {
     @Inject
     private JdbcOperations jdbcOperations;
 
-    @Inject
-    private PagamentoClientInterface client;
-
     @PostMapping("/webhook")
     @Override
     public ResponseEntity<WebHookDto> webhook(@Valid @RequestBody WebhookParams webhook) {
         try {
             System.out.println("Payload recebido: idPedido=" + webhook.idPedido() + ", status=" + webhook.status());
-            PagamentoControllerInterface pagamentoController = new PagamentoController();
-            pagamentoController.webhook(webhook, jdbcOperations);
+            WebHookMockParams webHookMockParams = new WebHookMockParams();
+            PagamentoController pagamentoController = new PagamentoController();
+            pagamentoController.webhook(webhook, jdbcOperations, webHookMockParams);
             return ResponseEntity.ok(new WebHookDto(true, "Webhook recebido com sucesso"));
 
         } catch (Exception e) {

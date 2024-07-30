@@ -3,9 +3,11 @@ package com.avalanches.interfaceadapters.controllers;
 import com.avalanches.applicationbusinessrules.usecases.PedidoUseCase;
 import com.avalanches.enterprisebusinessrules.entities.Pedido;
 import com.avalanches.enterprisebusinessrules.entities.StatusPedido;
+import com.avalanches.frameworksanddrivers.api.dto.WebHookMockParams;
 import com.avalanches.interfaceadapters.controllers.interfaces.PedidoControllerInterface;
+import com.avalanches.interfaceadapters.gateways.PagamentoGateway;
 import com.avalanches.interfaceadapters.gateways.PedidoGateway;
-import com.avalanches.interfaceadapters.gateways.interfaces.PagamentoClientInterface;
+import com.avalanches.interfaceadapters.gateways.interfaces.PagamentoGatewayInterface;
 import com.avalanches.interfaceadapters.gateways.interfaces.PedidoGatewayInterface;
 import com.avalanches.interfaceadapters.presenters.PedidoPresenter;
 import com.avalanches.interfaceadapters.presenters.dtos.PedidoDto;
@@ -17,9 +19,10 @@ import java.util.List;
 public class PedidoController implements PedidoControllerInterface {
 
     @Override
-    public Integer cadastrar(Pedido pedido, JdbcOperations jdbcOperations, PagamentoClientInterface pagamentoClient) {
+    public Integer cadastrar(Pedido pedido, JdbcOperations jdbcOperations, WebHookMockParams webHookMockParams) {
         PedidoGatewayInterface pedidoGateway = new PedidoGateway(jdbcOperations);
-        return PedidoUseCase.cadastrar(pedido, pedidoGateway, pagamentoClient);
+        PagamentoGatewayInterface pagamentoGateway = new PagamentoGateway(jdbcOperations, webHookMockParams);
+        return PedidoUseCase.cadastrar(pedido, pedidoGateway, pagamentoGateway);
     }
 
     @Override

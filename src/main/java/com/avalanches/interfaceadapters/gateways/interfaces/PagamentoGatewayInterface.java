@@ -6,4 +6,6 @@ public interface PagamentoGatewayInterface {
 
     void cadastrar(Pagamento pagamento);
 
+    Boolean efetuarPagamento(Integer idPedido);
+
 }
