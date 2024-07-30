@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface PagamentoApiInterface {
 
     @Operation(summary = "Webhook status pagamento",
-               description = "E utilizado para obter o status do pagamento via webhook")
+               description = "Endpoint utilizado para obter o status do pagamento via webhook")
     ResponseEntity<WebHookDto> webhook(@Valid @RequestBody WebhookParams webhook);
 
     @Operation(summary = "Consulta status pagamento",
