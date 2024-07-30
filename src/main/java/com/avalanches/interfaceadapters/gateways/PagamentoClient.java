@@ -9,7 +9,7 @@ import java.io.IOException;
 @Component
 public class PagamentoClient implements PagamentoClientInterface {
 
-    private static final String BASE_URL = "http://localhost:5001/pagamento/";
+    private static final String BASE_URL = "http://sistema-pagamentos-mock-service:5001/pagamento/";
     private final OkHttpClient client;
 
     public PagamentoClient() {
