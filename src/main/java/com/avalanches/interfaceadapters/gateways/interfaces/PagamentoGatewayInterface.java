@@ -5,4 +5,5 @@ import com.avalanches.enterprisebusinessrules.entities.Pagamento;
 public interface PagamentoGatewayInterface {
 
     void cadastrar(Pagamento pagamento);
+
 }

@@ -4,6 +4,7 @@ import com.avalanches.enterprisebusinessrules.entities.StatusPedido;
 import com.avalanches.frameworksanddrivers.api.interfaces.PedidoApiInterface;
 import com.avalanches.interfaceadapters.controllers.PedidoController;
 import com.avalanches.interfaceadapters.controllers.interfaces.PedidoControllerInterface;
+import com.avalanches.interfaceadapters.gateways.interfaces.PagamentoClientInterface;
 import com.avalanches.interfaceadapters.presenters.dtos.PedidoDto;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -24,11 +25,14 @@ public class PedidoApi implements PedidoApiInterface {
     @Inject
     private JdbcOperations jdbcOperations;
 
+    @Inject
+    private PagamentoClientInterface pagamentoClient;
+
     @PostMapping
     @Override
     public ResponseEntity<Integer> cadastrar(@Valid @RequestBody PedidoParams pedido) {
         PedidoControllerInterface pedidoController = new PedidoController();
-        Integer numeroPedido = pedidoController.cadastrar(Convert.pedidoParamsToPedido(pedido), jdbcOperations);
+        Integer numeroPedido = pedidoController.cadastrar(Convert.pedidoParamsToPedido(pedido), jdbcOperations, pagamentoClient);
         return ResponseEntity.status(HttpStatus.CREATED).body(numeroPedido);
     }
 
