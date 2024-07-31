@@ -44,6 +44,8 @@ e os adaptadores que ajudam a camada de apresentação a exibir resultados.
 
 - **Enterprise Business Rules**:  Representa a camada de entidades e suas regras de negócio.
 
+Vídeo explicando arquitetura: https://www.youtube.com/watch?v=D3DeARWrG60
+
 ## Event Storming
 
 O Event Storming encontra-se no seguinte link: `https://miro.com/app/board/uXjVKR1mTMY=/`
