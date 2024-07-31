@@ -4,8 +4,10 @@ import com.avalanches.applicationbusinessrules.usecases.interfaces.PedidoUseCase
 import com.avalanches.enterprisebusinessrules.entities.Pedido;
 import com.avalanches.enterprisebusinessrules.entities.PedidoProduto;
 import com.avalanches.enterprisebusinessrules.entities.StatusPedido;
+import com.avalanches.interfaceadapters.gateways.interfaces.ClienteGatewayInterface;
 import com.avalanches.interfaceadapters.gateways.interfaces.PagamentoGatewayInterface;
 import com.avalanches.interfaceadapters.gateways.interfaces.PedidoGatewayInterface;
+import com.avalanches.interfaceadapters.gateways.interfaces.ProdutoGatewayInterface;
 import org.webjars.NotFoundException;
 
 import java.util.List;
@@ -13,7 +15,20 @@ import java.util.List;
 public class PedidoUseCase implements PedidoUseCaseInterface {
 
     @Override
-    public Integer cadastrar(Pedido pedido, PedidoGatewayInterface pedidoGateway, PagamentoGatewayInterface pagamentoGateway) {
+    public Integer cadastrar(Pedido pedido,
+                             PedidoGatewayInterface pedidoGateway,
+                             ProdutoGatewayInterface produtoGateway,
+                             PagamentoGatewayInterface pagamentoGateway,
+                             ClienteGatewayInterface clienteGateway) {
+        if(!clienteGateway.verificaClienteExiste(pedido.IdCliente)) {
+            throw new NotFoundException("O cliente não foi encontrado.");
+        }
+
+        for(PedidoProduto p: pedido.listaProduto)
+            if(!produtoGateway.verificaProdutoExiste(p.idProduto)) {
+                throw new NotFoundException("O produto " + p.idProduto + " não foi encontrado.");
+            }
+
         pedidoGateway.cadastrar(pedido);
         PagamentoUseCase pagamentoUseCase = new PagamentoUseCase();
         pagamentoUseCase.efetuarPagamento(pedido.id, pagamentoGateway);
