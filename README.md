@@ -44,6 +44,8 @@ e os adaptadores que ajudam a camada de apresentação a exibir resultados.
 
 - **Enterprise Business Rules**:  Representa a camada de entidades e suas regras de negócio.
 
+Desenho da arquitetura: https://github.com/POSTECH-SOAT-SALA11/Avalanches/wiki/Desenho-da-arquitetura
+
 Vídeo explicando arquitetura: https://www.youtube.com/watch?v=D3DeARWrG60
 
 ## Event Storming
