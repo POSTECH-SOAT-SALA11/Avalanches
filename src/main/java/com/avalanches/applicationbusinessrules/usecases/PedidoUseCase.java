@@ -24,16 +24,16 @@ public class PedidoUseCase implements PedidoUseCaseInterface {
         return pedido.id;
     }
 
-    public static List<Pedido> listar(PedidoGatewayInterface pedidoGateway) {
+    @Override
+    public List<Pedido> listar(PedidoGatewayInterface pedidoGateway) {
         return pedidoGateway.listar();
     }
 
     @Override
     public void atualizaStatus(Integer idPedido, StatusPedido statusPedido, PedidoGatewayInterface pedidoGateway) {
         if (!pedidoGateway.verificaPedidoExiste(idPedido))  {
-           throw new NotFoundException("Pedido não encontrado.");
+            throw new NotFoundException("Pedido não encontrado.");
         }
         pedidoGateway.atualizaStatus(idPedido, statusPedido);
     }
-
 }

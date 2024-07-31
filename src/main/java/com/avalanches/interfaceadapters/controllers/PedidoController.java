@@ -22,7 +22,8 @@ public class PedidoController implements PedidoControllerInterface {
     public Integer cadastrar(Pedido pedido, JdbcOperations jdbcOperations, WebHookMockParams webHookMockParams) {
         PedidoGatewayInterface pedidoGateway = new PedidoGateway(jdbcOperations);
         PagamentoGatewayInterface pagamentoGateway = new PagamentoGateway(jdbcOperations, webHookMockParams);
-        return PedidoUseCase.cadastrar(pedido, pedidoGateway, pagamentoGateway);
+        PedidoUseCase pedidoUseCase = new PedidoUseCase();
+        return pedidoUseCase.cadastrar(pedido, pedidoGateway, pagamentoGateway);
     }
 
     @Override
