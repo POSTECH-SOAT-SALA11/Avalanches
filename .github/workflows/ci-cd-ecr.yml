@@ -1,0 +1,44 @@
+name: Build and Push Docker Images to ECR
+
+on:
+  push:
+    branches:
+      - main # Execute o workflow quando houver push na branch 'main'
+
+jobs:
+  environment: production
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        run: |
+          aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+
+      # Build and Push the first Docker image (from the root Dockerfile)
+      - name: Build the Docker image for root service
+        run: |
+          docker build -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}-root:latest -f Dockerfile .
+
+      - name: Push the Docker image for root service to ECR
+        run: |
+          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}-root:latest
+
+      # Build and Push the second Docker image (from sistema-pagamentos-mock/app)
+      - name: Build the Docker image for sistema-pagamentos-mock
+        run: |
+          docker build -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}-pagamentos:latest -f sistema-pagamentos-mock/app/Dockerfile sistema-pagamentos-mock/app
+
+      - name: Push the Docker image for sistema-pagamentos-mock to ECR
+        run: |
+          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}-pagamentos:latest
