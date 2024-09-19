@@ -2,29 +2,67 @@ package com.avalanches.enterprisebusinessrules.entities;
 
 public class Imagem {
 
-    public int id;
+    private int id;
 
-    public String nome;
+    private String nome;
 
-    public String descricao;
+    private String descricao;
 
-    public String tipoConteudo;
+    private String tipoConteudo;
 
-    public int tamanho;
+    private int tamanho;
 
-    public byte[] conteudo;
+    private byte[] conteudo;
 
-    public String caminho;
+    private String caminho;
 
     public Imagem(int id, String nome, String descricao, String tipoConteudo, int tamanho, String caminho, byte[] conteudo) {
-        this.id = id;
+        this.setId(id);
         this.nome = nome;
         this.descricao = descricao;
         this.tipoConteudo = tipoConteudo;
         this.tamanho = tamanho;
-        this.caminho = caminho;
-        this.conteudo = conteudo;
+        this.setCaminho(caminho);
+        this.setConteudo(conteudo);
+    }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public String getTipoConteudo() {
+        return tipoConteudo;
+    }
+
+    public int getTamanho() {
+        return tamanho;
+    }
+
+    public byte[] getConteudo() {
+        return conteudo;
+    }
+
+    public void setConteudo(byte[] conteudo) {
+        this.conteudo = conteudo;
+    }
+
+    public String getCaminho() {
+        return caminho;
+    }
+
+    public void setCaminho(String caminho) {
+        this.caminho = caminho;
     }
 }
-

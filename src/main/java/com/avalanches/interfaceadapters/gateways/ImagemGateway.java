@@ -7,7 +7,6 @@ import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Repository;
 import org.webjars.NotFoundException;
 
 import java.io.IOException;
@@ -42,38 +41,38 @@ public class ImagemGateway implements ImagemGatewayInterface {
                                 "INSERT INTO imagem(nome, descricao, tipoconteudo, caminho, tamanho) VALUES (?, ?, ?, ?, ?);",
                                 Statement.RETURN_GENERATED_KEYS
                         );
-                        ps.setString(1, imagem.nome);
-                        ps.setString(2, imagem.descricao);
-                        ps.setString(3, imagem.tipoConteudo);
-                        ps.setString(4, imagem.caminho);
-                        ps.setInt(5, imagem.tamanho);
+                        ps.setString(1, imagem.getNome());
+                        ps.setString(2, imagem.getDescricao());
+                        ps.setString(3, imagem.getTipoConteudo());
+                        ps.setString(4, imagem.getCaminho());
+                        ps.setInt(5, imagem.getTamanho());
                         return ps;
                     }
                 },
                 keyHolder
         );
-        imagem.id = (int) keyHolder.getKeys().get("id");
+        imagem.setId((int) keyHolder.getKeys().get("id"));
     }
 
     @Override
     public void atualizar(Imagem imagem) {
         editarArquivo(imagem);
         jdbcOperations.update("UPDATE imagem SET nome=?, descricao=?, tipoconteudo=?, caminho=?, tamanho=? WHERE id=(?);",
-                imagem.nome,
-                imagem.descricao,
-                imagem.tipoConteudo,
-                imagem.caminho,
-                imagem.tamanho,
-                imagem.id
+                imagem.getNome(),
+                imagem.getDescricao(),
+                imagem.getTipoConteudo(),
+                imagem.getCaminho(),
+                imagem.getTamanho(),
+                imagem.getId()
         );
     }
 
     @Override
     public void excluir(Imagem imagem) {
-        jdbcOperations.update("DELETE FROM imagem WHERE id=?", imagem.id);
+        jdbcOperations.update("DELETE FROM imagem WHERE id=?", imagem.getId());
 
-        if (imagem.caminho != null) {
-            Path imagePath = Paths.get(IMAGENS).resolve(imagem.caminho);
+        if (imagem.getCaminho() != null) {
+            Path imagePath = Paths.get(IMAGENS).resolve(imagem.getCaminho());
             try {
                 Files.deleteIfExists(imagePath);
             } catch (IOException e) {
@@ -91,8 +90,8 @@ public class ImagemGateway implements ImagemGatewayInterface {
                 throw new RuntimeException("Erro ao criar pasta 'imagens'.", e);
             }
         }
-        imagem.caminho = UUID.randomUUID().toString();
-        Path imagePath = imagesFolder.resolve(imagem.caminho);
+        imagem.setCaminho(UUID.randomUUID().toString());
+        Path imagePath = imagesFolder.resolve(imagem.getCaminho());
         try {
             Files.createFile(imagePath);
             editarArquivo(imagem);
@@ -103,13 +102,13 @@ public class ImagemGateway implements ImagemGatewayInterface {
 
     private static void editarArquivo(Imagem imagem) {
         Path imagesFolder = Paths.get(IMAGENS);
-        Path imagePath = imagesFolder.resolve(imagem.caminho);
+        Path imagePath = imagesFolder.resolve(imagem.getCaminho());
         if (!Files.exists(imagesFolder) || !Files.exists(imagePath)) {
             throw new NotFoundException("Arquivo não existe");
         }
 
         try {
-            Files.write(imagePath, imagem.conteudo);
+            Files.write(imagePath, imagem.getConteudo());
         } catch (IOException e) {
             throw new RuntimeException("Erro ao editar arquivo.", e);
         }

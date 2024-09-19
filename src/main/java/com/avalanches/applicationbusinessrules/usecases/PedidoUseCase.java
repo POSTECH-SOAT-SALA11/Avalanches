@@ -20,23 +20,23 @@ public class PedidoUseCase implements PedidoUseCaseInterface {
                              ProdutoGatewayInterface produtoGateway,
                              PagamentoGatewayInterface pagamentoGateway,
                              ClienteGatewayInterface clienteGateway) {
-        if(!clienteGateway.verificaClienteExiste(pedido.IdCliente)) {
+        if(!clienteGateway.verificaClienteExiste(pedido.getIdCliente())) {
             throw new NotFoundException("O cliente não foi encontrado.");
         }
 
-        for(PedidoProduto p: pedido.listaProduto)
-            if(!produtoGateway.verificaProdutoExiste(p.idProduto)) {
-                throw new NotFoundException("O produto " + p.idProduto + " não foi encontrado.");
+        for(PedidoProduto p: pedido.getListaProduto())
+            if(!produtoGateway.verificaProdutoExiste(p.getIdProduto())) {
+                throw new NotFoundException("O produto " + p.getIdProduto() + " não foi encontrado.");
             }
 
         pedidoGateway.cadastrar(pedido);
         PagamentoUseCase pagamentoUseCase = new PagamentoUseCase();
-        pagamentoUseCase.efetuarPagamento(pedido.id, pagamentoGateway);
+        pagamentoUseCase.efetuarPagamento(pedido.getId(), pagamentoGateway);
 
-        for(PedidoProduto p: pedido.listaProduto)
-            pedidoGateway.cadastrarProdutosPorPedido(pedido.id, p);
+        for(PedidoProduto p: pedido.getListaProduto())
+            pedidoGateway.cadastrarProdutosPorPedido(pedido.getId(), p);
 
-        return pedido.id;
+        return pedido.getId();
     }
 
     @Override

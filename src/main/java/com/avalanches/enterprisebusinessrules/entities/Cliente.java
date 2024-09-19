@@ -2,13 +2,13 @@ package com.avalanches.enterprisebusinessrules.entities;
 
 public class Cliente {
 
-    public Integer id;
+    private Integer id;
 
-    public String nome;
+    private String nome;
 
-    public String cpf;
+    private String cpf;
 
-    public String email;
+    private String email;
 
     public Cliente(Integer id,String nome, String cpf, String email) {
         this.id = id;
@@ -17,4 +17,19 @@ public class Cliente {
         this.email = email;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public String getEmail() {
+        return email;
+    }
 }

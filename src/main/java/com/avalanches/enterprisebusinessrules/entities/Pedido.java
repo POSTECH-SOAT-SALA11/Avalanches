@@ -8,21 +8,21 @@ import java.util.List;
 
 public class Pedido {
 
-    public Integer id;
+    private Integer id;
 
-    public StatusPedido status;
+    private StatusPedido status;
 
-    public BigDecimal valor;
+    private BigDecimal valor;
 
-    public LocalDateTime dataCriacao;
+    private LocalDateTime dataCriacao;
 
-    public LocalDateTime dataFinalizacao;
+    private LocalDateTime dataFinalizacao;
 
-    public Duration tempoEspera;
+    private Duration tempoEspera;
 
-    public List<PedidoProduto> listaProduto;
+    private List<PedidoProduto> listaProduto;
 
-    public Integer IdCliente;
+    private Integer IdCliente;
 
     public Pedido(
             Integer id,
@@ -32,7 +32,7 @@ public class Pedido {
             LocalDateTime dataFinalizacao,
             Integer IdCliente
     ){
-        this.id = id;
+        this.setId(id);
         this.status = status;
         this.valor = valor;
         this.dataCriacao = dataCriacao;
@@ -51,7 +51,7 @@ public class Pedido {
             List<PedidoProduto> listaProduto,
             Integer IdCliente
     ){
-        this.id = id;
+        this.setId(id);
         this.status = status;
         this.valor = valor;
         this.dataCriacao = dataCriacao;
@@ -62,6 +62,42 @@ public class Pedido {
     }
 
     public void adicionarProduto(PedidoProduto produto) {
-        this.listaProduto.add(produto);
+        this.getListaProduto().add(produto);
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public StatusPedido getStatus() {
+        return status;
+    }
+
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public LocalDateTime getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public LocalDateTime getDataFinalizacao() {
+        return dataFinalizacao;
+    }
+
+    public Duration getTempoEspera() {
+        return tempoEspera;
+    }
+
+    public List<PedidoProduto> getListaProduto() {
+        return listaProduto;
+    }
+
+    public Integer getIdCliente() {
+        return IdCliente;
     }
 }

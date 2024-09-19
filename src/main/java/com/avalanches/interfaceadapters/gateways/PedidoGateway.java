@@ -11,7 +11,6 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Repository;
 import org.webjars.NotFoundException;
 
 import java.sql.*;
@@ -38,17 +37,17 @@ public class PedidoGateway implements PedidoGatewayInterface {
                                 "insert into pedido (status, valor, datacriacao, datafinalizacao, idcliente) values (?, ?, ? ,? ,?)",
                                 Statement.RETURN_GENERATED_KEYS
                         );
-                        ps.setString(1, pedido.status.getValue());
-                        ps.setBigDecimal(2, pedido.valor);
-                        ps.setTimestamp(3, Timestamp.valueOf(pedido.dataCriacao));
-                        ps.setTimestamp(4, Timestamp.valueOf(pedido.dataFinalizacao));
-                        ps.setInt(5, pedido.IdCliente);
+                        ps.setString(1, pedido.getStatus().getValue());
+                        ps.setBigDecimal(2, pedido.getValor());
+                        ps.setTimestamp(3, Timestamp.valueOf(pedido.getDataCriacao()));
+                        ps.setTimestamp(4, Timestamp.valueOf(pedido.getDataFinalizacao()));
+                        ps.setInt(5, pedido.getIdCliente());
                         return ps;
                     }
                 },
                 keyHolder
         );
-        pedido.id = (int) keyHolder.getKeys().get("id");
+        pedido.setId((int) keyHolder.getKeys().get("id"));
 
     }
 
@@ -56,9 +55,9 @@ public class PedidoGateway implements PedidoGatewayInterface {
     public void cadastrarProdutosPorPedido(Integer idPedido, PedidoProduto pedidoProduto) {
         jdbcOperations.update("INSERT INTO pedido_produto (idPedido, idProduto, quantidade, valorUnitario) VALUES (?, ?, ?, ?);",
                 idPedido,
-                pedidoProduto.idProduto,
-                pedidoProduto.quantidade,
-                pedidoProduto.valorUnitario);
+                pedidoProduto.getIdProduto(),
+                pedidoProduto.getQuantidade(),
+                pedidoProduto.getValorUnitario());
     }
 
     @Override

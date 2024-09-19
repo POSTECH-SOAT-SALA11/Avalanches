@@ -16,47 +16,47 @@ public class ProdutoUseCase implements ProdutoUseCaseInterface {
     public void cadastrarProduto(Produto produto, ProdutoGatewayInterface produtoGateway, ImagemGatewayInterface imagemGateway) {
         produtoGateway.cadastrar(produto);
 
-        if(produto.imagens != null) {
-            for (Imagem imagem: produto.imagens) {
+        if(produto.getImagens() != null) {
+            for (Imagem imagem: produto.getImagens()) {
                 imagemGateway.cadastrar(imagem);
-                produtoGateway.cadastrarImagemProduto(produto.id, imagem.id);
+                produtoGateway.cadastrarImagemProduto(produto.getId(), imagem.getId());
             }
         }
     }
 
     @Override
     public void atualizarProduto(Produto produto, ProdutoGatewayInterface produtoGateway, ImagemGatewayInterface imagemGateway) {
-        Produto produtoPreAtualizado = produtoGateway.consultarProdutosPorID(produto.id);
+        Produto produtoPreAtualizado = produtoGateway.consultarProdutosPorID(produto.getId());
         if(produtoPreAtualizado == null) {
             throw new NotFoundException("Produto não encontrado.");
         }
 
-        List<Imagem> imagensPreAtualizadas = produtoGateway.consultarImagensPorProduto(produto.id);
+        List<Imagem> imagensPreAtualizadas = produtoGateway.consultarImagensPorProduto(produto.getId());
         if(imagensPreAtualizadas != null) {
             List<Imagem> imagensDeletadas;
 
-            if(produto.imagens != null) {
+            if(produto.getImagens() != null) {
                 imagensDeletadas = imagensPreAtualizadas.stream()
-                        .filter(preUpdatedImagem -> produto.imagens.stream().noneMatch(imagem -> imagem.id == preUpdatedImagem.id))
+                        .filter(preUpdatedImagem -> produto.getImagens().stream().noneMatch(imagem -> imagem.getId() == preUpdatedImagem.getId()))
                         .toList();
             } else {
                 imagensDeletadas = imagensPreAtualizadas;
             }
 
             for (Imagem imagem: imagensDeletadas) {
-                produtoGateway.excluirImagemProduto(produto.id, imagem.id);
+                produtoGateway.excluirImagemProduto(produto.getId(), imagem.getId());
                 imagemGateway.excluir(imagem);
             }
         }
 
-        if(produto.imagens != null) {
-            List<Imagem> imagensAtualizadas = produto.imagens.stream().filter(imagem -> imagem.id != 0).toList();
+        if(produto.getImagens() != null) {
+            List<Imagem> imagensAtualizadas = produto.getImagens().stream().filter(imagem -> imagem.getId() != 0).toList();
             if(imagensPreAtualizadas != null) {
                 for (Imagem imagem: imagensAtualizadas) {
                     var preUpdatedImage = imagensPreAtualizadas.stream()
-                            .filter(preUpdatedImagem -> preUpdatedImagem.id == imagem.id)
+                            .filter(preUpdatedImagem -> preUpdatedImagem.getId() == imagem.getId())
                             .findFirst();
-                    preUpdatedImage.ifPresent(value -> imagem.caminho = value.caminho);
+                    preUpdatedImage.ifPresent(value -> imagem.setCaminho(value.getCaminho()));
                 }
             }
 
@@ -64,10 +64,10 @@ public class ProdutoUseCase implements ProdutoUseCaseInterface {
                 imagemGateway.atualizar(imagem);
             }
 
-            List<Imagem> novasImagens = produto.imagens.stream().filter(imagem -> imagem.id == 0).toList();
+            List<Imagem> novasImagens = produto.getImagens().stream().filter(imagem -> imagem.getId() == 0).toList();
             for (Imagem imagem: novasImagens) {
                 imagemGateway.cadastrar(imagem);
-                produtoGateway.cadastrarImagemProduto(produto.id, imagem.id);
+                produtoGateway.cadastrarImagemProduto(produto.getId(), imagem.getId());
             }
         }
         produtoGateway.atualizar(produto);
@@ -83,7 +83,7 @@ public class ProdutoUseCase implements ProdutoUseCaseInterface {
         List<Imagem> imagensDeletadas = produtoGateway.consultarImagensPorProduto(id);
         if(imagensDeletadas != null) {
             for(Imagem imagem: imagensDeletadas) {
-                produtoGateway.excluirImagemProduto(id, imagem.id);
+                produtoGateway.excluirImagemProduto(id, imagem.getId());
                 imagemGateway.excluir(imagem);
             }
         }
@@ -95,10 +95,10 @@ public class ProdutoUseCase implements ProdutoUseCaseInterface {
         List<Produto> produtos =  produtoGateway.consultarProdutos(categoriaProduto);
 
         for (Produto produto: produtos){
-            produto.imagens = produtoGateway.consultarImagensPorProduto(produto.id);
+            produto.setImagens(produtoGateway.consultarImagensPorProduto(produto.getId()));
 
-            for(Imagem imagem: produto.imagens){
-                imagem.conteudo = imagemGateway.lerArquivo(imagem.caminho);
+            for(Imagem imagem: produto.getImagens()){
+                imagem.setConteudo(imagemGateway.lerArquivo(imagem.getCaminho()));
             }
         }
 

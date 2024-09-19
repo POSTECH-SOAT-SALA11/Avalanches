@@ -2,9 +2,9 @@ package com.avalanches.enterprisebusinessrules.entities;
 
 public class Pagamento {
 
-    Integer id;
-    Integer idPedido;
-    StatusPagamento statusPagamento;
+    private Integer id;
+    private Integer idPedido;
+    private StatusPagamento statusPagamento;
 
     public Pagamento(Integer id, Integer idPedido, StatusPagamento statusPagamento) {
         this.id = id;
