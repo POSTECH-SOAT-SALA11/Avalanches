@@ -77,6 +77,15 @@ public class PedidoGateway implements PedidoGatewayInterface {
     }
 
     @Override
+    public String buscarStatusPedido(Integer idPedido) {
+
+        String sql = "SELECT status FROM pedido WHERE id = ?";
+        String status = jdbcOperations.queryForObject(sql, new Object[]{idPedido}, String.class);
+
+        return status;
+    }
+
+    @Override
     public List<Pedido> listar() {
         try {
             String sql = "SELECT p.id, p.status, p.valor, p.datacriacao, p.datafinalizacao, p.idcliente, "

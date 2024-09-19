@@ -16,4 +16,6 @@ public interface PedidoGatewayInterface {
     List<Pedido> listar();
 
     boolean verificaPedidoExiste(Integer idPedido);
+
+    String buscarStatusPedido(Integer idPedido);
 }
