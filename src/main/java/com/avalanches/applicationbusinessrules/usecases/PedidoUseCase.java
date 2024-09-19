@@ -10,6 +10,7 @@ import com.avalanches.interfaceadapters.gateways.interfaces.PedidoGatewayInterfa
 import com.avalanches.interfaceadapters.gateways.interfaces.ProdutoGatewayInterface;
 import org.webjars.NotFoundException;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class PedidoUseCase implements PedidoUseCaseInterface {
@@ -24,10 +25,7 @@ public class PedidoUseCase implements PedidoUseCaseInterface {
             throw new NotFoundException("O cliente não foi encontrado.");
         }
 
-        for(PedidoProduto p: pedido.listaProduto)
-            if(!produtoGateway.verificaProdutoExiste(p.idProduto)) {
-                throw new NotFoundException("O produto " + p.idProduto + " não foi encontrado.");
-            }
+        pedido.setValor(this.calcularValorTotal(pedido, produtoGateway));
 
         pedidoGateway.cadastrar(pedido);
         PagamentoUseCase pagamentoUseCase = new PagamentoUseCase();
@@ -50,5 +48,17 @@ public class PedidoUseCase implements PedidoUseCaseInterface {
             throw new NotFoundException("Pedido não encontrado.");
         }
         pedidoGateway.atualizaStatus(idPedido, statusPedido);
+    }
+
+    private BigDecimal calcularValorTotal(Pedido pedido, ProdutoGatewayInterface produtoGateway) {
+        BigDecimal valorTotal = BigDecimal.ZERO;
+        for(PedidoProduto p: pedido.listaProduto){
+            if(!produtoGateway.verificaProdutoExiste(p.idProduto)) {
+                throw new NotFoundException("O produto " + p.idProduto + " não foi encontrado.");
+            }
+            BigDecimal valorProduto = p.valorUnitario.multiply(BigDecimal.valueOf(p.quantidade));
+            valorTotal = valorTotal.add(valorProduto);
+        }
+        return valorTotal;
     }
 }

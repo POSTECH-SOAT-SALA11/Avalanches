@@ -64,4 +64,8 @@ public class Pedido {
     public void adicionarProduto(PedidoProduto produto) {
         this.listaProduto.add(produto);
     }
+
+    public void setValor(BigDecimal valor) {
+        this.valor = valor;
+    }
 }
