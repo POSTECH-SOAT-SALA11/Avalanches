@@ -6,7 +6,6 @@ import com.avalanches.frameworksanddrivers.databases.ClienteNotFoundException;
 import com.avalanches.interfaceadapters.gateways.interfaces.ClienteGatewayInterface;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcOperations;
-import org.springframework.stereotype.Repository;
 
 public class ClienteGateway implements ClienteGatewayInterface {
 
@@ -19,9 +18,9 @@ public class ClienteGateway implements ClienteGatewayInterface {
     @Override
     public void cadastrar(Cliente cliente) {
         jdbcOperations.update("INSERT INTO cliente (nome, cpf, email) VALUES (?, ?, ?);",
-                cliente.nome,
-                cliente.cpf,
-                cliente.email);
+                cliente.getNome(),
+                cliente.getCpf(),
+                cliente.getEmail());
     }
 
     @Override

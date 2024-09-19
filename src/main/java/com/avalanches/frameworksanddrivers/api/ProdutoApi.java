@@ -38,7 +38,7 @@ public class ProdutoApi implements ProdutoApiInterface {
     public ResponseEntity<Void> atualizar(@PathVariable int id, @Valid @RequestBody ProdutoParams produto) {
         ProdutoControllerInterface produtoController = new ProdutoController();
         Produto produtoEntity = Convert.produtoParamsToProduto(produto);
-        produtoEntity.id = id;
+        produtoEntity.setId(id);
         produtoController.atualizarProduto(produtoEntity, jdbcOperations);
         return ResponseEntity.status(HttpStatus.OK).build();
     }

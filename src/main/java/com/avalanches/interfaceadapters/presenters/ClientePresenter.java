@@ -8,6 +8,6 @@ public class ClientePresenter implements ClientePresenterInterface {
 
     @Override
     public ClienteDto clienteToDto(Cliente cliente) {
-        return new ClienteDto(cliente.id, cliente.nome, cliente.cpf, cliente.email);
+        return new ClienteDto(cliente.getId(), cliente.getNome(), cliente.getCpf(), cliente.getEmail());
     }
 }

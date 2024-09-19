@@ -30,13 +30,13 @@ public class ProdutoPresenter implements ProdutoPresenterInterface {
     @Override
     public ProdutoDto produtoToDto(Produto produto) {
         return new ProdutoDto(
-            produto.id,
-            produto.valor,
-            produto.quantidade,
-            categoriaProdutoToDto(produto.categoria),
-            produto.nome,
-            produto.descricao,
-            imagensToDtos(produto.imagens)
+                produto.getId(),
+                produto.getValor(),
+                produto.getQuantidade(),
+            categoriaProdutoToDto(produto.getCategoria()),
+                produto.getNome(),
+                produto.getDescricao(),
+            imagensToDtos(produto.getImagens())
         );
     }
 
@@ -57,13 +57,13 @@ public class ProdutoPresenter implements ProdutoPresenterInterface {
     @Override
     public ImagemDto imagemToDto(Imagem imagem) {
         return new ImagemDto(
-            imagem.id,
-            imagem.nome,
-            imagem.descricao,
-            imagem.tipoConteudo,
-            imagem.tamanho,
-            imagem.caminho,
-            imagem.conteudo
+                imagem.getId(),
+                imagem.getNome(),
+                imagem.getDescricao(),
+                imagem.getTipoConteudo(),
+                imagem.getTamanho(),
+                imagem.getCaminho(),
+                imagem.getConteudo()
         );
     }
 

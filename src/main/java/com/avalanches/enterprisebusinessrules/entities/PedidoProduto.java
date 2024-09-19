@@ -4,15 +4,27 @@ import java.math.BigDecimal;
 
 public class PedidoProduto {
 
-    public int idProduto;
+    private int idProduto;
 
-    public int quantidade;
+    private int quantidade;
 
-    public BigDecimal valorUnitario;
+    private BigDecimal valorUnitario;
 
     public PedidoProduto(int idProduto, int quantidade, BigDecimal valorUnitario) {
         this.idProduto = idProduto;
         this.quantidade = quantidade;
         this.valorUnitario = valorUnitario;
+    }
+
+    public int getIdProduto() {
+        return idProduto;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public BigDecimal getValorUnitario() {
+        return valorUnitario;
     }
 }

@@ -12,7 +12,6 @@ import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Repository;
 import org.webjars.NotFoundException;
 
 import java.sql.Connection;
@@ -40,17 +39,17 @@ public class ProdutoGateway implements ProdutoGatewayInterface {
                             "INSERT INTO produto(nome, descricao, categoria, quantidade, valor) VALUES (?, ?, ?, ?, ?)",
                             Statement.RETURN_GENERATED_KEYS
                     );
-                    ps.setString(1, produto.nome);
-                    ps.setString(2, produto.descricao);
-                    ps.setString(3, produto.categoria.getValue());
-                    ps.setInt(4, produto.quantidade);
-                    ps.setBigDecimal(5, produto.valor);
+                    ps.setString(1, produto.getNome());
+                    ps.setString(2, produto.getDescricao());
+                    ps.setString(3, produto.getCategoria().getValue());
+                    ps.setInt(4, produto.getQuantidade());
+                    ps.setBigDecimal(5, produto.getValor());
                     return ps;
                 }
             },
             keyHolder
         );
-        produto.id = (int) keyHolder.getKeys().get("id");
+        produto.setId((int) keyHolder.getKeys().get("id"));
     }
 
     @Override
@@ -66,12 +65,12 @@ public class ProdutoGateway implements ProdutoGatewayInterface {
     public void atualizar(Produto produto) {
         jdbcOperations.update(
             "UPDATE produto SET nome=?, descricao=?, categoria=?, quantidade=?, valor=? WHERE id=?",
-                produto.nome,
-                produto.descricao,
-                produto.categoria.getValue(),
-                produto.quantidade,
-                produto.valor,
-                produto.id
+                produto.getNome(),
+                produto.getDescricao(),
+                produto.getCategoria().getValue(),
+                produto.getQuantidade(),
+                produto.getValor(),
+                produto.getId()
         );
     }
 

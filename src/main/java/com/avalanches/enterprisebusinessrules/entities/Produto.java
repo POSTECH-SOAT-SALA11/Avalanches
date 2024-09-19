@@ -5,19 +5,19 @@ import java.util.List;
 
 public class Produto {
 
-    public Integer id;
+    private Integer id;
 
-    public BigDecimal valor;
+    private BigDecimal valor;
 
-    public int quantidade;
+    private int quantidade;
 
-    public CategoriaProduto categoria;
+    private CategoriaProduto categoria;
 
-    public String nome;
+    private String nome;
 
-    public String descricao;
+    private String descricao;
 
-    public List<Imagem> imagens;
+    private List<Imagem> imagens;
 
     public Produto(
         int id,
@@ -28,12 +28,48 @@ public class Produto {
         String descricao,
         List<Imagem> imagens
     ) {
-        this.id = id;
+        this.setId(id);
         this.valor = valor;
         this.quantidade = quantidade;
         this.categoria = categoria;
         this.nome = nome;
         this.descricao = descricao;
+        this.imagens = imagens;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public CategoriaProduto getCategoria() {
+        return categoria;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public List<Imagem> getImagens() {
+        return imagens;
+    }
+
+    public void setImagens(List<Imagem>imagens) {
         this.imagens = imagens;
     }
 
