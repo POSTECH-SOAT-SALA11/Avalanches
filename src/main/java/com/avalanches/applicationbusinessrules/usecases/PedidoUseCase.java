@@ -50,6 +50,7 @@ public class PedidoUseCase implements PedidoUseCaseInterface {
         pedidoGateway.atualizaStatus(idPedido, statusPedido);
     }
 
+
     private BigDecimal calcularValorTotal(Pedido pedido, ProdutoGatewayInterface produtoGateway) {
         BigDecimal valorTotal = BigDecimal.ZERO;
         for(PedidoProduto p: pedido.listaProduto){
