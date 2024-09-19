@@ -30,14 +30,14 @@ public class PedidoPresenter implements PedidoPresenterInterface {
     @Override
     public PedidoDto pedidoToDto(Pedido pedido) {
         return new PedidoDto(
-                pedido.getId(),
+            pedido.getId(),
             statusPedidoToDto(pedido.getStatus()),
-                pedido.getValor(),
-                pedido.getDataCriacao(),
-                pedido.getDataFinalizacao(),
-                pedido.getTempoEspera(),
+            pedido.getValor(),
+            pedido.getDataCriacao(),
+            pedido.getDataFinalizacao(),
+            pedido.getTempoEspera(),
             pedidoProdutosToDtos(pedido.getListaProduto()),
-                pedido.getIdCliente()
+            pedido.getIdCliente()
         );
     }
 
@@ -58,9 +58,9 @@ public class PedidoPresenter implements PedidoPresenterInterface {
     @Override
     public PedidoProdutoDto pedidoProdutoToDto(PedidoProduto pedidoProduto) {
         return new PedidoProdutoDto(
-                pedidoProduto.getIdProduto(),
-                pedidoProduto.getQuantidade(),
-                pedidoProduto.getValorUnitario()
+            pedidoProduto.getIdProduto(),
+            pedidoProduto.getQuantidade(),
+            pedidoProduto.getValorUnitario()
         );
     }
 
