@@ -4,6 +4,7 @@ import com.avalanches.applicationbusinessrules.usecases.interfaces.PedidoUseCase
 import com.avalanches.enterprisebusinessrules.entities.Pedido;
 import com.avalanches.enterprisebusinessrules.entities.PedidoProduto;
 import com.avalanches.enterprisebusinessrules.entities.StatusPedido;
+import com.avalanches.frameworksanddrivers.databases.StatusPedidoInvalidoException;
 import com.avalanches.interfaceadapters.gateways.interfaces.ClienteGatewayInterface;
 import com.avalanches.interfaceadapters.gateways.interfaces.PagamentoGatewayInterface;
 import com.avalanches.interfaceadapters.gateways.interfaces.PedidoGatewayInterface;
@@ -29,6 +30,8 @@ public class PedidoUseCase implements PedidoUseCaseInterface {
                 throw new NotFoundException("O produto " + p.getIdProduto() + " não foi encontrado.");
             }
 
+
+
         pedidoGateway.cadastrar(pedido);
         PagamentoUseCase pagamentoUseCase = new PagamentoUseCase();
         pagamentoUseCase.efetuarPagamento(pedido.getId(), pagamentoGateway);
@@ -49,6 +52,24 @@ public class PedidoUseCase implements PedidoUseCaseInterface {
         if (!pedidoGateway.verificaPedidoExiste(idPedido))  {
             throw new NotFoundException("Pedido não encontrado.");
         }
+
+        if(!VerificaStatusValido(idPedido, statusPedido, pedidoGateway)){
+            throw new StatusPedidoInvalidoException(statusPedido);
+        }
         pedidoGateway.atualizaStatus(idPedido, statusPedido);
+    }
+
+    private boolean VerificaStatusValido(Integer idPedido, StatusPedido statusPedido, PedidoGatewayInterface pedidoGateway) {
+
+        StatusPedido statusAtual = StatusPedido.fromValue(pedidoGateway.buscarStatusPedido(idPedido));
+
+        StatusPedido proximoStatusValido = switch (statusAtual) {
+            case RECEBIDO -> StatusPedido.EMPREPARACAO;
+            case EMPREPARACAO -> StatusPedido.PRONTO;
+            case PRONTO -> StatusPedido.FINALIZADO;
+            default -> null;
+        };
+
+        return statusPedido == proximoStatusValido;
     }
 }

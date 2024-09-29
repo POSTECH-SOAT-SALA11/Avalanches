@@ -3,6 +3,7 @@ package com.avalanches.frameworksanddrivers.api.handler;
 import com.avalanches.enterprisebusinessrules.entities.CategoriaProduto;
 import com.avalanches.frameworksanddrivers.databases.ClienteAlreadyExistsException;
 import com.avalanches.frameworksanddrivers.databases.ClienteNotFoundException;
+import com.avalanches.frameworksanddrivers.databases.StatusPedidoInvalidoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -37,6 +38,16 @@ public class GlobalExceptionHandler {
                 LocalDateTime.now()
         );
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(StatusPedidoInvalidoException.class)
+    public ResponseEntity<ErroResponse> handleStatusPedidoInvalidoException(StatusPedidoInvalidoException ex) {
+        ErroResponse errorResponse = new ErroResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(ClienteAlreadyExistsException.class)
